@@ -1,0 +1,69 @@
+/****************************************/
+/*HEADER*/
+/****************************************/
+.header{
+    background-image: url(../images/header-background.jpg);
+    background-size: contain;
+    background-position: center;
+    height:48rem;
+    color:white;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    text-align: center; 
+    padding: 6rem 0; 
+}
+
+.header-btn{
+    border:1px solid #fff;
+    color:white;
+    max-width: max-content;
+    font-size: 1.8rem;
+    font-weight: 600;
+    padding: 0.8rem 2rem;
+    border-radius: 3rem;
+    display:inline-block;
+    align-items: center;
+    margin:2rem;
+    text-decoration: none;
+}
+.header-btn:hover{
+    background-color: #fff;
+    color:black;
+}
+
+
+/****************************************/
+/*INTROSECTION*/
+/****************************************/
+
+.intro-img{
+    height:2rem;
+    width:2rem; 
+}
+
+.intro-description{
+    font-size: 1rem;
+    color:grey;
+}
+
+/****************************************/
+/*LIVE AUCTION SECTION*/
+/****************************************/
+.carousel-control-prev,
+        .carousel-control-next {
+            color: grey; 
+        }
+
+        /* Hover effect for control buttons */
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            background-color: #0056b3; /* Change to desired hover color */
+            color: #fff; /* Text color */
+        }
+
+        /* Active state for control buttons */
+        .carousel-control-prev:focus,
+        .carousel-control-next:focus {
+            outline: none; /* Removes outline when button is clicked */
+        }

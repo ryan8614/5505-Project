@@ -1,0 +1,31 @@
+/****************************************/
+/*COMMON STYLES CAN BE USED IN WEBPAGES*/
+/****************************************/
+
+* {
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+     
+  }
+  
+  html {
+    /*default font-size 16px,set font-size to 10px which is 10/16=62.5%,use percentage of user's browser font-size*/
+      font-size: 62.5%;
+  
+  }
+  
+  html,body,a,h1,h2,h3,h4,h5,h6,p,td,li {
+    font-family: "Rubik",sans-serif
+  }
+
+  h1,h2,h3,h4,h5,h6{
+    text-align: center;
+  }
+
+  .logo{
+    height: 6.4rem;
+    padding:1.8rem;
+  }
+
+  
