@@ -1,5 +1,6 @@
-from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
+from app import db
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -7,4 +8,22 @@ class User(db.Model):
     username = db.Column(db.String(255), unique=True, nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
     passwd_hash = db.Column(db.String(255), nullable=False)
+
+    def verify_password(self, password):
+        return check_password_hash(self.passwd_hash, password)
+
+    def get_id(self):
+        return str(self.id)
+    
+    @property
+    def is_active(self):
+        return True
+    
+    @property
+    def is_authenticated(self):
+        return True
+    
+    @property
+    def is_anonymous(self):
+        return False
 
