@@ -43,6 +43,17 @@
         </div>
     </nav>
 
+    <!-- echo flash message -->
+    <div class="container col-8 text-center">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+    </div>
+
     <header class="header">
         <div class="container">
             <h1>Welcome to the Virtual NFT Marketplace</h1>
