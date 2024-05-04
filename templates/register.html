@@ -37,35 +37,60 @@
             </div>
         </div>
     </nav>
+    <!-- echo flash message -->
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+    </div>
     <!-- Register form -->
     <div class="container col-md-4 my-3 bg-light">
-      <h2 class="text-center">Register</h2>
-      <form action="{{ url_for('register') }}" method="post">
-        {{ form.hidden_tag() }}
-        <div class="mb-3 mt-3">
-            {{ form.username.label(class="form-label") }}
-            {{ form.username(class="form-control", placeholder="Enter user name") }}
-        </div>
-        <div class="mb-3 mt-3">
-            {{ form.email.label(class="form-label") }}
-            {{ form.email(class="form-control", placeholder="Enter email") }}
-        </div>
-        <div class="mb-3">
-            {{ form.password.label(class="form-label") }}
-            {{ form.password(class="form-control", placeholder="Enter password") }}
-        </div>
-        <div class="mb-3">
-            {{ form.confirm_password.label(class="form-label") }}
-            {{ form.confirm_password(class="form-control", placeholder="Confirm password") }}
-        </div>
-        <div class="container mb-3">
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    {{ form.submit(class="btn btn-primary mb-3") }}
-                </div>
-            </div>
-        </div>
-      </form>
+        <h2 class="text-center">Register</h2>
+        <form action="{{ url_for('register') }}" method="post">
+          {{ form.hidden_tag() }}
+          <div class="mb-3 mt-3">
+              {{ form.username.label(class="form-label") }}
+              {{ form.username(class="form-control", placeholder="Enter user name") }}
+              {% if form.username.errors %}
+                  <div class="alert alert-danger">
+                      {{ form.username.errors[0] }}
+                  </div>
+              {% endif %}
+          </div>
+          <div class="mb-3 mt-3">
+              {{ form.email.label(class="form-label") }}
+              {{ form.email(class="form-control", placeholder="Enter email") }}
+              {% if form.email.errors %}
+                  <div class="alert alert-danger">
+                      {{ form.email.errors[0] }}
+                  </div>
+              {% endif %}
+          </div>
+          <div class="mb-3">
+              {{ form.password.label(class="form-label") }}
+              {{ form.password(class="form-control", placeholder="Enter password") }}
+          </div>
+          <div class="mb-3">
+              {{ form.confirm_password.label(class="form-label") }}
+              {{ form.confirm_password(class="form-control", placeholder="Confirm password") }}
+              {% if form.confirm_password.errors %}
+                  <div class="alert alert-danger">
+                      {{ form.confirm_password.errors[0] }}
+                  </div>
+              {% endif %}
+          </div>
+          <div class="container mb-3">
+              <div class="row justify-content-center">
+                  <div class="col-auto">
+                      {{ form.submit(class="btn btn-primary mb-3") }}
+                  </div>
+              </div>
+          </div>
+        </form>
     </div> 
   </body>
 </html>
