@@ -34,7 +34,7 @@ def login():
             # Redirect to home page after successful login
             return redirect(url_for('dashboard'))
         else:
-            flash('Invalid email or password', 'danger')
+            flash('Login failed: user does not exist/password is incorrect!', 'danger')
             return redirect(url_for('login'))
     return render_template('login.html', form=form)
 
