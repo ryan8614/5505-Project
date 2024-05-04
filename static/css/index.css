@@ -50,23 +50,51 @@
 /****************************************/
 /*LIVE AUCTION SECTION*/
 /****************************************/
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-body span {
+    display: block;
+}
+
+.card-body span:first-child {
+    text-align: left;
+}
+
+.card-body span:last-child {
+    text-align: right;
+}
+
+/* Controls for the carousel */
 .carousel-control-prev,
-        .carousel-control-next {
-            color: grey; 
-        }
+.carousel-control-next {
+    width: 5%;
+}
 
-        /* Hover effect for control buttons */
-        .carousel-control-prev:hover,
-        .carousel-control-next:hover {
-            background-color: #0056b3; /* Change to desired hover color */
-            color: #fff; /* Text color */
-        }
-
-        /* Active state for control buttons */
-        .carousel-control-prev:focus,
-        .carousel-control-next:focus {
-            outline: none; /* Removes outline when button is clicked */
-        }
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #000;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background-size: 60%;
+}
 
 /************************************/
 /* TOP SELLER SECTION */
