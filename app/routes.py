@@ -4,18 +4,17 @@ Server routes implementation using Flask
 '''
 
 from flask import render_template, flash, redirect, url_for
-from flask_login import login_user, current_user
-from app import app, db
-from .forms import *
-from .models import User
+from flask_login import login_user, current_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import request
+from .forms import LoginForm, RegistrationForm
+from .models import User
+from . import db, app
+
 
 # Route for index.html
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
-
 
 # Route for login.html
 @app.route('/login', methods=['GET', 'POST'])
@@ -32,7 +31,8 @@ def login():
             # If the user exists and the password is correct
             login_user(user, remember=form.remember_me.data)
             flash('Logged in successfully as {}'.format(form.user_email.data))
-            return redirect(url_for('dashboard'))  # Redirect to home page after successful login
+            # Redirect to home page after successful login
+            return redirect(url_for('dashboard'))
         else:
             flash('Invalid email or password', 'danger')
             return redirect(url_for('login'))
@@ -42,8 +42,8 @@ def login():
 # Route for register.html
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    form = RegistrationForm(request.form)
-    if request.method == 'POST' and form.validate():
+    form = RegistrationForm()
+    if form.validate_on_submit():
         hashed_password = generate_password_hash(form.password.data, method='sha256')
         new_user = User(username=form.username.data, email=form.email.data, passwd_hash=hashed_password)
     
@@ -59,6 +59,7 @@ def register():
 
 
 @app.route('/dashboard')
+@login_required
 def dashboard():
     return render_template('index.html')
 

@@ -7,14 +7,17 @@ import binascii, os
 
 
 app = Flask(__name__, template_folder='../templates', static_folder='../static')
+
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-login_manager = LoginManager(app)
-login_manager.login_view = 'login'
 
 # secret_key = binascii.hexlify(os.urandom(24)).decode()
 app.config['SECRET_KEY'] = 'you-will-never-guess-the-secret_key'
+
+login_manager = LoginManager(app)
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
