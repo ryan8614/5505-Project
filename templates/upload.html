@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload and Split Image</title>
+</head>
+<body>
+    <h1>Upload Image for Splitting</h1>
+    <!-- echo flash message -->
+    <div class="container col-8 text-center">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+    </div>
+    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+        <label for="file">Choose an image file:</label>
+        <input type="file" id="file" name="file" accept="image/png, image/jpeg"><br><br>
+
+        <label for="num_parts">Split into:</label>
+        <select id="num_parts" name="num_parts">
+            <option value="4">4 Parts</option>
+            <option value="6">6 Parts</option>
+            <option value="9">9 Parts</option>
+        </select><br><br>
+
+        <button type="submit">Upload and Split</button>
+    </form>
+</body>
+</html>
+

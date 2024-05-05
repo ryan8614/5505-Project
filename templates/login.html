@@ -37,6 +37,16 @@
           </div>
       </div>
     </nav>
+    <!-- echo flash message -->
+    <div class="container col-8 text-center">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </div>
     <!-- Login form -->
     <div class="container col-md-4 my-3 bg-light">
       <h2 class="text-center">Login</h2>
@@ -45,6 +55,11 @@
         <div class="my-3">
           {{ form.user_email.label(class="form-label") }}
           {{ form.user_email(class="form-control", placeholder="Enter email") }}
+          {% if form.user_email.errors %}
+                <div class="alert alert-danger">
+                    {{ form.user_email.errors[0] }}
+                </div>
+          {% endif %}
         </div>
         <div class="mb-3">
           {{ form.password.label(class="form-label") }}
@@ -68,5 +83,6 @@
       <span class="psw">Forget <a href="#">password?</a></span><br>
       <span class="sign_up">No account?<a href="./register.html">sign up</a></span>
     </div>
+    
   </body>
 </html>
