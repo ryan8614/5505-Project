@@ -10,12 +10,12 @@
     <link href="{{ url_for('static', filename='css/dashboard.css') }}" rel="stylesheet">
     <!-- Bootstrap CSS Link -->
     <link href="https://cdn.bootcss.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <!-- Bootstrap JS Link for Lottery Modal-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Bootstrap Icon Link-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/raffle.js') }}"></script>
 </head>
 <body>
     <!-- Navbar -->
@@ -48,12 +48,9 @@
             <div class="mb-3">
                 <img src="{{ url_for('static', filename='images/seller8.png') }}" class="user-img d-block">
             </div>
-            <div class="mb-3">
-                <button type="button" class="btn btn-sm btn-secondary d-block">Upload Images</button>
-            </div>
         </div>
-        <h3 class="text-center">Hello user,welcome to dashboard!</h3>
-        <h4 class="text-center">Balance:18.6 ETH</h4>
+        <h3 class="text-center">Hello {{ current_user.username }},welcome to dashboard!</h3>
+        <h4 class="text-center">Balance:{{ '%.2f'|format(current_user.balance) }} ETH</h4>
         <!-- Logout Button -->
         <div class="d-flex align-items-center justify-content-center mb-3">
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#logoutModal">
@@ -86,16 +83,16 @@
         </div>     
     </div>
     <div class="container"> 
-        <!-- nav tab -->
-        <ul class="nav nav-tabs">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" href="{{ url_for('dashboard',id='my-trade') }}">My Trade</a>
+                <a class="nav-link active" data-bs-toggle="tab" href="#my-trade">My Trade</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('dashboard',id='my-fragments') }}">My Fragments</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#my-fragments">My Fragments</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('dashboard',id='my-collection') }}">My Collection</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#my-collection">My Collection</a>
             </li>
         </ul>
         <!-- nav tab content -->
@@ -112,29 +109,30 @@
                             <th>Seller</th>
                             <th>Operation</th>
                         </tr>
-                        <tr>
-                            <td><img class="trade-img"  src="{{ url_for('static', filename='images/fox.jpg') }}"</td>
-                            <td>Fox</td>
-                            <td>4.5 ETH</td>
-                            <td>2024-05-01</td>
-                            <td>Mark</td>
-                            <td><button type="button" class="btn btn-secondary">Delete</button></td>
-                        </tr>
-                        <tr>
-                            <td><img class="trade-img"  src="{{ url_for('static', filename='images/fox.jpg') }}"</td>
-                            <td>Fox</td>
-                            <td>4.5 ETH</td>
-                            <td>2024-05-01</td>
-                            <td>Mark</td>
-                            <td><button type="button" class="btn btn-secondary">Delete</button></td>
-                        </tr>
                     </thead>
+                    <tbody>
+                    </tbody>
                 </table>
             </div>
             <!-- my fragments -->
             <div id="my-fragments" class="container tab-pane fade"><br>
-                <h3>Menu 1</h3>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Images</th>
+                            <th>id</th>
+                            <th>name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for split in current_user.user_splits %}
+                        <tr><td><img class="trade-img" src="{{ url_for('static', filename=split.path.split('static/')[-1])}}"></td>
+                            <td>{{ split.id }}</td>
+                            <td>{{ split.path.split('static/outputs/')[-1] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
             <!-- my collection -->
             <div id="my-collection" class="container tab-pane fade"><br>
@@ -319,28 +317,25 @@
             <div class="col-sm-6 d-flex align-items-center justify-content-center">
                 <img src="{{ url_for('static', filename='images/lottery-img.png') }}" alt="Open lottery modal" class="btn lottery-img" data-bs-toggle="modal" data-bs-target="#lottery-modal">
             </div>
-        </div>
-        <!-- The Modal -->
-        <div class="modal" id="lottery-modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-            
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                    <h4 class="modal-title">Congratulations! </h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+            <button type="button" id="raffleButton" class="btn btn-primary">Try Your Luck!</button>
+            <!-- Modal box -->
+            <div class="modal" id="raffleModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- Head -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Congratulations!</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <!-- Content -->
+                        <div class="modal-body">
+                            <!-- Dynamically insert the image and split name -->
+                            <p>You've won a piece!</p>
+                            <img id="winningSplitImage" src="" alt="Winning Split" class="img-fluid"> 
+                            <p id="winningSplitName"></p>
+                        </div>
                     </div>
-            
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        You have won the following fragment: XXX. It has been placed in the "My Fragments" section in your dashboard.
-                    </div>
-            
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                    </div>
-            
                 </div>
             </div>
         </div>
@@ -357,5 +352,4 @@
         <p class="mb-5">Contact Address: 35 Stirling Highway Perth WA 6009 Australia</p>
     </footer> 
 </body>
-
 </html>
