@@ -52,25 +52,26 @@
         <h3 class="text-center">Hello {{ current_user.username }},welcome to dashboard!</h3>
         <h4 class="text-center">Balance:{{ '%.2f'|format(current_user.balance) }} ETH</h4>
         <!-- Logout Button -->
-        <div class="d-flex align-items-center justify-content-center mb-3">
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#logoutModal">
-                Logout
-            </button>
-        </div>
-        <!-- Logout Modal -->
-        <div class="modal fade col-8" id="logoutModal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        Are you sure you want to logout?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
-                    </div>
-                </div>
+<div class="d-flex align-items-center justify-content-center mb-3">
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#logoutModal">
+        Logout
+    </button>
+</div>
+<!-- Logout Modal -->
+<div class="modal fade col-8" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                Are you sure you want to logout?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
             </div>
         </div>
+    </div>
+</div>
+
         <!-- echo flash message -->
         <div class="container col-8 text-center">
             {% with messages = get_flashed_messages(with_categories=true) %}
