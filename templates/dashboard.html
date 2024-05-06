@@ -134,175 +134,39 @@
                     </tbody>
                 </table>
             </div>
-            <!-- my collection -->
+            <!-- my collection tab -->
             <div id="my-collection" class="container tab-pane fade"><br>
-                <h3>Menu 2</h3>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-            </div> 
-        </div>
-    </div>
-    
-    <!-- my fragments -->
-    <div class="container"><br>
-        <h3>My Fragments</h3>
-        <div class="row mt-5 mb-5">
-            <div class="col-sm-3">
-                <div class="card">
-                    <img src="{{ url_for('static', filename='images/fox.jpg') }}" class="card-img-top" alt="cat nft">
-                    <div class="card-body d-flex justify-content-between">
-                        <span>
-                            <small>Seller</small><br>
-                            <p>Emma R.</p>
-                        </span>
-                        <span>
-                            <small>Price</small><br>
-                            <p>9.2 ETH</p>
-                        </span>
-                        <span>
-                            <button type="button" class="btn btn-danger">Sale</button>
-                        </span>
+                <div class="row mt-5 mb-5">
+                    <div class="col-sm-3 col-md-3">
+                        <div class="card">
+                            <img src="{{ url_for('static', filename='images/cat.jpg') }}" class="card-img-top" alt="cat nft">
+                            <span style="display: block; text-align: center; font-weight: bold; margin-top: 10px;">CAT</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <div class="card">
+                            <img src="{{ url_for('static', filename='images/tiger.jpg') }}" class="card-img-top" alt="tiger nft">
+                            <span style="display: block; text-align: center; font-weight: bold; margin-top: 10px;">TIGER</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <div class="card">
+                            <img src="{{ url_for('static', filename='images/frog.jpg') }}" class="card-img-top" alt="frog nft">
+                            <span style="display: block; text-align: center; font-weight: bold; margin-top: 10px;">FROG</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <div class="card">
+                            <img src="{{ url_for('static', filename='images/monky.jpg') }}" class="card-img-top" alt="monky nft">
+                            <span style="display: block; text-align: center; font-weight: bold; margin-top: 10px;">MONKEY</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="{{ url_for('static', filename='images/tiger.jpg') }}" class="card-img-top" alt="tiger nft">
-                    <div class="card-body d-flex justify-content-between">
-                        <span>
-                            <small>Seller</small><br>
-                            <p>Emma R.</p>
-                        </span>
-                        <span>
-                            <small>Price</small><br>
-                            <p>9.2 ETH</p>
-                        </span>
-                        <span>
-                            <button type="button" class="btn btn-danger">Sale</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="{{ url_for('static', filename='images/octopus.jpg') }}" class="card-img-top" alt="panda nft">
-                    <div class="card-body d-flex justify-content-between">
-                        <span>
-                            <small>Seller</small><br>
-                            <p>Emma R.</p>
-                        </span>
-                        <span>
-                            <small>Price</small><br>
-                            <p>9.2 ETH</p>
-                        </span>
-                        <span>
-                            <button type="button" class="btn btn-danger">Sale</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="{{ url_for('static', filename='images/monky.jpg') }}" class="card-img-top" alt="monky nft">
-                    <div class="card-body d-flex justify-content-between">
-                        <span>
-                            <small>Seller</small><br>
-                            <p>Noah T.</p>
-                        </span>
-                        <span>
-                            <small>Price</small><br>
-                            <p>13.2 ETH</p>
-                        </span>
-                        <span>
-                            <button type="button" class="btn btn-danger">Sale</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            
+
           
-    <!-- my collection -->
-    <div class="container"><br>
-        <h3>My Collection</h3>
-        <div class="row mt-5 mb-5">
-            <div class="col-sm-3">
-                <div class="card">
-                    <img src="{{ url_for('static', filename='images/cat.jpg') }}" class="card-img-top" alt="cat nft">
-                    <div class="card-body d-flex justify-content-between">
-                        <span>
-                            <small>Seller</small><br>
-                            <p>Emma R.</p>
-                        </span>
-                        <span>
-                            <small>Price</small><br>
-                            <p>9.2 ETH</p>
-                        </span>
-                        <span>
-                            <button type="button" class="btn btn-secondary">Unlike</button>
-                            <button type="button" class="btn btn-danger">Buy</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="{{ url_for('static', filename='images/tiger.jpg') }}" class="card-img-top" alt="tiger nft">
-                    <div class="card-body d-flex justify-content-between">
-                        <span>
-                            <small>Seller</small><br>
-                            <p>Liam S.</p>
-                        </span>
-                        <span>
-                            <small>Price</small><br>
-                            <p>18.6 ETH</p>
-                        </span>
-                        <span>
-                            <button type="button" class="btn btn-secondary">Unlike</button>
-                            <button type="button" class="btn btn-danger">Buy</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="{{ url_for('static', filename='images/frog.jpg') }}" class="card-img-top" alt="panda nft">
-                    <div class="card-body d-flex justify-content-between">
-                        <span>
-                            <small>Seller</small><br>
-                            <p>Noah T.</p>
-                        </span>
-                        <span>
-                            <small>Price</small><br>
-                            <p>8.5 ETH</p>
-                        </span>
-                        <span>
-                            <button type="button" class="btn btn-secondary">Unlike</button>
-                            <button type="button" class="btn btn-danger">Buy</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="{{ url_for('static', filename='images/monky.jpg') }}" class="card-img-top" alt="monky nft">
-                    <div class="card-body d-flex justify-content-between">
-                        <span>
-                            <small>Seller</small><br>
-                            <p>Noah T.</p>
-                        </span>
-                        <span>
-                            <small>Price</small><br>
-                            <p>13.2 ETH</p>
-                        </span>
-                        <span>
-                            <button type="button" class="btn btn-secondary">Unlike</button>
-                            <button type="button" class="btn btn-danger">Buy</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Lottery -->
     <div class="container mb-5">
