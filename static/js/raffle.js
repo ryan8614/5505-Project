@@ -4,8 +4,8 @@ $(document).ready(function() {
             if (data.error) {
                 alert(data.error);
             } else {
-                $('#winningSplitImage').attr('src', data.split_path); 
-                $('#winningSplitName').text('Congratulations! You won: ' + data.split_name);
+                $('#winningSplitImage').attr('src', data.fragment_path); 
+                $('#winningSplitName').text('Congratulations! You won: ' + data.fragment_name);
                 $('#raffleModal').modal('show');
             }
         }).fail(function(response) {
