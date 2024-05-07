@@ -53,47 +53,51 @@
         <!-- Available Fragments Section -->
         <div class="section">
             <h2 class="mb-3">Available Fragments</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <!-- Grab available fragments from the database -->
-                {% for fragment in available_fragments %}
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="{{ url_for('static', filename=fragment.image) }}" class="card-img-top" alt="{{ fragment.name }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ fragment.name }}</h5>
-                            <p class="card-text">Price: {{ fragment.price }} ETH</p>
-                            <a href="#" class="btn btn-primary">Buy</a>
+            <div class="section-content">
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <!-- Grab available fragments from the database -->
+                    {% for fragment in available_fragments %}
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="{{ url_for('static', filename=fragment.image) }}" class="card-img-top" alt="{{ fragment.name }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ fragment.name }}</h5>
+                                <p class="card-text">Price: {{ fragment.price }} ETH</p>
+                                <a href="#" class="btn btn-primary">Buy</a>
+                            </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
         </div>
 
         <!-- My Fragments Section -->
         <div class="section">
             <h2 class="mb-3">My Fragments</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <!-- Grab my fragments from the database -->
-                {% for fragment in owned_fragments %}
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="{{ url_for('static', filename=fragment.image) }}" class="card-img-top" alt="{{ fragment.name }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ fragment.name }}</h5>
-                            <form>
-                                <div class="mb-3">
-                                    <label for="price-{{ fragment.id }}" class="form-label">Price (ETH)</label>
-                                    <input type="number" class="form-control" id="price-{{ fragment.id }}" placeholder="Enter price" step="0.01" min="0">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Sale</button>
-                            </form>
+            <div class="section-content">
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <!-- Grab my fragments from the database -->
+                    {% for fragment in owned_fragments %}
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="{{ url_for('static', filename=fragment.image) }}" class="card-img-top" alt="{{ fragment.name }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ fragment.name }}</h5>
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="price-{{ fragment.id }}" class="form-label">Price (ETH)</label>
+                                        <input type="number" class="form-control" id="price-{{ fragment.id }}" placeholder="Enter price" step="0.01" min="0">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Sale</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
-        </div>
+        </main>
     </main>
 
     <!-- Bootstrap JS -->
