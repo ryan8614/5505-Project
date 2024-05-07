@@ -17,8 +17,6 @@ class ImageProcessor:
         file.save(file_path)
         return file_path
 
-
-
     def split_image(self, image_path, n):
         img = Image.open(image_path)
         if n == 9:
@@ -38,6 +36,8 @@ class ImageProcessor:
         prefix = os.path.basename(image_path).split('.')[0]
         extension = image_path.rsplit('.', 1)[1]
 
+        # filename, image_path, piece_number
+        fragments = []
         for i in range(rows):
             for j in range(columns):
                 box = (j * block_width, i * block_height, (j + 1) * block_width, (i + 1) * block_height)
@@ -46,5 +46,12 @@ class ImageProcessor:
                 # Convert RGBA to RGB before saving as JPEG
                 if cropped_img.mode == 'RGBA' and extension.lower() == 'jpg':
                     cropped_img = cropped_img.convert('RGB')
+                
+                filename = f"{prefix}-{i * columns + j + 1}.{extension}"
+                path = os.path.join(self.output_folder, filename)
+                cropped_img.save(path)
+                fragments.append([filename, path, (i * columns + j + 1)])
+        return fragments
 
-                cropped_img.save(os.path.join(self.output_folder, f"{prefix}-{i * columns + j + 1}.{extension}"))
+
+
