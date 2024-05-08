@@ -75,39 +75,17 @@
     transition: transform 0.3s;
 }
 
+
+
 /************************************/
-/* trade */
+/* marketplace */
 /************************************/
-.fragment-card:hover {
-    transform: scale(1.05);
+
+.section {
+    margin-bottom: 40px;  
 }
-
-.trade-form {
-    margin-bottom: 12px;
-  }
-  
-  .trade-form label {
-    font-weight: bold;
-  }
-  
-  .trade-history th {
+.section-content {
+    max-height: 500px; 
+    overflow-y: auto; 
     background-color: #f8f9fa;
-  }
-
-  .custom-container {
-    background-color: #f8f9fa; 
-    border: 1px solid #dee2e6; 
-    border-radius: 5px; 
-    padding: 20px; 
-    margin-top: 20px; 
-    height: 500px;
-  }
-  
-  .nav-link.active {
-    background-color: #ddd; 
-    color: #000; 
-  }
-  
-  .list-group-item {
-    margin-bottom: 10px; 
-  }
+}
