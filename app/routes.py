@@ -73,12 +73,12 @@ def dashboard():
 
 @app.route('/marketplace')
 def marketplace():
-    return render_template('index.html')
+    return render_template('marketplace.html')
 
 
 @app.route('/leaderboard')
 def leaderboard():
-    return render_template('index.html')
+    return render_template('leaderboard.html')
 
 
 @app.route('/about')
