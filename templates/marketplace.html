@@ -8,6 +8,12 @@
     <link href="https://cdn.bootcss.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <!-- Reused CSS Link -->
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    <!-- Marketplace CSS Link -->
+    <link href="{{ url_for('static', filename='css/marketplace.css') }}" rel="stylesheet">
+    <!-- Dropdown navbar CSS Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Dropdown navbar JS Link -->
+    <script src="{{ url_for('static', filename='js/marketplace.js') }}"></script>
 </head>
 <body>
     <!-- Navbar -->
@@ -23,7 +29,7 @@
                         <a class="nav-link" href="{{ url_for('index') }}"><b>Home</b></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ url_for('marketplace') }}"><b>Marketplace</b></a>
+                        <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Marketplace</b></a>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('leaderboard') }}"><b>Leader Board</b></a>
                     </li>
@@ -47,13 +53,66 @@
         </div>
     </nav>
 
-    <main class="container my-5">
-        <h1 class="mb-4">Marketplace</h1>
+    <!-- Marketplace title -->
+    <h1 class="mt-5 mb-5 text-center market-title">Marketplace</h1>
 
-        <!-- Available Fragments Section -->
+    <!-- Marketplace intro -->
+    <div class="intro-container d-flex justify-content-center align-items-center">
+        <div class="row intro-content align-items-center justify-content-center">
+            <div class="col-md-6 d-flex align-items-center"> <!-- Add d-flex and align-items-center here -->
+                <img class="market-intro-img" alt="nft-market" src="{{ url_for('static', filename='images/marketplace-intro.jpg') }}">
+            </div>
+            <div class="col-md-6 how-to-play">
+                <h2>How To Play</h2>
+                <h3>
+                    Are you ready to dive into the exciting world of Non-Fungible Tokens (NFTs)? Here's your chance to join the action!
+                </h3>
+                <h4>
+                    <b>Register now</b>: Signing up is quick and easy. Once you create an account, you'll automatically receive 50 ETH to kickstart your journey. This Ethereum can be used for purchasing NFTs or participating in thrilling lotteries.
+                </h4>
+                <h4>
+                    <b>Collect Rare NFTs</b>: Our marketplace features exclusive collections, each comprised of 9 unique pieces. Gather all 9 fragments of a series to unlock lucrative rewards! Stay tuned as we constantly release new series, giving you ample opportunities to expand your collection. Whether you're trading, buying, or winning fragments in lotteries, there are countless ways to acquire these coveted cards.
+                </h4>
+                <h4>
+                    <b>Ascend the Leaderboard</b>: Want to see how you stack up against other collectors? Check out our leaderboard to track your progress! Account balance determines your position, so keep growing your ETH stash to climb higher.
+                </h4>
+                <h4>
+                    <b>Daily Rewards</b>: Don't forget to claim your daily check-in bonus! Earn additional ETH just by logging in each day. It's a simple way to boost your funds and enhance your NFT journey.
+                </h4>
+                <h4>
+                    Ready to embark on this thrilling adventure? Join us now and let the excitement begin!
+                </h4>
+                <div class="d-flex align-items-center justify-content-center">
+                    <a href="{{ url_for('login') }}" class="intro-btn">Sign In</a>
+                    <a href="{{ url_for('register') }}" class="intro-btn">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Available Fragments -->
+    <h1 class="mb-3">Fragments On Sale</h1>
+    <div class="sidebar-container">
+        <div class="sidenav">
+            <a class="nav-link" data-bs-toggle="tab" href="#all-fregments">All Fragments</a>
+            <a class="nav-link" data-bs-toggle="tab" href="#my-fragments">My Fragments</a>
+          </div>
+          
+          <div class="sidebar-content">
+            <h2>test only</h2>
+            <p>This sidebar is of full height (100%) and always shown.</p>
+            <p>Scroll down the page to see the result.</p>
+            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+          </div>
+          <!-- All Fregments Section  -->
         <div class="section">
-            <h2 class="mb-3">Available Fragments</h2>
-            <div class="section-content">
+            <div class="section-content" id="all-fragments">
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     <!-- Grab available fragments from the database -->
                     {% for fragment in available_fragments %}
@@ -74,8 +133,7 @@
 
         <!-- My Fragments Section -->
         <div class="section">
-            <h2 class="mb-3">My Fragments</h2>
-            <div class="section-content">
+            <div class="section-content" id="my-fragments">
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     <!-- Grab my fragments from the database -->
                     {% for fragment in owned_fragments %}
@@ -97,8 +155,74 @@
                     {% endfor %}
                 </div>
             </div>
-        </main>
-    </main>
+        
+        </div>
+    </div>
+    
+     <!-- FAQ -->
+    <div class="collap-container">
+        <h2 class="FAQ">Frequently Asked Questions</h2>
+        <button type="button" class="collap-btn">What Exactly is an NFT?</button>
+        <div class="collap-content">
+        <p>Non-fungible Tokens are digital valuables that can be purchased and sold utilizing Blockchain technology on an online marketplace. It’s not interchangeable because it’s non-fungible. With the recent advent of Blockchain across many industries, artists and investors have begun to look for methods to use it to transform the way paintings and other valuables are purchased and traded. NFT users can claim ownership of digital property in exchange for cryptocurrency, rather than visiting a physical store or gallery or even bidding at an auction on tangible items. In terms of data, NFTs can be anything. Images, videos, audio, text, and other forms of creative media are all acceptable. Each NFT is unique, with proven ownership, because it is stored on the blockchain.</p>
+        </div>
+        <button type="button" class="collap-btn">How to Collect NFT Fragments?</button>
+        <div class="collap-content">
+        <p>You can consume 10 ETH each time to attend lottery on dashboard or buy fragments from marketplace.</p>
+        </div>
+        <button type="button" class="collap-btn">How to Redeem a Collection?</button>
+        <div class="collap-content">
+        <p>Once you collect a set of 9 fragments,you can redeem them on dashboard,choose the collection and click redeem.The redeem value will add into your account balance directly</p>
+        </div>
+
+        
+
+    </div>
+    
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start">
+        <div class="container p-4">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Balance</h5>
+                    <p>
+                        Balance offers a platform to trade and collect virtual NFTs. We are dedicated to providing a secure and engaging environment for our users.
+                    </p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Links</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="{{ url_for('about') }}" class="text-dark">About Us</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('terms') }}" class="text-dark">Terms of Service</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('privacy') }}" class="text-dark">Privacy Policy</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Follow Us</h5>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="#!" class="text-dark">Twitter</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="text-dark">Facebook</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="text-dark">Instagram</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="text-center p-3" style="background-color: #f0f0f0;">
+            © 2024 Balance, Inc. All rights reserved.
+        </div>
+    </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.bootcss.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
