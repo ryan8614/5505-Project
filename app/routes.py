@@ -7,14 +7,14 @@ from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import login_user, current_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+from datetime import datetime
 import os
 import hashlib
 import random
+import decimal
 from .forms import LoginForm, RegistrationForm
-from .models import User, NFT, Fragment
+from .models import User, NFT, Fragment, Trade
 from . import db, app, processor
-
-
 
 
 # Route for index.html
@@ -52,14 +52,14 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = generate_password_hash(form.password.data, method='pbkdf2:sha256')
-        new_user = User(username=form.username.data, email=form.email.data, passwd_hash=hashed_password, balance=50)
-    
+        new_user = User(username=form.username.data, email=form.email.data, passwd_hash=hashed_password)
+        new_user.set_balance(50)
         # Add user data to Database
         db.session.add(new_user)
         # Make sure to commit changes to the database
         db.session.commit()
 
-        flash('Account created for {0}!'.format(form.username.data), 'success')
+        flash('Account created for {0}! You can now log in.'.format(form.username.data), 'success')
         return redirect(url_for('login'))  # Redirect to the login page after successful registration
 
     return render_template('register.html', title='Register', form=form)
@@ -68,21 +68,26 @@ def register():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    return render_template('dashboard.html', fragments=current_user.user_fragments)
 
 
 @app.route('/marketplace')
 def marketplace():
-    return render_template('marketplace.html')
+    return render_template('marketplace.html', trades=Trade.query.all())
 
 
 @app.route('/leaderboard')
 def leaderboard():
-    return render_template('leaderboard.html')
+    return render_template('index.html')
 
 
 @app.route('/about')
 def about():
+    return render_template('index.html')
+
+
+@app.route('/privacy')
+def privacy():
     return render_template('index.html')
 
 
@@ -91,9 +96,76 @@ def terms():
     return render_template('index.html')
 
 
-@app.route('/privacy')
-def privacy():
-    return render_template('index.html')
+@app.route('/trade', methods=['POST'])
+@login_required
+def trade():
+    data = request.get_json()
+    if data:
+        fragment_id = data.get('fragment_id')
+        price = data.get('price')
+        owner = data.get('owner')
+
+        fragment = Fragment.query.get(fragment_id)
+        if fragment is None:
+            flash('Fragment not found', 'error')
+            return redirect(url_for('dashboard'))
+    
+        # Fragment have been listed for transactions
+        if Trade.query.get(fragment_id):
+            flash('Fragment is currently for sale', 'error')
+            return redirect(url_for('dashboard'))
+        
+        if str(owner) != str(current_user.id):
+            flash('User information does not match', 'error')
+            return redirect(url_for('dashboard'))
+
+        # Create a new Trade object
+        new_trade = Trade(id=fragment_id, owner=owner, listed_time=datetime.now())
+        new_trade.set_price(price)
+
+        # Add new transaction objects to the database
+        db.session.add(new_trade)
+        db.session.commit()
+    
+        flash('Trade created successfully', 'success')
+        return redirect(url_for('dashboard'))
+    else:
+        flash('Invalid form data', 'error')
+        return redirect(url_for('dashboard'))
+
+
+@app.route('/trade/update_price/<string:frag_id>', methods=['POST'])
+@login_required
+def update_trade_price(frag_id):
+    data = request.get_json()
+    if data:
+        status = data.get('status')
+        price = data.get('price')
+        owner = data.get('owner')
+
+        # Retrieve the trade object
+        trade = Trade.query.get(frag_id)
+        if trade is None:
+            flash('Trade not found', 'error')
+            return redirect(url_for('dashboard'))
+    
+        # Check if current user is the owner of the fragment
+        if str(current_user.id) != str(owner):
+            flash('Owner information does not match', 'error')
+            return redirect(url_for('dashboard'))
+
+        # Update price
+        if status == 'update':
+            trade.set_price(price)
+        elif status == 'cancel':
+            db.session.delete(trade)
+        db.session.commit()
+        flash('Trade updated successfully', 'success')
+        return redirect(url_for('dashboard'))
+    else:
+        flash('Invalid form data', 'error')
+        return redirect(url_for('dashboard'))
+        
 
 
 @app.route('/upload', methods=['GET', 'POST'])
@@ -136,7 +208,6 @@ def upload():
         else:
             flash('Invalid file or file format not supported.')
             return redirect(url_for('upload'))
-        
     else:
         return render_template('upload.html')
 
@@ -146,10 +217,11 @@ def upload():
 def raffle():
     # Lottery deduction
     deduction = 10
+    current_balance = current_user.get_balance()
     if current_user.balance < deduction:
         return jsonify({'error': 'Insufficient balance'}), 400
     
-    current_user.balance -= deduction
+    current_user.set_balance(current_balance - deduction)
     available_fragments = Fragment.query.filter_by(owner=0).all()
     if not available_fragments:
         return jsonify({'error': 'No available fragments'}), 400

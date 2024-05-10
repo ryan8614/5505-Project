@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, BooleanField, StringField, SubmitField, PasswordField, ValidationError
-from wtforms.validators import DataRequired, Email, Length, EqualTo
+from wtforms import SelectField, BooleanField, StringField, SubmitField, PasswordField, ValidationError, HiddenField, DecimalField
+from wtforms.validators import DataRequired, Email, Length, EqualTo, NumberRange
 from .models import User
 
 
@@ -34,4 +34,5 @@ class RegistrationForm(FlaskForm):
         if user:
             raise ValidationError('This email address is already registered. Please use a different email address.')
         
+
   
