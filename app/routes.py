@@ -11,7 +11,6 @@ from datetime import datetime
 import os
 import hashlib
 import random
-import decimal
 from .forms import LoginForm, RegistrationForm
 from .models import User, NFT, Fragment, Trade
 from . import db, app, processor
