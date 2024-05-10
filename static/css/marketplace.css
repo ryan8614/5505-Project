@@ -1,0 +1,167 @@
+/****************************************/
+/*MARKETPLACE INTRO*/
+/****************************************/
+.market-title{
+    font-size:5rem;
+    font-weight:600;
+    font-style: italic;
+}
+.intro-container{
+    height: 60rem;
+    margin-left: 60rem;
+    margin-top: 10rem;
+    margin-bottom: 10rem;
+    background-color:rgba(137, 18, 207, 0.83);
+    border-radius: 30rem 0 0 30rem;
+    position: relative;
+}
+.intro-content{
+     margin-left: -50rem;
+     /* position:absolute; */
+}
+
+.market-intro-img{
+    max-height:65rem;
+    width:auto;
+    border-radius: 3rem;
+}
+
+.how-to-play{
+    padding-right: 15rem;
+    padding-left: 5rem;
+}
+/* Responsive setting when screen width less than 1300px */
+@media screen and (max-width: 1300px) {
+    .market-intro-img {
+        display: none;
+    }
+    .intro-container {
+        margin-left: 10rem;
+    }
+    .how-to-play {
+        width: 70%;
+        margin-right: -25rem;
+        padding-right: 5rem;
+        padding-left: 30rem;
+    }
+}
+
+/* Responsive setting when screen width less than 760px */
+@media screen and (max-width: 760px) {
+    .market-intro-img {
+        display: none;
+    }
+    .intro-container {
+        height:fit-content;
+        margin:5rem;
+        border-radius: 2rem;
+    }
+    .how-to-play {
+        text-align: center;
+    }
+}
+
+.how-to-play h2,
+.how-to-play h3,
+.how-to-play h4{
+    line-height: 1.2;
+    color:bisque;
+    font-style: italic;
+}
+
+.intro-btn{
+    border:1px solid #fff;
+    color:white;
+    max-width: max-content;
+    font-size: 1.8rem;
+    font-weight: 600;
+    padding: 0.8rem 2rem;
+    border-radius: 3rem;
+    display:inline-block;
+    align-items: center;
+    margin:2rem;
+    text-decoration: none;
+}
+
+.intro-btn:hover{
+    background-color: #fff;
+    color:black;
+}
+
+/****************************************/
+/*FRAGMENTS ON SALE*/
+/****************************************/
+.sidebar-container {
+    height: 60rem;
+    margin:10rem;
+    display: flex; /* Use flexbox to create a row layout */
+    border:1px solid rgba(137, 18, 207, 0.83);
+    border-radius: 2rem;
+  }
+  
+  .sidenav {
+    height: 100%;
+    width: 20rem;
+    background-color:rgba(137, 18, 207, 0.83);
+    padding-top: 2rem;
+    border-radius:2rem;
+  }
+  
+  .sidenav a {
+    padding: 2rem;
+    text-decoration: none;
+    font-size: 2rem;
+    color: bisque;
+    display: block;
+  }
+  
+  .sidenav a:hover {
+    color: white;
+  }
+  
+  .sidebar-content {
+    flex: 1; /* Take up remaining space */
+    font-size: 2rem; 
+    padding: 0 2rem;
+    width: auto;
+    overflow-y: auto;
+  }
+  
+/****************************************/
+/*FREQUENT ASKED QUESTIONS*/
+/****************************************/
+.collap-container{
+    margin:10rem 10rem;
+}
+
+.FAQ{
+    text-align: center;
+    margin-bottom: 5rem;
+}
+.collap-btn {
+background-color:grey;
+color: white;
+cursor: pointer;
+padding: 1.8rem;
+width: 100%;
+border: none;
+text-align: left;
+outline: none;
+font-size: 2rem;
+}
+
+.active, .collap-btn:hover {
+background-color: #555;
+}
+
+.collap-content {
+font-size: 1.8rem;
+padding: 0 18px;
+display: none;
+overflow: hidden;
+background-color: #f1f1f1;
+}
+
+.collap-content.active {
+    display: block; /* Display the content when the active class is present */
+}

@@ -1,0 +1,183 @@
+/****************************************/
+/*USER INFO*/
+/****************************************/
+.user-img{
+    height:15rem;
+    width:15rem;
+}
+/* scroll nav contents with fixed height */
+.tab-content{
+    height: 40rem;
+    width: auto;
+    overflow-y: auto;
+}
+
+.trade-img{
+    height:6rem;
+    width:6rem;
+
+}
+
+th, td {
+    text-align: left;
+    vertical-align: middle;
+}
+.nav-container{
+    border:1px solid grey;
+    border-radius: 2rem;
+}
+/****************************************/
+/*LOTTERY*/
+/****************************************/
+.lottery-block{
+    margin-top:15rem;
+    margin-bottom: 5rem;
+}
+/* lottery text */
+.lottery-text{
+    border:1rem dotted grey;
+    border-radius: 5rem;
+    background-color: azure;
+}
+.lottery-intro{
+    font-family: "Permanent Marker", cursive;
+    font-weight: 200;
+    font-style: normal;
+    font-size:2.4rem;
+}
+/* lottery title animation */
+.lottery-title span {
+    font-family: "Permanent Marker", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 5rem;
+    color: orange;
+    display: inline-flex;
+    animation: lottery-title 2s infinite;
+}
+
+@keyframes lottery-title {
+    0%,
+    75% {
+        transform: rotateY(360deg);
+    }
+}
+.lottery-title-container span:nth-of-type(1) {
+    animation-delay: 0.2s;
+}
+.lottery-title-container span:nth-of-type(2) {
+    animation-delay: 0.4s;
+}
+.lottery-title-container span:nth-of-type(3) {
+    animation-delay: 0.6s;
+}
+.lottery-title-container span:nth-of-type(4) {
+    animation-delay: 0.8s;
+}
+.lottery-title-container span:nth-of-type(5) {
+    animation-delay: 1s;
+}
+.lottery-title-container span:nth-of-type(6) {
+    animation-delay: 1.2s;
+}
+.lottery-title-container span:nth-of-type(7) {
+    animation-delay: 1.4s;
+}
+
+/* lottery spin wheel animation */
+.lottery-container{
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    margin-top: 3rem;
+    margin-bottom: 20rem;
+    margin-top:40rem;
+}
+.spin-wheel{
+    height:35rem;
+    width:35rem;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow:0 0 1rem grey;
+    transition: 3s all;
+}
+
+.spin-wheel div{
+    height: 50%;
+    width:20rem;
+    clip-path:polygon(100% 0,50% 100%,0 0);
+    position:absolute;
+    transform: translateX(-50%);
+    transform-origin: bottom;
+    left:21%;
+    display: flex;
+    align-items: center;
+    font-size:4rem;
+    font-weight: 1000;
+    font-family: monospace;
+    letter-spacing: 1rem;
+    color:white;
+    writing-mode: vertical-rl;
+}
+
+.spin-wheel .one{
+    background-color: bisque;
+    left:50%;
+}
+
+.spin-wheel .two{
+    background-color: blueviolet;
+    transform: rotate(60deg);
+}
+
+.spin-wheel .three{
+    background-color: bisque;
+    transform: rotate(120deg);
+}
+.spin-wheel .four{
+    background-color: blueviolet;
+    transform: rotate(180deg);
+}
+.spin-wheel .five{
+    background-color: bisque;
+    transform: rotate(240deg);
+}
+
+.spin-wheel .six{
+    background-color: blueviolet;
+    transform: rotate(300deg);
+}
+
+.wheel-center{
+    height:2.5rem;
+    width:2.5rem;
+    background:orange;
+    border-radius: 50%;
+    position:absolute;
+}
+
+#spin{
+    height:6rem;
+    width: 12rem;
+    position: absolute;
+    margin-top: 60rem;
+    font-size: 2.4rem;
+    font-weight: 800;
+    box-shadow: 0 1rem 1.5rem grey;
+}
+
+#spin:hover{
+    box-shadow: none;
+}
+
+.stopper{
+    height: 5rem;
+    width:4rem;
+    background:orange;
+    position:absolute;
+    margin-top: 60rem;
+    margin-top:-35rem;
+    clip-path:polygon(100% 0,50% 100%,0 0);
+
+}
