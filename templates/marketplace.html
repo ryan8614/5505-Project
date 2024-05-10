@@ -93,35 +93,19 @@
     <!-- Available Fragments -->
     <h1 class="mb-3">Fragments On Sale</h1>
     <div class="sidebar-container">
-        <div class="sidenav">
-            <a class="nav-link" data-bs-toggle="tab" href="#all-fregments">All Fragments</a>
-            <a class="nav-link" data-bs-toggle="tab" href="#my-fragments">My Fragments</a>
-          </div>
-          
-          <div class="sidebar-content">
-            <h2>test only</h2>
-            <p>This sidebar is of full height (100%) and always shown.</p>
-            <p>Scroll down the page to see the result.</p>
-            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-          </div>
-          <!-- All Fregments Section  -->
+        <!-- All Fregments Section  -->
         <div class="section">
             <div class="section-content" id="all-fragments">
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <!-- Grab available fragments from the database -->
-                    {% for fragment in available_fragments %}
+                <div class="row row-cols-1 row-cols-md-6 g-4">
+                    <!-- Grab Tradable fragments from the database -->
+                    {% for trade in trades %}
                     <div class="col">
                         <div class="card h-100">
-                            <img src="{{ url_for('static', filename=fragment.image) }}" class="card-img-top" alt="{{ fragment.name }}">
+                            <img src="{{ trade.fragment.path }}" class="card-img-top" alt="{{ trade.fragment.name }}">
                             <div class="card-body">
-                                <h5 class="card-title">{{ fragment.name }}</h5>
-                                <p class="card-text">Price: {{ fragment.price }} ETH</p>
+                                <h5 class="card-title">{{ trade.fragment.name }}</h5>
+                                <p class="card-text">Price: {{ trade.price }} ETH</p>
+                                <p class="card-text">Release Time: {{ trade.listes_time }}</p>
                                 <a href="#" class="btn btn-primary">Buy</a>
                             </div>
                         </div>
@@ -130,34 +114,10 @@
                 </div>
             </div>
         </div>
-
-        <!-- My Fragments Section -->
-        <div class="section">
-            <div class="section-content" id="my-fragments">
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <!-- Grab my fragments from the database -->
-                    {% for fragment in owned_fragments %}
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="{{ url_for('static', filename=fragment.image) }}" class="card-img-top" alt="{{ fragment.name }}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ fragment.name }}</h5>
-                                <form>
-                                    <div class="mb-3">
-                                        <label for="price-{{ fragment.id }}" class="form-label">Price (ETH)</label>
-                                        <input type="number" class="form-control" id="price-{{ fragment.id }}" placeholder="Enter price" step="0.01" min="0">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Sale</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        
-        </div>
     </div>
+    
+
+
     
      <!-- FAQ -->
     <div class="collap-container">
