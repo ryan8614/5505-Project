@@ -64,19 +64,19 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route('/dashboard')
+@app.route('/dashboard', methods=['GET'])
 @login_required
 def dashboard():
     return render_template('dashboard.html', fragments=current_user.user_fragments)
 
 
-@app.route('/marketplace')
+@app.route('/marketplace', methods=['GET'])
 def marketplace():
     return render_template('marketplace.html', trades=Trade.query.all())
 
 
-@app.route('/leaderboard')
-def leaderboard():
+@app.route('/buy', methods=['POST'])
+def buy():
     return render_template('index.html')
 
 

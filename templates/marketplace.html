@@ -12,8 +12,7 @@
     <link href="{{ url_for('static', filename='css/marketplace.css') }}" rel="stylesheet">
     <!-- Dropdown navbar CSS Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Dropdown navbar JS Link -->
-    <script src="{{ url_for('static', filename='js/marketplace.js') }}"></script>
+
 </head>
 <body>
     <!-- Navbar -->
@@ -31,7 +30,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Marketplace</b></a>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('leaderboard') }}"><b>Leader Board</b></a>
+                        <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Leader Board</b></a>
                     </li>
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
@@ -105,12 +104,45 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ trade.fragment.name }}</h5>
                                 <p class="card-text">Price: {{ trade.price }} ETH</p>
-                                <p class="card-text">Release Time: {{ trade.listes_time }}</p>
-                                <a href="#" class="btn btn-primary">Buy</a>
+                                <p class="card-text">Release Time: {{ trade.listed_time.date() }}</p>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#BuyModal"
+                                data-fragment-path="{{ trade.fragment.path }}"
+                                data-fragment-name="{{ trade.fragment.name }}"
+                                data-fragment-price="{{ trade.price }}"
+                                data-fragment-release-time="{{ trade.listed_time.date() }}">
+                                    Buy
+                                </button>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
+
+                    <!-- Modal Box -->
+                    <div class="modal fade" id="BuyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <!-- Content -->
+                                <div class="modal-body">
+                                    <div class="container-fluid text-center">
+                                        <img src="" alt="trade-img" class="img-fluid">
+                                    </div>
+                                    
+                                    <h5></h5>
+                                    <p class="price"></p>
+                                    <p class="release-time"></p>
+                                    <p>Balance: ETH</p>
+                                </div>
+                        
+                                <!-- Bottom -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="confirmTransaction()">Confirm</button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                </div>
+                        
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -184,7 +216,11 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.bootcss.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery, Popper.js, and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/marketplace.js') }}"></script>
 </body>
 </html>

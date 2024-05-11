@@ -1,18 +1,24 @@
+$(document).ready(function() {
+    // Handle modal show event and update modal content
+    $('#BuyModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var fragmentName = button.data('fragment-name'); // Extract info from data-* attributes
+        var fragmentPrice = button.data('fragment-price');
+        var fragmentReleaseTime = button.data('fragment-release-time');
+        var fragmentPath = button.data('fragment-path')
 
-//https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_collapsible
+        console.log(fragmentName)
+        var modal = $(this);
+        modal.find('.modal-body img').attr('src', fragmentPath)
+        modal.find('.modal-body h5').text(fragmentName);
+        modal.find('.modal-body p.price').text('Price: ' + fragmentPrice + ' ETH');
+        modal.find('.modal-body p.release-time').text('Release Time: ' + fragmentReleaseTime);
+    });
 
-document.addEventListener("DOMContentLoaded", function() {
-    var coll = document.getElementsByClassName("collap-btn");
-    var i;
-
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            content.classList.toggle("active");
-        });
-    }
+    // Handle collapse button click event
+    $(".collap-btn").click(function() {
+        $(this).toggleClass("active");
+        $(this).next().toggleClass("active");
+    });
 });
-
-        
         
