@@ -11,7 +11,7 @@ from datetime import datetime
 import os
 import hashlib
 import random
-from .forms import LoginForm, RegistrationForm
+from .forms import LoginForm, RegistrationForm, BuyForm
 from .models import User, NFT, Fragment, Trade
 from . import db, app, processor
 
@@ -64,20 +64,22 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route('/dashboard')
+@app.route('/dashboard', methods=['GET'])
 @login_required
 def dashboard():
     return render_template('dashboard.html', fragments=current_user.user_fragments)
 
 
-@app.route('/marketplace')
+@app.route('/marketplace', methods=['GET'])
 def marketplace():
-    return render_template('marketplace.html', trades=Trade.query.all())
+    form = BuyForm()
+    trades = Trade.query.all()
+    return render_template('marketplace.html', trades=trades, form=form)
 
 
-@app.route('/leaderboard')
-def leaderboard():
-    return render_template('leaderboard.html')
+@app.route('/check_login')
+def check_login():
+    return jsonify({'is_logged_in': current_user.is_authenticated})
 
 
 @app.route('/about')
