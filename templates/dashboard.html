@@ -40,14 +40,15 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Marketplace</b></a> 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('leaderboard') }}"><b>Leader Board</b></a>
                     </li>
-                      
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}"><b>Log Out</b></a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
+
      <!-- User info -->
     <div class="user-info">
         <h1 class="mt-5 mb-5">Dashboard</h1>
@@ -59,26 +60,6 @@
             </div>
             <h3 class="text-center">Hello {{ current_user.username }},welcome to dashboard!</h3>
             <h4 class="text-center">Balance:{{ '%.2f'|format(current_user.balance) }} ETH</h4>
-            <!-- Logout Button -->
-            <div class="d-flex align-items-center justify-content-center mb-3">
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                    Logout
-                </button>
-            </div>
-            <!-- Logout Modal -->
-            <div class="modal fade col-8" id="logoutModal">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            Are you sure you want to logout?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- echo flash message -->
             <div class="container col-8 text-center">
                 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -230,8 +211,8 @@
 
     <!-- Lottery -->
     <div class="container lottery-block">
-        <div class="row">
-            <div class="col-sm-6 d-flex align-items-start justify-content-center lottery-text">
+        <div class="row justify-content-center">
+            <div class="col-sm-5 d-flex align-items-start justify-content-center lottery-text">
                 <div class="lottery-title-container">
                     <h2 class="lottery-title mb-10">
                         <span>L</span>
@@ -242,14 +223,19 @@
                         <span>R</span>
                         <span>Y</span>
                     </h2>
-                    <p class="lottery-intro">Want to collect some rare fragments?<br>
-                    Spend 10 ETH each time to participate in our lottery!<br> 
-                    Collect a complete set of fragments to redeem rewards! <br>
-                    Click on the image on the right to join the lottery now!</p>
+                    <p class="lottery-intro">
+                        Want to collect some rare fragments?
+                        <br>
+                        Spend 10 ETH each time to participate in our lottery!
+                        <br> 
+                        Collect a complete set of fragments to redeem rewards! 
+                        <br>
+                        Click on the image on the right to join the lottery now!
+                    </p >
                 </div>
             </div>
             <!-- Spin Wheel -->
-            <div class="lottery-container col-sm-6">
+            <div class="lottery-container col-sm-5">
                 <div class="spin-wheel">
                     <div class="one">1</div>
                     <div class="two">2</div>
@@ -262,48 +248,54 @@
                 <button type="button" id="spin" class="btn btn-primary">Spin</button>
                 <div class="stopper"></div>
             </div>
-            <!-- Modal box -->
-            <div class="modal" id="raffleModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <!-- Head -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Congratulations!</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <!-- Content -->
-                        <div class="modal-body">
-                            <!-- Dynamically insert the image and split name -->
-                            <p>You've won a piece!</p>
-                            <img id="winningSplitImage" src="" alt="Winning Split" class="img-fluid"> 
-                            <p id="winningSplitName"></p>
-                        </div>
-                    </div>
+        </div>
+    </div>
+    
+    <!-- Raffle Modal -->
+    <div class="modal fade" id="raffleModal" tabindex="-1" aria-labelledby="raffleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="raffleModalLabel">Congratulations!</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div>
-            <!-- Error Modal -->
-            <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="errorModalLabel">Error</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Here we will use an icon and a span to display the error -->
-                            <div class="alert alert-danger" role="alert">
-                                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                <span id="errorMessage">Error message will appear here.</span>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
+                <div class="modal-body text-center p-4">
+                    <p>You've won a piece!</p>
+                    <img id="winningSplitImage" src="" alt="Winning Split" class="img-fluid rounded mb-3"> 
+                    <p id="winningSplitName" class="fw-bold"></p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <!-- Added data-bs-dismiss attribute to ensure this button also can close the modal -->
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
+
+     <!-- Error Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-primary text-white"> <!-- Changed bg-danger to bg-primary -->
+                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <div class="alert alert-danger" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <span id="errorMessage">Error message will appear here.</span>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
         <!-- Footer -->
         <footer class="bg-light text-center text-lg-start">
             <div class="container p-4">
