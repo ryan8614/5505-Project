@@ -168,6 +168,60 @@ def update_trade_price(frag_id):
         return redirect(url_for('dashboard'))
         
 
+@app.route('/buy', methods=['POST'])
+def buy():
+    form = BuyForm()
+    if form.validate_on_submit():
+        # Process Data
+        frag = Fragment.query.get(form.fragment_id.data)
+        buyer = User.query.get(form.buyer.data)
+    
+        if not frag or not buyer:
+            flash('Invalid transaction details.', 'error')
+            return redirect(url_for('marketplace'))
+        
+        # Get transaction information related to fragments
+        trade = Trade.query.get(frag.id)
+        # Confirm that the transaction information is valid
+        if not trade:
+            flash('No trade found for this fragment.', 'error')
+            return redirect(url_for('marketplace'))
+
+        # Check if the buyer is the current owner of the item
+        if buyer.id == trade.owner:
+            flash('You already own this fragment.', 'error')
+            return redirect(url_for('marketplace'))
+        elif buyer.balance < trade.price:
+            flash('Insufficient balance.', 'error')
+            return redirect(url_for('marketplace'))
+        else:
+            owner = User.query.get(trade.owner)
+            owner.balance += trade.price
+            buyer.balance -= trade.price
+            frag.owner = buyer.id
+
+            # Add transaction history
+            new_trade_history = TradeHistory(
+                frag_id=frag.id,
+                seller=owner.id,
+                buyer=buyer.id,
+                price=trade.price,
+                transaction_time=datetime.utcnow()
+            )
+            db.session.add(new_trade_history)
+
+            # Since we have reassigned the fragment, we need to delete the existing trade
+            db.session.delete(trade)
+
+            # Commit all changes to the database
+            db.session.commit()
+
+            flash('Purchase successful!', 'success')
+            return redirect(url_for('marketplace'))
+        
+    return render_template('marketplace.html', form=form)
+
+
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
