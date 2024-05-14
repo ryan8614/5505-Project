@@ -35,4 +35,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('This email address is already registered. Please use a different email address.')
         
 
-  
+class BuyForm(FlaskForm):
+    fragment_id = StringField('FragmentId', validators=[DataRequired()])
+    buyer = StringField('Buyer', validators=[DataRequired()])
+    submit = SubmitField('Confirm')

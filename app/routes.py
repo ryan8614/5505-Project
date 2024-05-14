@@ -11,7 +11,7 @@ from datetime import datetime
 import os
 import hashlib
 import random
-from .forms import LoginForm, RegistrationForm
+from .forms import LoginForm, RegistrationForm, BuyForm
 from .models import User, NFT, Fragment, Trade
 from . import db, app, processor
 
@@ -72,12 +72,15 @@ def dashboard():
 
 @app.route('/marketplace', methods=['GET'])
 def marketplace():
-    return render_template('marketplace.html', trades=Trade.query.all())
+    form = BuyForm()
+    trades = Trade.query.all()
+    return render_template('marketplace.html', trades=trades, form=form)
 
 
-@app.route('/buy', methods=['POST'])
-def buy():
-    return render_template('index.html')
+
+@app.route('/check_login')
+def check_login():
+    return jsonify({'is_logged_in': current_user.is_authenticated})
 
 
 @app.route('/about')
@@ -165,6 +168,21 @@ def update_trade_price(frag_id):
         flash('Invalid form data', 'error')
         return redirect(url_for('dashboard'))
         
+
+@app.route('/buy', methods=['POST'])
+def buy():
+    form = BuyForm()
+    if form.validate_on_submit():
+        # Process Data
+        fragment_id = form.fragment_id.data
+        buyer = form.buyer.data
+        print(buyer, fragment_id)
+
+
+        flash('Purchase successful!', 'success')
+        return redirect(url_for('marketplace')) 
+    return render_template('marketplace.html', form=form)
+
 
 
 @app.route('/upload', methods=['GET', 'POST'])

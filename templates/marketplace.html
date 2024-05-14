@@ -29,8 +29,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Marketplace</b></a>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Leader Board</b></a>
                     </li>
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
@@ -55,40 +53,6 @@
     <!-- Marketplace title -->
     <h1 class="mt-5 mb-5 text-center market-title">Marketplace</h1>
 
-    <!-- Marketplace intro -->
-    <div class="intro-container d-flex justify-content-center align-items-center">
-        <div class="row intro-content align-items-center justify-content-center">
-            <div class="col-md-6 d-flex align-items-center"> <!-- Add d-flex and align-items-center here -->
-                <img class="market-intro-img" alt="nft-market" src="{{ url_for('static', filename='images/marketplace-intro.jpg') }}">
-            </div>
-            <div class="col-md-6 how-to-play">
-                <h2>How To Play</h2>
-                <h3>
-                    Are you ready to dive into the exciting world of Non-Fungible Tokens (NFTs)? Here's your chance to join the action!
-                </h3>
-                <h4>
-                    <b>Register now</b>: Signing up is quick and easy. Once you create an account, you'll automatically receive 50 ETH to kickstart your journey. This Ethereum can be used for purchasing NFTs or participating in thrilling lotteries.
-                </h4>
-                <h4>
-                    <b>Collect Rare NFTs</b>: Our marketplace features exclusive collections, each comprised of 9 unique pieces. Gather all 9 fragments of a series to unlock lucrative rewards! Stay tuned as we constantly release new series, giving you ample opportunities to expand your collection. Whether you're trading, buying, or winning fragments in lotteries, there are countless ways to acquire these coveted cards.
-                </h4>
-                <h4>
-                    <b>Ascend the Leaderboard</b>: Want to see how you stack up against other collectors? Check out our leaderboard to track your progress! Account balance determines your position, so keep growing your ETH stash to climb higher.
-                </h4>
-                <h4>
-                    <b>Daily Rewards</b>: Don't forget to claim your daily check-in bonus! Earn additional ETH just by logging in each day. It's a simple way to boost your funds and enhance your NFT journey.
-                </h4>
-                <h4>
-                    Ready to embark on this thrilling adventure? Join us now and let the excitement begin!
-                </h4>
-                <div class="d-flex align-items-center justify-content-center">
-                    <a href="{{ url_for('login') }}" class="intro-btn">Sign In</a>
-                    <a href="{{ url_for('register') }}" class="intro-btn">Sign Up</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
     <!-- Available Fragments -->
     <h1 class="mb-3">Fragments On Sale</h1>
     <div class="sidebar-container">
@@ -106,6 +70,7 @@
                                 <p class="card-text">Price: {{ trade.price }} ETH</p>
                                 <p class="card-text">Release Time: {{ trade.listed_time.date() }}</p>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#BuyModal"
+                                data-fragment-id="{{ trade.fragment.id }}"
                                 data-fragment-path="{{ trade.fragment.path }}"
                                 data-fragment-name="{{ trade.fragment.name }}"
                                 data-fragment-price="{{ trade.price }}"
@@ -131,12 +96,23 @@
                                     <h5></h5>
                                     <p class="price"></p>
                                     <p class="release-time"></p>
-                                    <p>Balance: ETH</p>
+                                    <p class="balance">
+                                        <span>Balance: </span>
+                                    {% if current_user.is_authenticated %}
+                                        {{ current_user.get_balance() }}<span> ETH</span>
+                                    {% else %}
+                                        <span>Login to see balance</span>
+                                    {% endif %}
+                                    </p>
                                 </div>
                         
                                 <!-- Bottom -->
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="confirmTransaction()">Confirm</button>
+                                    <button type="button" id="confirmButton" class="btn btn-primary" data-bs-dismiss="modal"
+                                    data-fragment_id="" 
+                                    data-buyer="{{ current_user.id }}">
+                                        Confirm
+                                    </button>
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                 </div>
                         
@@ -148,7 +124,12 @@
         </div>
     </div>
     
-
+    <!-- Form -->
+    <form id="buyForm" method="POST" action="{{ url_for('buy') }}">
+        {{ form.hidden_tag() }}
+        <input type="hidden" name="fragment_id" id="hiddenFragmentId">
+        <input type="hidden" name="buyer" id="hiddenBuyer">
+    </form>
 
     
      <!-- FAQ -->
