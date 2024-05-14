@@ -77,7 +77,7 @@ def marketplace():
 
 @app.route('/leaderboard')
 def leaderboard():
-    return render_template('index.html')
+    return render_template('leaderboard.html')
 
 
 @app.route('/about')
