@@ -28,7 +28,13 @@
                         <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}"><b>Home</b></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Marketplace</b></a>
+                        <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Marketplace</b></a> 
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}"><b>Log In</b></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('register') }}"><b>Sign Up</b></a>
                     </li>
                     {% if not current_user.is_authenticated %}
                         <li class="nav-item">
@@ -49,7 +55,6 @@
             </div>
         </div>
     </nav>
-    
 
     <!-- echo flash message -->
     <div class="container col-8 text-center">
@@ -73,7 +78,7 @@
        
     </header>
     <div class="intro">
-        <h2 class="mt-5 mb-5 text-center">How It Works</h2>
+        <h2 class="mt-5 mb-5">How It Works</h2>
         <div class="container">
             <div class="row">
                 <div class="col-sm-3 mb-5">
