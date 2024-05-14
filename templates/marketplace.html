@@ -12,8 +12,7 @@
     <link href="{{ url_for('static', filename='css/marketplace.css') }}" rel="stylesheet">
     <!-- Dropdown navbar CSS Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Dropdown navbar JS Link -->
-    <script src="{{ url_for('static', filename='js/marketplace.js') }}"></script>
+
 </head>
 <body>
     <!-- Navbar -->
@@ -30,8 +29,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Marketplace</b></a>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('leaderboard') }}"><b>Leader Board</b></a>
                     </li>
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
@@ -56,40 +53,17 @@
     <!-- Marketplace title -->
     <h1 class="mt-5 mb-5 text-center market-title">Marketplace</h1>
 
-    <!-- Marketplace intro -->
-    <div class="intro-container d-flex justify-content-center align-items-center">
-        <div class="row intro-content align-items-center justify-content-center">
-            <div class="col-md-6 d-flex align-items-center"> <!-- Add d-flex and align-items-center here -->
-                <img class="market-intro-img" alt="nft-market" src="{{ url_for('static', filename='images/marketplace-intro.jpg') }}">
-            </div>
-            <div class="col-md-6 how-to-play">
-                <h2>How To Play</h2>
-                <h3>
-                    Are you ready to dive into the exciting world of Non-Fungible Tokens (NFTs)? Here's your chance to join the action!
-                </h3>
-                <h4>
-                    <b>Register now</b>: Signing up is quick and easy. Once you create an account, you'll automatically receive 50 ETH to kickstart your journey. This Ethereum can be used for purchasing NFTs or participating in thrilling lotteries.
-                </h4>
-                <h4>
-                    <b>Collect Rare NFTs</b>: Our marketplace features exclusive collections, each comprised of 9 unique pieces. Gather all 9 fragments of a series to unlock lucrative rewards! Stay tuned as we constantly release new series, giving you ample opportunities to expand your collection. Whether you're trading, buying, or winning fragments in lotteries, there are countless ways to acquire these coveted cards.
-                </h4>
-                <h4>
-                    <b>Ascend the Leaderboard</b>: Want to see how you stack up against other collectors? Check out our leaderboard to track your progress! Account balance determines your position, so keep growing your ETH stash to climb higher.
-                </h4>
-                <h4>
-                    <b>Daily Rewards</b>: Don't forget to claim your daily check-in bonus! Earn additional ETH just by logging in each day. It's a simple way to boost your funds and enhance your NFT journey.
-                </h4>
-                <h4>
-                    Ready to embark on this thrilling adventure? Join us now and let the excitement begin!
-                </h4>
-                <div class="d-flex align-items-center justify-content-center">
-                    <a href="{{ url_for('login') }}" class="intro-btn">Sign In</a>
-                    <a href="{{ url_for('register') }}" class="intro-btn">Sign Up</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+    <!-- echo flash message -->
+    <div class="container col-8 text-center">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div> 
+
     <!-- Available Fragments -->
     <h1 class="mb-3">Fragments On Sale</h1>
     <div class="sidebar-container">
@@ -105,18 +79,68 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ trade.fragment.name }}</h5>
                                 <p class="card-text">Price: {{ trade.price }} ETH</p>
-                                <p class="card-text">Release Time: {{ trade.listes_time }}</p>
-                                <a href="#" class="btn btn-primary">Buy</a>
+                                <p class="card-text">Release Time: {{ trade.listed_time.date() }}</p>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#BuyModal"
+                                data-fragment-id="{{ trade.fragment.id }}"
+                                data-fragment-path="{{ trade.fragment.path }}"
+                                data-fragment-name="{{ trade.fragment.name }}"
+                                data-fragment-price="{{ trade.price }}"
+                                data-fragment-release-time="{{ trade.listed_time.date() }}">
+                                    Buy
+                                </button>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
+
+                    <!-- Modal Box -->
+                    <div class="modal fade" id="BuyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <!-- Content -->
+                                <div class="modal-body">
+                                    <div class="container-fluid text-center">
+                                        <img src="" alt="trade-img" class="img-fluid">
+                                    </div>
+                                    
+                                    <h5></h5>
+                                    <p class="price"></p>
+                                    <p class="release-time"></p>
+                                    <p class="balance">
+                                        <span>Balance: </span>
+                                    {% if current_user.is_authenticated %}
+                                        {{ current_user.get_balance() }}<span> ETH</span>
+                                    {% else %}
+                                        <span>Login to see balance</span>
+                                    {% endif %}
+                                    </p>
+                                </div>
+                        
+                                <!-- Bottom -->
+                                <div class="modal-footer">
+                                    <button type="button" id="confirmButton" class="btn btn-primary" data-bs-dismiss="modal"
+                                    data-fragment_id="" 
+                                    data-buyer="{{ current_user.id }}">
+                                        Confirm
+                                    </button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                </div>
+                        
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
-
+    <!-- Form -->
+    <form id="buyForm" method="POST" action="{{ url_for('buy') }}">
+        {{ form.hidden_tag() }}
+        <input type="hidden" name="fragment_id" id="hiddenFragmentId">
+        <input type="hidden" name="buyer" id="hiddenBuyer">
+    </form>
 
     
      <!-- FAQ -->
@@ -184,7 +208,11 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.bootcss.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery, Popper.js, and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/marketplace.js') }}"></script>
 </body>
 </html>

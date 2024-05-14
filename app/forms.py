@@ -20,8 +20,8 @@ class LoginForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     username = StringField('User name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=6, message='Password must be at least 6 characters long')])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password'), Length(min=6, message='Password must be at least 6 characters long')])
     submit = SubmitField('Register')
 
     def validate_username(self, username):
@@ -35,4 +35,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('This email address is already registered. Please use a different email address.')
         
 
-  
+class BuyForm(FlaskForm):
+    fragment_id = StringField('FragmentId', validators=[DataRequired()])
+    buyer = StringField('Buyer', validators=[DataRequired()])
+    submit = SubmitField('Confirm')
