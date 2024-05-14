@@ -156,3 +156,15 @@ class Trade(db.Model):
     
 
 
+class TradeHistory(db.Model):
+    __tablename__ = 'trade_history'
+    
+    trade_id = db.Column(db.Integer, primary_key=True)
+    frag_id = db.Column(db.Text, db.ForeignKey('fragment.id'), nullable=False)
+    seller = db.Column(db.Integer, db.ForeignKey('users.id'))
+    buyer = db.Column(db.Integer, db.ForeignKey('users.id'))
+    price = db.Column(db.Numeric, nullable=False, default=0.0, server_default="0.0",check_constraint='price>=0')
+    transaction_time = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+
+    def __repr__(self):
+        return f"<TradeHistory(trade_id={self.trade_id}, frag_id={self.frag_id}, seller={self.seller}, buyer={self.buyer}, price={self.price}, transaction_time={self.transaction_time})>"

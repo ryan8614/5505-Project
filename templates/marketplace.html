@@ -53,6 +53,17 @@
     <!-- Marketplace title -->
     <h1 class="mt-5 mb-5 text-center market-title">Marketplace</h1>
 
+    <!-- echo flash message -->
+    <div class="container col-8 text-center">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div> 
+
     <!-- Available Fragments -->
     <h1 class="mb-3">Fragments On Sale</h1>
     <div class="sidebar-container">
