@@ -44,15 +44,13 @@
                         <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Marketplace</b></a > 
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('dashboard')  }}"><b>Dashboard</b></a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('logout') }}"><b>Log out</b></a >
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+
      <!-- User info -->
     <div class="user-info">
         <h1 class="mt-5 mb-5">Dashboard</h1>
@@ -81,7 +79,7 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#my-trade">My Trade</a>
+                    <a class="nav-link active" data-bs-toggle="tab" href="#my-trade">Trade History</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="tab" href="#my-fragments">My Fragments</a>
@@ -94,28 +92,32 @@
             <div class="tab-content">
                 <!-- my trade -->
                 <div id="my-trade" class="container tab-pane active"><br>
-                    <table class="table table-hover">
+                    <table class="table">
                         <thead>
                             <tr>
-                                <th>Images</th>
-                                <th>Name</th>
+                                <th>Frag-Id</th>
+                                <th>Frag-Name</th>
                                 <th>Price</th>
                                 <th>Date</th>
                                 <th>Seller</th>
-                                <th>Operation</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="trades">
+                            {% for trade in trade_history %}
+                                <tr style="height: 50px;">
+                                    <td>{{ trade.frag_id }}</td>
+                                    <td>{{ trade.frag_name }}</td>
+                                    <td>{{ '%.2f'|format(trade.price) }}</td>
+                                    <td>{{ trade.transaction_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                                    <td>{{ trade.seller_username }}</td>
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
-                    <!-- test block need to be delete later -->
-                    <div class="container"><br>
-                        <h3>for scroll test only,content need to be delete later</h3>
-                    <p style="font-size:5rem">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-                    </div>
                 </div>
                 <!-- My Fragments -->
                 <div id="my-fragments" class="container tab-pane fade"><br>
+
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -140,78 +142,68 @@
                     </table>
 
                     <!-- Fragment Model -->
-                <div class="modal fade" id="myFragmentModal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
+                    <div class="modal fade" id="myFragmentModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
 
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">Fragment Details</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel">Fragment Details</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
 
-                            <div class="modal-body">
-                                <p>Name: <span id="modalFragmentName"></span></p>
-                                <p>Status: <span id="modalFragmentStatus"></span></p>
-                                <div id="priceContainer" style="display: none;">
-                                    <p>Price: <span id="modalFragmentPrice"></span></p>
+                                <div class="modal-body">
+                                    <p>Name: <span id="modalFragmentName"></span></p>
+                                    <p>Status: <span id="modalFragmentStatus"></span></p>
+                                    <div id="priceContainer" style="display: none;">
+                                        <p>Price: <span id="modalFragmentPrice"></span></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fragmentStatus">Change Status:</label>
+                                        <select id="fragmentStatus" class="form-control">
+                                            <option value="not_for_sale">Not For Sale</option>
+                                            <option value="for_sale">For Sale</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mt-3" id="priceGroup" style="display: none;">
+                                        <label for="newPrice">New Price:</label>
+                                        <input type="number" id="newPrice" class="form-control" min="0" step="0.01">
+                                    </div>
+                                    <!-- Hidden input to store data -->
+                                    <input type="hidden" id="currentUserId" value="{{ current_user.id }}">
+                                    <input type="hidden" id="fragment-id" value="">
+                                    <input type="hidden" id="fragment-status" value="">
                                 </div>
-                                <div class="form-group">
-                                    <label for="fragmentStatus">Change Status:</label>
-                                    <select id="fragmentStatus" class="form-control">
-                                        <option value="not_for_sale">Not For Sale</option>
-                                        <option value="for_sale">For Sale</option>
-                                    </select>
-                                </div>
-                                <div class="form-group mt-3" id="priceGroup" style="display: none;">
-                                    <label for="newPrice">New Price:</label>
-                                    <input type="number" id="newPrice" class="form-control" min="0" step="0.01">
-                                </div>
-                                <!-- Hidden input to store data -->
-                                <input type="hidden" id="currentUserId" value="{{ current_user.id }}">
-                                <input type="hidden" id="fragment-id" value="">
-                                <input type="hidden" id="fragment-status" value="">
-                            </div>
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" id="saveChangesButton">Save Changes</button>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" id="saveChangesButton">Save Changes</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-            </div>
-           <!-- my collection tab -->
-           <div id="my-collection" class="container tab-pane fade"><br>
-                <div class="row mt-5 mb-5">
-                    <div class="col-sm-3 col-md-3">
-                        <div class="card">
-                            <img src="{{ url_for('static', filename='images/cat.jpg') }}" class="card-img-top" alt="cat nft">
-                            <span style="display: block; text-align: center; font-weight: bold; margin-top: 10px;">CAT</span>
-                        </div>
-                    </div>
-                    <div class="col-sm-3 col-md-3">
-                        <div class="card">
-                            <img src="{{ url_for('static', filename='images/tiger.jpg') }}" class="card-img-top" alt="tiger nft">
-                            <span style="display: block; text-align: center; font-weight: bold; margin-top: 10px;">TIGER</span>
-                        </div>
-                    </div>
-                    <div class="col-sm-3 col-md-3">
-                        <div class="card">
-                            <img src="{{ url_for('static', filename='images/frog.jpg') }}" class="card-img-top" alt="frog nft">
-                            <span style="display: block; text-align: center; font-weight: bold; margin-top: 10px;">FROG</span>
-                        </div>
-                    </div>
-                    <div class="col-sm-3 col-md-3">
-                        <div class="card">
-                            <img src="{{ url_for('static', filename='images/monky.jpg') }}" class="card-img-top" alt="monky nft">
-                            <span style="display: block; text-align: center; font-weight: bold; margin-top: 10px;">MONKEY</span>
-                        </div>
+                <!-- My collection -->
+                <div id="my-collection" class="container tab-pane fade"><br>
+                    <div class="row mt-5 mb-5">
+                        {% for nft in collections %}
+                            {% if loop.index0 % 3 == 0 and not loop.first %}
+                                </div>
+                                <div class="row mt-5 mb-5">
+                            {% endif %}
+                            <div class="col-sm-3 col-md-3">
+                                <div class="card">
+                                    <img src="{{ nft.path }}" class="card-img-top" alt="{{ nft.name }} nft">
+                                    <span style="display: block; text-align: center; font-weight: bold; margin-top: 10px;">{{ nft.name.upper() }}</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% if collections|length % 3 != 0 %}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <!-- Lottery -->
@@ -242,12 +234,12 @@
             <!-- Spin Wheel -->
             <div class="lottery-container col-sm-5">
                 <div class="spin-wheel">
-                    <div class="one"></div>
-                    <div class="two"></div>
-                    <div class="three"></div>
-                    <div class="four"></div>
-                    <div class="five"></div>
-                    <div class="six"></div>
+                    <div class="one">1</div>
+                    <div class="two">2</div>
+                    <div class="three">3</div>
+                    <div class="four">4</div>
+                    <div class="five">5</div>
+                    <div class="six">6</div>
                 </div>
                 <span class="wheel-center"></span>
                 <button type="button" id="spin" class="btn btn-primary">Spin</button>
