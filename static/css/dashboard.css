@@ -33,18 +33,29 @@ th, td {
     margin-top:15rem;
     margin-bottom: 5rem;
 }
-/* lottery text */
-.lottery-text{
-    border:1rem dotted grey;
+
+.lottery-text {
+    max-width: 400px;   
+    margin: auto;      
+    padding: 2rem;     
+    border: 1rem dotted grey;
     border-radius: 5rem;
     background-color: azure;
+    text-align: center; 
 }
-.lottery-intro{
+
+.lottery-title {
+    margin-bottom: 1rem; 
+    white-space: nowrap;  
+}
+
+.lottery-intro {
+    font-size: 1.6rem; 
+    padding: 0 1rem;  
     font-family: "Permanent Marker", cursive;
-    font-weight: 200;
-    font-style: normal;
-    font-size:2.4rem;
 }
+
+
 /* lottery title animation */
 .lottery-title span {
     font-family: "Permanent Marker", cursive;
