@@ -4,32 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload and Split Image</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Upload Image for Splitting</h1>
-    <!-- echo flash message -->
-    <div class="container col-8 text-center">
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Upload Image for Splitting</h1>
+    <!-- Echo flash messages -->
+    <div class="container col-md-8 text-center">
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
             {% for category, message in messages %}
-              <div class="alert alert-{{ category }}">{{ message }}</div>
+              <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
             {% endfor %}
           {% endif %}
         {% endwith %}
     </div>
-    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
-        <label for="file">Choose an image file:</label>
-        <input type="file" id="file" name="file" accept="image/png, image/jpeg"><br><br>
+    <br>
+    <!-- Form Content -->
+    <div class="container col-8">
+      <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" class="mb-3">
+        <div class="form-group">
+            <label for="file">Choose an image file:</label>
+            <input type="file" id="file" name="file" accept="image/png, image/jpeg" class="form-control-file">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="bonus">Set Bonus:</label>
+            <input type="number" id="bonus" name="bonus" class="form-control" min="0" max="500" step="10" value="50">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="num_parts">Split into:</label>
+            <select id="num_parts" name="num_parts" class="form-control">
+                <option value="4">4 Parts</option>
+                <option value="6">6 Parts</option>
+                <option value="9">9 Parts</option>
+            </select>
+        </div>
+        <br>
+        <div class="row d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary">Upload and Split</button>
+        </div>
+      </form>
+    </div>
+    
+  </div>
 
-        <label for="num_parts">Split into:</label>
-        <select id="num_parts" name="num_parts">
-            <option value="4">4 Parts</option>
-            <option value="6">6 Parts</option>
-            <option value="9">9 Parts</option>
-        </select><br><br>
 
-        <button type="submit">Upload and Split</button>
-    </form>
+  <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
 
