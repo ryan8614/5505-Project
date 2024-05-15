@@ -1,5 +1,3 @@
-//spin wheel
-
 let spin_wheel = document.querySelector(".spin-wheel");
 let btn = document.getElementById("spin");
 let number = 0; // angle starts from 0

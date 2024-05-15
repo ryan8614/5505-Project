@@ -10,9 +10,9 @@
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
     <!-- Marketplace CSS Link -->
     <link href="{{ url_for('static', filename='css/marketplace.css') }}" rel="stylesheet">
-    <!-- Dropdown navbar CSS Link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <!-- navbar JS Link -->
+    <script src="{{ url_for('static', filename='js/marketplace.js') }}"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
 </head>
 <body>
     <!-- Navbar -->
@@ -29,7 +29,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Marketplace</b></a>
-                    </li>
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('dashboard') }}"><b>Dashboard</b></a>
@@ -50,265 +49,200 @@
         </div>
     </nav>
 
-    <!-- Marketplace title -->
-    <h1 class="mt-5 mb-5 text-center market-title">Marketplace</h1>
-
-
-    <!-- echo flash message -->
-    <div class="container col-8 text-center">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
-    </div> 
-    
-    <!-- Live Auction Carousel -->
-    <div class="container mt-5 mb-5 live-auction">
-        <h2 class="mt-5 mb-5 text-center"><b>Live Auctions</b></h2>
-        <div id="liveAuctionCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="row bg-white">
-                        <div class="col-sm-3">
-                            <div class="card">
-                                <img src="{{ url_for('static', filename='images/cat.jpg') }}" class="card-img-top" alt="cat nft">
-                                <div class="card-body d-flex justify-content-between">
-                                    <span>
-                                        <small>Creator</small><br>
-                                        <p>Emma R.</p>
-                                    </span>
-                                    <span>
-                                        <small>Current Bid</small><br>
-                                        <p>9.2 ETH</p>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card">
-                                <img src="{{ url_for('static', filename='images/tiger.jpg') }}" class="card-img-top" alt="tiger nft">
-                                <div class="card-body d-flex justify-content-between">
-                                    <span>
-                                        <small>Creator</small><br>
-                                        <p>Liam S.</p>
-                                    </span>
-                                    <span>
-                                        <small>Current Bid</small><br>
-                                        <p>18.6 ETH</p>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card">
-                                <img src="{{ url_for('static', filename='images/panda.jpg') }}" class="card-img-top" alt="panda nft">
-                                <div class="card-body d-flex justify-content-between">
-                                    <span>
-                                        <small>Creator</small><br>
-                                        <p>Noah T.</p>
-                                    </span>
-                                    <span>
-                                        <small>Current Bid</small><br>
-                                        <p>8.5 ETH</p>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card">
-                                <img src="{{ url_for('static', filename='images/monky.jpg') }}" class="card-img-top" alt="monky nft">
-                                <div class="card-body d-flex justify-content-between">
-                                    <span>
-                                        <small>Creator</small><br>
-                                        <p>Noah T.</p>
-                                    </span>
-                                    <span>
-                                        <small>Current Bid</small><br>
-                                        <p>13.2 ETH</p>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row bg-white">
-                        <div class="col-md-3">
-                            <div class="card">
-                                <img src="{{ url_for('static', filename='images/fox.jpg') }}" class="card-img-top" alt="fox nft">
-                                <div class="card-body d-flex justify-content-between">
-                                    <span>
-                                        <small>Creator</small><br>
-                                        <p>Olivia W.</p>
-                                    </span>
-                                    <span>
-                                        <small>Current Bid</small><br>
-                                        <p>21.6 ETH</p>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card">
-                                <img src="{{ url_for('static', filename='images/octopus.jpg') }}" class="card-img-top" alt="nft">
-                                <div class="card-body d-flex justify-content-between">
-                                    <span>
-                                        <small>Creator</small><br>
-                                        <p>Ryan Z.</p>
-                                    </span>
-                                    <span>
-                                        <small>Current Bid</small><br>
-                                        <p>53.2 ETH</p>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card">
-                                <img src="{{ url_for('static', filename='images/owl.jpg') }}" class="card-img-top" alt="owl nft">
-                                <div class="card-body d-flex justify-content-between">
-                                    <span>
-                                        <small>Creator</small><br>
-                                        <p>David L.</p>
-                                    </span>
-                                    <span>
-                                        <small>Current Bid</small><br>
-                                        <p>24.2 ETH</p>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card">
-                                <img src="{{ url_for('static', filename='images/frog.jpg') }}" class="card-img-top" alt="frog nft">
-                                <div class="card-body d-flex justify-content-between">
-                                    <span>
-                                        <small>Creator</small><br>
-                                        <p>Eva D.</p>
-                                    </span>
-                                    <span>
-                                        <small>Current Bid</small><br>
-                                        <p>7.8 ETH</p>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>    
-                    </div>
-                </div>
-            </div>
-            <!-- Carousel controls -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#liveAuctionCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#liveAuctionCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+    <!-- Marketplace intro -->
+    <div class="market-intro-container mb-5">
+        <div class="market-intro">
+            <h1 class="intro-text">We are platform for everyone</h1>
         </div>
     </div>
+
+    <!-- User join container -->
+    <div class="user-container d-flex align-items-center justify-content-center">
+        <div class="user-img d-flex">
+            <img src="{{ url_for('static', filename='images/seller1.png') }}"  alt="user-image">
+            <img src="{{ url_for('static', filename='images/seller2.png') }}"  alt="user-image">
+            <img src="{{ url_for('static', filename='images/seller3.png') }}"  alt="user-image">
+            <img src="{{ url_for('static', filename='images/seller4.png') }}"  alt="user-image">
+            <img src="{{ url_for('static', filename='images/seller5.png') }}"  alt="user-image">
+            <img src="{{ url_for('static', filename='images/seller6.png') }}"  alt="user-image">
+        </div>
+        <p class="user-text"><span>10000+</span> Users have joined!</p>
+    </div>
+
+   <!-- User review container -->
+    <div class="review-container">
+        <div class="review-img">
+            <img src="{{ url_for('static', filename='images/market-img2.png') }}"  alt="nft image" class="market-img2">
+        </div>
+        <div class="review r1">Easy to sign up and easy to operate.</div>
+        <div class="review r2">Many attractive collections!</div>
+        <div class="review r3">A good way to entertainment!</div>
+    </div>
+
 
     <!-- Available Fragments -->
-    <h1 class="mb-3 text-center">Fragments On Sale</h1>
-    <div class="sidebar-container">
-        <!-- All Fregments Section  -->
-        <div class="section">
-            <div class="section-content" id="all-fragments">
-                <div class="row row-cols-1 row-cols-md-6 g-4">
-                    <!-- Grab Tradable fragments from the database -->
-                    {% for trade in trades %}
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="{{ trade.fragment.path }}" class="card-img-top" alt="{{ trade.fragment.name }}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ trade.fragment.name }}</h5>
-                                <p class="card-text">Price: {{ trade.price }} ETH</p>
-                                <p class="card-text">Release Time: {{ trade.listed_time.date() }}</p>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#BuyModal"
-                                data-fragment-id="{{ trade.fragment.id }}"
-                                data-fragment-path="{{ trade.fragment.path }}"
-                                data-fragment-name="{{ trade.fragment.name }}"
-                                data-fragment-price="{{ trade.price }}"
-                                data-fragment-release-time="{{ trade.listed_time.date() }}">
-                                    Buy
-                                </button>
-                            </div>
-                        </div>
+    <h1 class="my-5">Fragments On Sale</h1>
+     <!-- Search use AJAX if possible -->
+    <div class="search-container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Fragment buttons block -->
+    <div class="fragments-btn-container">
+        <div class="fragment-buttons d-flex">
+            <div class="btn btn-success frag-btn active" onclick="showContent('all-fragments')">All Fragments</div>
+            <div class="btn btn-success frag-btn" onclick="showContent('my-fragments')">My Fragments</div>
+        </div>
+    <!-- All Fregments Section  -->
+    <div class="btn-content active" id="all-fragments">
+        <!-- Grab available fragments from the database -->
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for fragment in available_fragments %}
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename=fragment.image) }}" class="card-img-top" alt="{{ fragment.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ fragment.name }}</h5>
+                        <p class="card-text">Price: {{ fragment.price }} ETH</p>
+                        <a href="#" class="btn btn-primary">Buy</a>
                     </div>
-                    {% endfor %}
-
-                    <!-- Modal Box -->
-                    <div class="modal fade" id="BuyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-
-                                <!-- Content -->
-                                <div class="modal-body">
-                                    <div class="container-fluid text-center">
-                                        <img src="" alt="trade-img" class="img-fluid">
-                                    </div>
-                                    
-                                    <h5></h5>
-                                    <p class="price"></p>
-                                    <p class="release-time"></p>
-                                    <p class="balance">
-                                        <span>Balance: </span>
-                                    {% if current_user.is_authenticated %}
-                                        {{ current_user.get_balance() }}<span> ETH</span>
-                                    {% else %}
-                                        <span>Login to see balance</span>
-                                    {% endif %}
-                                    </p>
-                                </div>
-                        
-                                <!-- Bottom -->
-                                <div class="modal-footer">
-                                    <button type="button" id="confirmButton" class="btn btn-primary" data-bs-dismiss="modal"
-                                    data-fragment_id="" 
-                                    data-buyer="{{ current_user.id }}">
-                                        Confirm
-                                    </button>
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                </div>
-                        
-                            </div>
-                        </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- NFT cards  -->
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/cat.jpg') }}" class="card-img-top" alt="cat nft">
+                    <div class="card-body d-flex justify-content-between">
+                        <span>
+                            <small>Creator</small><br>
+                            <p>Emma R.</p>
+                        </span>
+                        <span>
+                            <small>Current Bid</small><br>
+                            <p>9.2 ETH</p>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/tiger.jpg') }}" class="card-img-top" alt="tiger nft">
+                    <div class="card-body d-flex justify-content-between">
+                        <span>
+                            <small>Creator</small><br>
+                            <p>Liam S.</p>
+                        </span>
+                        <span>
+                            <small>Current Bid</small><br>
+                            <p>18.6 ETH</p>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/panda.jpg') }}" class="card-img-top" alt="panda nft">
+                    <div class="card-body d-flex justify-content-between">
+                        <span>
+                            <small>Creator</small><br>
+                            <p>Noah T.</p>
+                        </span>
+                        <span>
+                            <small>Current Bid</small><br>
+                            <p>8.5 ETH</p>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/monky.jpg') }}" class="card-img-top" alt="monky nft">
+                    <div class="card-body d-flex justify-content-between">
+                        <span>
+                            <small>Creator</small><br>
+                            <p>Noah T.</p>
+                        </span>
+                        <span>
+                            <small>Current Bid</small><br>
+                            <p>13.2 ETH</p>
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
+        <h2>test only</h2>
+        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
     </div>
     
-    <!-- Form -->
-    <form id="buyForm" method="POST" action="{{ url_for('buy') }}">
-        {{ form.hidden_tag() }}
-        <input type="hidden" name="fragment_id" id="hiddenFragmentId">
-        <input type="hidden" name="buyer" id="hiddenBuyer">
-    </form>
-
+    <!-- My Fragments Section -->
+    <div class="section">
+        <div class="btn-content" id="my-fragments">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <!-- Grab my fragments from the database -->
+                {% for fragment in owned_fragments %}
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{{ url_for('static', filename=fragment.image) }}" class="card-img-top" alt="{{ fragment.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ fragment.name }}</h5>
+                            <form>
+                                <div class="mb-3">
+                                    <label for="price-{{ fragment.id }}" class="form-label">Price (ETH)</label>
+                                    <input type="number" class="form-control" id="price-{{ fragment.id }}" placeholder="Enter price" step="0.01" min="0">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Sale</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    
+    </div>
+    </div>
     
      <!-- FAQ -->
     <div class="collap-container">
         <h2 class="FAQ">Frequently Asked Questions</h2>
-        <button type="button" class="collap-btn">What Exactly is an NFT?</button>
+        <button type="button" class="collap-btn bg-light">What Exactly is an NFT?</button>
         <div class="collap-content">
         <p>Non-fungible Tokens are digital valuables that can be purchased and sold utilizing Blockchain technology on an online marketplace. It’s not interchangeable because it’s non-fungible. With the recent advent of Blockchain across many industries, artists and investors have begun to look for methods to use it to transform the way paintings and other valuables are purchased and traded. NFT users can claim ownership of digital property in exchange for cryptocurrency, rather than visiting a physical store or gallery or even bidding at an auction on tangible items. In terms of data, NFTs can be anything. Images, videos, audio, text, and other forms of creative media are all acceptable. Each NFT is unique, with proven ownership, because it is stored on the blockchain.</p>
         </div>
-        <button type="button" class="collap-btn">How to Collect NFT Fragments?</button>
+        <button type="button" class="collap-btn bg-light">How to Collect NFT Fragments?</button>
         <div class="collap-content">
         <p>You can consume 10 ETH each time to attend lottery on dashboard or buy fragments from marketplace.</p>
         </div>
-        <button type="button" class="collap-btn">How to Redeem a Collection?</button>
+        <button type="button" class="collap-btn bg-light">How to Redeem a Collection?</button>
         <div class="collap-content">
-        <p>Once you collect a set of 9 fragments,you can redeem them on dashboard,choose the collection and click redeem.The redeem value will add into your account balance directly</p>
+        <p>Once you collect a set of fragments,you can redeem them on dashboard,choose the collection and click redeem.The redeem value will add into your account balance directly</p>
         </div>
 
         
 
     </div>
+
+    <!-- Join our community-->
+    <div class="join-container d-block text-center">
+        <h1 class="py-2">Join Our Community</h1>
+        <a class="btn btn-primary py-2" href="{{ url_for('register') }}">Get Started</a>
+    </div>
+
     
     <!-- Footer -->
     <footer class="bg-light text-center text-lg-start">
@@ -355,11 +289,7 @@
         </div>
     </footer>
 
-    <!-- jQuery, Popper.js, and Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-    <!-- Custom JS -->
-    <script src="{{ url_for('static', filename='js/marketplace.js') }}"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.bootcss.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

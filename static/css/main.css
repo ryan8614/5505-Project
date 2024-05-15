@@ -6,23 +6,27 @@
     margin:0;
     padding: 0;
     box-sizing: border-box;
-}
+     
+  }
   
-html {
-/*default font-size 16px,set font-size to 10px which is 10/16=62.5%,use percentage of user's browser font-size*/
-    font-size: 62.5%;
-
-}
+  html {
+    /*default font-size 16px,set font-size to 10px which is 10/16=62.5%,use percentage of user's browser font-size*/
+      font-size: 62.5%;
   
-html,body,a,h1,h2,h3,h4,h5,h6,p,td,li {
-font-family: "Rubik",sans-serif
-}
+  }
+  
+  html,body,a,h1,h2,h3,h4,h5,h6,p,td,li {
+    font-family: "Rubik",sans-serif
+  }
 
+  h1,h2,h3,h4,h5,h6{
+    text-align: center;
+  }
 
-.logo{
-height: 6.4rem;
-padding:1.8rem;
-}
+  .logo{
+    height: 6.4rem;
+    padding:1.8rem;
+  }
 
   /* Navigation */
 .navbar {
@@ -71,52 +75,17 @@ padding:1.8rem;
     transition: transform 0.3s;
 }
 
+
+
 /************************************/
 /* marketplace */
 /************************************/
 
-
-
 .section {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 50px; 
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    width: 90%; 
-    margin-left: auto; 
-    margin-right: auto; 
+    margin-bottom: 40px;  
 }
-
 .section-content {
-    padding: 15px;
-    border-radius: 8px;
-    height: 300px; 
+    max-height: 500px; 
     overflow-y: auto; 
+    background-color: #f8f9fa;
 }
-
-#my-fragments-section {
-    background-color: #f0f0f0; 
-}
-
-.card {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease-in-out;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-}
-
-.card-img-top {
-    height: 150px; 
-    width: 100%; 
-    object-fit: cover;
-}
-
-.card-body {
-    padding: 10px;
-}
-
-

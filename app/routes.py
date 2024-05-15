@@ -12,7 +12,7 @@ import os
 import hashlib
 import random
 from .forms import LoginForm, RegistrationForm, BuyForm
-from .models import User, NFT, Fragment, Trade, TradeHistory
+from .models import User, NFT, Fragment, Trade
 from . import db, app, processor
 
 
@@ -75,7 +75,6 @@ def marketplace():
     form = BuyForm()
     trades = Trade.query.all()
     return render_template('marketplace.html', trades=trades, form=form)
-
 
 
 @app.route('/check_login')
