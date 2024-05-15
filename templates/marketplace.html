@@ -60,186 +60,94 @@
             {% for category, message in messages %}
             <div class="alert alert-{{ category }}">{{ message }}</div>
             {% endfor %}
-        {% endif %}
-        {% endwith %}
-    </div> 
-
-    <!-- Live Auction Carousel -->
-    <div class="container mt-5 mb-5">
-        <h2 class="mt-5 mb-5 text-center"><b>Live Auctions</b></h2>
-        <div id="liveAuctionCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                {% for i in range(nft|length // 4 + (nft|length % 4 > 0)) %}
-                <div class="carousel-item {{ 'active' if i == 0 else '' }}">
-                    <div class="row bg-white">
-                        {% for item in nft[i*4:(i+1)*4] %}
-                        <div class="col-sm-3">
-                            <div class="card">
-                                <img src="{{ item.path }}" class="card-img-top" alt="cat nft">
-                                <div class="card-body d-flex justify-content-between">
-                                    <span>
-                                        <small>Creator</small><br>
-                                        <p>Emma R.</p>
-                                    </span>
-                                    <span>
-                                        <small>Current Bid</small><br>
-                                        <p>9.2 ETH</p>
-                                    </span>
-                                    <span>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#RedeemModal"
-                                        data-nft-id="{{ item.id }}"
-                                        data-nft-bonus="{{ item.bonus }}"
-                                        data-nft-name="{{ item.path.name }}">
-                                            Redeem
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endfor %}
-
-                <!-- Modal Box -->
-                <div class="modal fade" id="RedeemModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-
-                            <!-- Content -->
-                            <div class="modal-body">
-                                <p>
-                                    Are you sure you want to redeem <span class="name"></span>? 
-                                    <br>
-                                    If success, you will get <span class="bonus"></span>.
-                                </p>
-                            </div>
-                    
-                            <!-- Bottom -->
-                            <div class="modal-footer">
-                                <button type="button" id="nft-confirmButton" class="btn btn-primary" data-bs-dismiss="modal"
-                                data-nftId="" 
-                                data-user="{{ current_user.id }}">
-                                    Confirm
-                                </button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                            </div>
-                    
-                        </div>
+        </div>
+        <!-- NFT cards  -->
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/cat.jpg') }}" class="card-img-top" alt="cat nft">
+                    <div class="card-body d-flex justify-content-between">
+                        <span>
+                            <small>Creator</small><br>
+                            <p>Emma R.</p>
+                        </span>
+                        <span>
+                            <small>Current Bid</small><br>
+                            <p>9.2 ETH</p>
+                        </span>
                     </div>
                 </div>
             </div>
-            <!-- Carousel controls -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#liveAuctionCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#liveAuctionCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-
-        <!-- RedeemForm -->>
-        <form id="redeemForm" method="POST" action="{{ url_for('redeem') }}">
-            {{ redeem_form.hidden_tag() }}
-            <input type="hidden" name="nft_id" id="hiddenNFTId">
-            <input type="hidden" name="user" id="hiddenUser">
-        </form>
-    </div>
-
-    <!-- Available Fragments -->
-    <h1 class="mb-3 text-center">Fragments On Sale</h1>
-    <div class="sidebar-container">
-        <!-- All Fregments Section  -->
-        <div class="section">
-            <div class="section-content" id="all-fragments">
-                <div class="row row-cols-1 row-cols-md-4 g-4">
-                    <!-- Grab Tradable fragments from the database -->
-                    {% for trade in trades %}
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="{{ trade.fragment.path }}" class="card-img-top" alt="{{ trade.fragment.name }}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ trade.fragment.name }}</h5>
-                                <p class="card-text">Price: {{ trade.price }} ETH</p>
-                                <p class="card-text">Release Time: {{ trade.listed_time.date() }}</p>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#BuyModal"
-                                data-fragment-id="{{ trade.fragment.id }}"
-                                data-fragment-path="{{ trade.fragment.path }}"
-                                data-fragment-name="{{ trade.fragment.name }}"
-                                data-fragment-price="{{ trade.price }}"
-                                data-fragment-release-time="{{ trade.listed_time.date() }}">
-                                    Buy
-                                </button>
-                            </div>
-                        </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/tiger.jpg') }}" class="card-img-top" alt="tiger nft">
+                    <div class="card-body d-flex justify-content-between">
+                        <span>
+                            <small>Creator</small><br>
+                            <p>Liam S.</p>
+                        </span>
+                        <span>
+                            <small>Current Bid</small><br>
+                            <p>18.6 ETH</p>
+                        </span>
                     </div>
-                    {% endfor %}
-
-                    <!-- Modal Box -->
-                    <div class="modal fade" id="BuyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-
-                                <!-- Content -->
-                                <div class="modal-body">
-                                    <div class="container-fluid text-center">
-                                        <img src="" alt="trade-img" class="img-fluid">
-                                    </div>
-                                    
-                                    <h5></h5>
-                                    <p class="price"></p>
-                                    <p class="release-time"></p>
-                                    <p class="balance">
-                                        <span>Balance: </span>
-                                    {% if current_user.is_authenticated %}
-                                        {{ current_user.get_balance() }}<span> ETH</span>
-                                    {% else %}
-                                        <span>Login to see balance</span>
-                                    {% endif %}
-                                    </p>
-                                </div>
-                        
-                                <!-- Bottom -->
-                                <div class="modal-footer">
-                                    <button type="button" id="frg-confirmButton" class="btn btn-primary" data-bs-dismiss="modal"
-                                    data-fragment_id="" 
-                                    data-buyer="{{ current_user.id }}">
-                                        Confirm
-                                    </button>
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                </div>
-                        
-                            </div>
-                        </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/panda.jpg') }}" class="card-img-top" alt="panda nft">
+                    <div class="card-body d-flex justify-content-between">
+                        <span>
+                            <small>Creator</small><br>
+                            <p>Noah T.</p>
+                        </span>
+                        <span>
+                            <small>Current Bid</small><br>
+                            <p>8.5 ETH</p>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/monky.jpg') }}" class="card-img-top" alt="monky nft">
+                    <div class="card-body d-flex justify-content-between">
+                        <span>
+                            <small>Creator</small><br>
+                            <p>Noah T.</p>
+                        </span>
+                        <span>
+                            <small>Current Bid</small><br>
+                            <p>13.2 ETH</p>
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- BuyForm -->
-        <form id="buyForm" method="POST" action="{{ url_for('buy') }}">
-            {{ buy_form.hidden_tag() }}
-            <input type="hidden" name="fragment_id" id="hiddenFragmentId">
-            <input type="hidden" name="buyer" id="hiddenBuyer">
-        </form>
+        <h2>test only</h2>
+        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
     </div>
-    
     
      <!-- FAQ -->
     <div class="collap-container">
         <h2 class="FAQ">Frequently Asked Questions</h2>
-        <button type="button" class="collap-btn">What Exactly is an NFT?</button>
+        <button type="button" class="collap-btn bg-light">What Exactly are NFTs?</button>
         <div class="collap-content">
-        <p>Non-fungible Tokens are digital valuables that can be purchased and sold utilizing Blockchain technology on an online marketplace. It’s not interchangeable because it’s non-fungible. With the recent advent of Blockchain across many industries, artists and investors have begun to look for methods to use it to transform the way paintings and other valuables are purchased and traded. NFT users can claim ownership of digital property in exchange for cryptocurrency, rather than visiting a physical store or gallery or even bidding at an auction on tangible items. In terms of data, NFTs can be anything. Images, videos, audio, text, and other forms of creative media are all acceptable. Each NFT is unique, with proven ownership, because it is stored on the blockchain.</p>
+            <p>Non-fungible Tokens are digital valuables that can be purchased and sold utilizing Blockchain technology on an online marketplace. In terms of data, NFTs can be anything. Images, videos, audio, text, and other forms of creative media are all acceptable. Each NFT is unique, with proven ownership, because it is stored on the blockchain.</p>
         </div>
         <button type="button" class="collap-btn">How to Collect NFT Fragments?</button>
         <div class="collap-content">
         <p>You can consume 10 ETH each time to attend lottery on dashboard or buy fragments from marketplace.</p>
         </div>
-        <button type="button" class="collap-btn">How to Redeem a Collection?</button>
+        <button type="button" class="collap-btn bg-light">How to Redeem NFTs?</button>
         <div class="collap-content">
-        <p>Once you collect a set of 9 fragments,you can redeem them on dashboard,choose the collection and click redeem.The redeem value will add into your account balance directly</p>
+        <p>Once you collect a set of fragments, you can redeem them on Marketplace page, choose the NFT you would like to redeem. Then the bonus value for successfully obtaining the NFT will add into your account balance directly</p>
         </div>
 
         
