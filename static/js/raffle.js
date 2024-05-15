@@ -4,7 +4,7 @@ $(document).ready(function() {
             $('#winningSplitImage').attr('src', data.fragment_path); 
             $('#winningSplitName').text('Congratulations! You won: ' + data.fragment_name);
             $('#raffleModal').modal('show');
-        }).fail(function(jqXHR, textStatus, errorThrown) {
+        }).fail(function(jqXHR) {
             if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
                 $('#errorMessage').text(jqXHR.responseJSON.error);
             } else {

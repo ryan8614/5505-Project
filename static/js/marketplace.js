@@ -1,18 +1,16 @@
+//fragments on sale section buttons change content when click
+function showContent(id) {
+    // Hide all contents
+    const contents = document.querySelectorAll('.btn-content');
+    contents.forEach(content => {
+        content.classList.remove('active');
+    });
 
-//https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_collapsible
-
-document.addEventListener("DOMContentLoaded", function() {
-    var coll = document.getElementsByClassName("collap-btn");
-    var i;
-
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            content.classList.toggle("active");
-        });
+    // Show the clicked content
+    const targetContent = document.getElementById(id);
+    if (targetContent) {
+        targetContent.classList.add('active');
     }
-});
-
+}
         
         
