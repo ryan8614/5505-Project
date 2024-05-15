@@ -158,12 +158,14 @@
 }
 .collap-btn {
 cursor: pointer;
-padding: 1.8rem;
+padding: 2.5rem;
 width: 100%;
 border: none;
 text-align: left;
 outline: none;
 font-size: 2rem;
+transition: font-size 0.15s ease-in-out; 
+
 }
 
 .active, .collap-btn:hover {
