@@ -44,13 +44,15 @@
                         <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Marketplace</b></a > 
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('dashboard')  }}"><b>Dashboard</b></a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('logout') }}"><b>Log out</b></a >
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-
      <!-- User info -->
     <div class="user-info">
         <h1 class="mt-5 mb-5">Dashboard</h1>
@@ -240,12 +242,12 @@
             <!-- Spin Wheel -->
             <div class="lottery-container col-sm-5">
                 <div class="spin-wheel">
-                    <div class="one">1</div>
-                    <div class="two">2</div>
-                    <div class="three">3</div>
-                    <div class="four">4</div>
-                    <div class="five">5</div>
-                    <div class="six">6</div>
+                    <div class="one"></div>
+                    <div class="two"></div>
+                    <div class="three"></div>
+                    <div class="four"></div>
+                    <div class="five"></div>
+                    <div class="six"></div>
                 </div>
                 <span class="wheel-center"></span>
                 <button type="button" id="spin" class="btn btn-primary">Spin</button>
