@@ -39,3 +39,9 @@ class BuyForm(FlaskForm):
     fragment_id = StringField('FragmentId', validators=[DataRequired()])
     buyer = StringField('Buyer', validators=[DataRequired()])
     submit = SubmitField('Confirm')
+
+
+class RedeemForm(FlaskForm):
+    nft_id = StringField('NftId', validators=[DataRequired()])
+    user = StringField('User', validators=[DataRequired()])
+    submit = SubmitField('Confirm')

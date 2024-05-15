@@ -11,8 +11,8 @@ from datetime import datetime
 import os
 import hashlib
 import random
-from .forms import LoginForm, RegistrationForm, BuyForm
-from .models import User, NFT, Fragment, Trade
+from .forms import LoginForm, RegistrationForm, BuyForm, RedeemForm
+from .models import User, NFT, Fragment, Trade, TradeHistory
 from . import db, app, processor
 
 
@@ -67,24 +67,83 @@ def register():
 @app.route('/dashboard', methods=['GET'])
 @login_required
 def dashboard():
-    return render_template('dashboard.html', fragments=current_user.user_fragments)
+    trade_history = db.session.query(
+        TradeHistory.trade_id,
+        TradeHistory.frag_id,
+        TradeHistory.frag_name,
+        TradeHistory.price,
+        TradeHistory.transaction_time,
+        User.username.label('seller_username'),
+    ).join(User, User.id == TradeHistory.seller).filter(TradeHistory.buyer == current_user.id).all()
+    fragments=current_user.user_fragments
+    collections = NFT.query.filter_by(completed=1, owner=current_user.id).all()
+    return render_template('dashboard.html', trade_history=trade_history, fragments=fragments, collections=collections)
 
 
 @app.route('/marketplace', methods=['GET'])
 def marketplace():
-    form = BuyForm()
+    buy_form = BuyForm()
+    redeem_form = RedeemForm()
     trades = Trade.query.all()
-    return render_template('marketplace.html', trades=trades, form=form)
+    nft = NFT.query.filter_by(completed=0).all()
+    return render_template('marketplace.html', trades=trades, nft=nft ,buy_form=buy_form, redeem_form=redeem_form)
 
 
-@app.route('/check_login')
+
+@app.route('/check_login', methods=['GET'])
 def check_login():
     return jsonify({'is_logged_in': current_user.is_authenticated})
 
 
-@app.route('/about')
-def about():
-    return render_template('index.html')
+@app.route('/redeem', methods=['POST'])
+def redeem():
+    form = RedeemForm()
+    print(1)
+    if form.validate_on_submit():
+        nft = NFT.query.get(form.nft_id.data)
+        user = User.query.get(form.user.data)
+        if not nft or not user:
+            flash('NFT or user not found.', 'error')
+            return redirect(url_for('marketplace'))
+        
+        fragments = Fragment.query.filter_by(img_id=nft.id, owner=user.id).all()
+        piece_list = set()
+
+        if len(fragments) < nft.pieces:
+            flash('Not enough fragments to redeem.', 'error')
+            return redirect(url_for('marketplace'))
+
+      
+        for fragment in fragments:
+            if not fragment.verify_frag_name() or fragment.piece_number in piece_list:
+                flash('Redeem verification failed.', 'error')
+                return redirect(url_for('marketplace'))
+            piece_list.add(fragment.piece_number)
+
+        if len(piece_list) == nft.pieces and max(piece_list) == nft.pieces:
+            # Process successful redemption here, such as transferring ownership, marking NFT as complete, etc.
+            # Update NFT ownership and mark as completed
+            nft.owner = user.id
+            nft.completed = 1
+
+            # Update user balance
+            user.set_balance(float(user.balance) + float(nft.get_bonus))
+
+             # Delete related fragments and trades
+            for fragment in fragments:
+                db.session.delete(fragment)
+
+            # Commit all changes to the database
+            db.session.commit()
+
+            flash('Redemption successful.', 'success')
+            return redirect(url_for('marketplace'))
+        else:
+            flash('Redeem verification failed.', 'error')
+            return redirect(url_for('marketplace'))
+        
+
+    return render_template('marketplace.html')
 
 
 @app.route('/privacy')
@@ -94,6 +153,10 @@ def privacy():
 
 @app.route('/terms')
 def terms():
+    return render_template('index.html')
+
+@app.route('/about')
+def about():
     return render_template('index.html')
 
 
@@ -203,11 +266,13 @@ def buy():
             # Add transaction history
             new_trade_history = TradeHistory(
                 frag_id=frag.id,
+                frag_name=frag.name,
                 seller=owner.id,
                 buyer=buyer.id,
-                price=trade.price,
                 transaction_time=datetime.utcnow()
             )
+
+            new_trade_history.set_price(trade.price)
             db.session.add(new_trade_history)
 
             # Since we have reassigned the fragment, we need to delete the existing trade
@@ -291,7 +356,7 @@ def raffle():
     return jsonify({'fragment_path': fragment_path, 'fragment_name': fragment_name})
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['GET'])
 @login_required
 def logout():
     if current_user.is_authenticated:

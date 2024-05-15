@@ -1,0 +1,83 @@
+.bg-change {
+    background: linear-gradient(-45deg, #6a82fb, #da22ff, #6a82fb, #da22ff);
+    background-size: 400% 400%;
+    animation: gradientBG 10s ease infinite;
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+
+}
+
+.bg-change::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/static/images/bg-shadow.png') no-repeat center center / cover;
+    opacity: 0.2; 
+    z-index: -2;
+}
+   
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh; 
+    background-color: transparent;
+    z-index: 1; 
+}
+
+#login-container-bg {
+    background-color: transparent !important; 
+}
+#register-container-bg{
+    background-color: transparent !important; 
+}
+
+.login-form {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 500px; 
+    min-width: 300px;
+    margin: auto;
+}
+
+input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #6a82fb;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #5a72db;
+}
+
+.form-footer-links {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px 0;
+}
