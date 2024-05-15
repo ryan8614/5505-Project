@@ -332,48 +332,20 @@
         <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
     </div>
     
-    <!-- My Fragments Section -->
-    <div class="section">
-        <div class="btn-content" id="my-fragments">
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <!-- Grab my fragments from the database -->
-                {% for fragment in owned_fragments %}
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="{{ url_for('static', filename=fragment.image) }}" class="card-img-top" alt="{{ fragment.name }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ fragment.name }}</h5>
-                            <form>
-                                <div class="mb-3">
-                                    <label for="price-{{ fragment.id }}" class="form-label">Price (ETH)</label>
-                                    <input type="number" class="form-control" id="price-{{ fragment.id }}" placeholder="Enter price" step="0.01" min="0">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Sale</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    
-    </div>
-    </div>
-    
      <!-- FAQ -->
     <div class="collap-container">
         <h2 class="FAQ">Frequently Asked Questions</h2>
-        <button type="button" class="collap-btn bg-light">What Exactly is an NFT?</button>
+        <button type="button" class="collap-btn bg-light">What Exactly are NFTs?</button>
         <div class="collap-content">
-        <p>Non-fungible Tokens are digital valuables that can be purchased and sold utilizing Blockchain technology on an online marketplace. It’s not interchangeable because it’s non-fungible. With the recent advent of Blockchain across many industries, artists and investors have begun to look for methods to use it to transform the way paintings and other valuables are purchased and traded. NFT users can claim ownership of digital property in exchange for cryptocurrency, rather than visiting a physical store or gallery or even bidding at an auction on tangible items. In terms of data, NFTs can be anything. Images, videos, audio, text, and other forms of creative media are all acceptable. Each NFT is unique, with proven ownership, because it is stored on the blockchain.</p>
+            <p>Non-fungible Tokens are digital valuables that can be purchased and sold utilizing Blockchain technology on an online marketplace. In terms of data, NFTs can be anything. Images, videos, audio, text, and other forms of creative media are all acceptable. Each NFT is unique, with proven ownership, because it is stored on the blockchain.</p>
         </div>
         <button type="button" class="collap-btn bg-light">How to Collect NFT Fragments?</button>
         <div class="collap-content">
         <p>You can consume 10 ETH each time to attend lottery on dashboard or buy fragments from marketplace.</p>
         </div>
-        <button type="button" class="collap-btn bg-light">How to Redeem a Collection?</button>
+        <button type="button" class="collap-btn bg-light">How to Redeem NFTs?</button>
         <div class="collap-content">
-        <p>Once you collect a set of fragments,you can redeem them on dashboard,choose the collection and click redeem.The redeem value will add into your account balance directly</p>
+        <p>Once you collect a set of fragments, you can redeem them on Marketplace page, choose the NFT you would like to redeem. Then the bonus value for successfully obtaining the NFT will add into your account balance directly</p>
         </div>
 
         
