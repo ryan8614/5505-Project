@@ -71,10 +71,11 @@ padding:1.8rem;
     transition: transform 0.3s;
 }
 
-
 /************************************/
 /* marketplace */
 /************************************/
+
+
 
 .section {
     background-color: #ffffff;
@@ -90,7 +91,8 @@ padding:1.8rem;
 .section-content {
     padding: 15px;
     border-radius: 8px;
-    overflow: hidden; 
+    height: 300px; 
+    overflow-y: auto; 
 }
 
 #my-fragments-section {
@@ -116,4 +118,5 @@ padding:1.8rem;
 .card-body {
     padding: 10px;
 }
+
 

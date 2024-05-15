@@ -83,50 +83,80 @@
     text-decoration: none;
 }
 
-.intro-btn:hover{
-    background-color: #fff;
-    color:black;
+
+/****************************************/
+/*LIVE AUCTION SECTION*/
+/****************************************/
+.live-auction {
+    background-color: white;
 }
+.live-auction .card {
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+.live-auction .card:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.live-auction .card-img-top {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.live-auction .card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+.live-auction .creator, .live-auction .price {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.live-auction .creator {
+    align-items: flex-start;
+}
+
+.live-auction .price {
+    align-items: flex-end;
+}
+
+.live-auction .small {
+    color: #666;
+    font-size: 0.8em;
+}
+
+.live-auction p {
+    margin: 0;
+    font-weight: bold;
+}
+
+/* Styles for carousel controls */
+.live-auction .carousel-control-prev-icon,
+.live-auction .carousel-control-next-icon {
+    background-color: #000;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background-size: 60%;
+}
+
 
 /****************************************/
 /*FRAGMENTS ON SALE*/
 /****************************************/
-.sidebar-container {
-    height: 60rem;
-    margin:10rem;
-    display: flex; /* Use flexbox to create a row layout */
-    border:1px solid rgba(137, 18, 207, 0.83);
-    border-radius: 2rem;
-  }
-  
-  .sidenav {
-    height: 100%;
-    width: 20rem;
-    background-color:rgba(137, 18, 207, 0.83);
-    padding-top: 2rem;
-    border-radius:2rem;
-  }
-  
-  .sidenav a {
-    padding: 2rem;
-    text-decoration: none;
-    font-size: 2rem;
-    color: bisque;
-    display: block;
-  }
-  
-  .sidenav a:hover {
-    color: white;
-  }
-  
-  .sidebar-content {
-    flex: 1; /* Take up remaining space */
-    font-size: 2rem; 
-    padding: 0 2rem;
-    width: auto;
-    overflow-y: auto;
-  }
-  
+
+
+
 /****************************************/
 /*FREQUENT ASKED QUESTIONS*/
 /****************************************/
