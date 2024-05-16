@@ -289,48 +289,52 @@ def buy():
 
 
 @app.route('/upload', methods=['GET', 'POST'])
+@login_required 
 def upload():
-    if request.method == 'POST':
-        file = request.files['file']
-        num_parts = request.form.get('num_parts', type=int)
-        
-        if file and file.filename and processor.allowed_file(file.filename):
-            filename = secure_filename(file.filename)  # NFT filename
-            file_path = os.path.join(processor.upload_folder, filename)  # NFT filepath
-
-            # Check if the file already exists
-            if os.path.exists(file_path):
-                flash('A file with this name already exists. Please upload a file with a different name or delete the existing one.')
-                return redirect(request.url)
-
-            save_result = processor.save_file(file)
-            if save_result:
-                # Insert a new piece of data into the NFT table
-                img_hash_id = hashlib.sha256(filename.encode()).hexdigest() # NFT hash id
-                new_nft = NFT(id=img_hash_id, path=file_path, completed=False, pieces=num_parts, owner=0)
-                db.session.add(new_nft)
-
-                fragments = processor.split_image(file_path, num_parts)
-                for frag_data in fragments:
-                    fragment_filename, fragment_path, piece_number = frag_data[0], frag_data[1], frag_data[2]
-                    frag_hash_id = hashlib.sha256(fragment_filename.encode()).hexdigest() # Split hash id
-                    new_fragment = Fragment(id = frag_hash_id, img_id = img_hash_id, path = fragment_path, piece_number = piece_number, owner = 0)
-                    db.session.add(new_fragment)
-                db.session.commit()
-                
-
-                flash('File has been uploaded and processed successfully.')
-                return redirect(url_for('upload'))
-            else:
-                flash('File format not supported.')
-                return redirect(request.url)
+    if current_user.username == 'root':
+        if request.method == 'POST':
+            file = request.files['file']
+            num_parts = request.form.get('num_parts', type=int)
             
-        else:
-            flash('Invalid file or file format not supported.')
-            return redirect(url_for('upload'))
-    else:
-        return render_template('upload.html')
+            if file and file.filename and processor.allowed_file(file.filename):
+                filename = secure_filename(file.filename)  # NFT filename
+                file_path = os.path.join(processor.upload_folder, filename)  # NFT filepath
 
+                # Check if the file already exists
+                if os.path.exists(file_path):
+                    flash('A file with this name already exists. Please upload a file with a different name or delete the existing one.')
+                    return redirect(request.url)
+
+                save_result = processor.save_file(file)
+                if save_result:
+                    # Insert a new piece of data into the NFT table
+                    img_hash_id = hashlib.sha256(filename.encode()).hexdigest() # NFT hash id
+                    new_nft = NFT(id=img_hash_id, path=file_path, completed=False, pieces=num_parts, owner=0)
+                    db.session.add(new_nft)
+
+                    fragments = processor.split_image(file_path, num_parts)
+                    for frag_data in fragments:
+                        fragment_filename, fragment_path, piece_number = frag_data[0], frag_data[1], frag_data[2]
+                        frag_hash_id = hashlib.sha256(fragment_filename.encode()).hexdigest() # Split hash id
+                        new_fragment = Fragment(id = frag_hash_id, img_id = img_hash_id, path = fragment_path, piece_number = piece_number, owner = 0)
+                        db.session.add(new_fragment)
+                    db.session.commit()
+                    
+
+                    flash('File has been uploaded and processed successfully.')
+                    return redirect(url_for('upload'))
+                else:
+                    flash('File format not supported.')
+                    return redirect(request.url)
+                
+            else:
+                flash('Invalid file or file format not supported.')
+                return redirect(url_for('upload'))
+        else:
+            return render_template('upload.html')
+    else:
+        flash('You are not authorized to access this page.')
+        return redirect(url_for('index'))
 
 @app.route('/raffle', methods=['POST'])
 @login_required

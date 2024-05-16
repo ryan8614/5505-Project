@@ -51,6 +51,17 @@
         </div>
     </nav>
 
+    <!-- echo flash message -->
+    <div class="container col-8 text-center">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>    
+
      <!-- User info -->
     <div class="user-info">
         <h1 class="mt-5 mb-5 text-center">Dashboard</h1>
@@ -61,18 +72,7 @@
                 </div>
             </div>
             <h3 class="text-center">Hello {{ current_user.username }},welcome to dashboard!</h3>
-            <h4 class="text-center">Balance:{{ '%.2f'|format(current_user.balance) }} ETH</h4>
-            
-            <!-- echo flash message -->
-            <div class="container col-8 text-center">
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-                {% endwith %}
-            </div>     
+            <h4 class="text-center">Balance:{{ '%.2f'|format(current_user.balance) }} ETH</h4> 
         </div>
         <!-- User Nav Section -->
         <div class="container nav-container"> 

@@ -1,4 +1,11 @@
 $(document).ready(function() {
+
+    // Handle fragments on sale section buttons change content when click
+    $('.collap-btn').click(function() {
+        var content = $(this).next();
+        content.toggle();  // Toggle visibility
+    });
+
     // Handle modal show event and update modal content
     $('button[data-bs-target="#BuyModal"]').click(function(event) {
         event.preventDefault();
@@ -80,31 +87,16 @@ $(document).ready(function() {
     }
 
     $('#frg-confirmButton').on('click', function() {
-        frgconfirmTransaction($(this));
-    });
-
-    function frgconfirmTransaction(button) {
-        var fragment_id = button.data('fragment_id');
-        var buyer = button.data('buyer');
-
-        $('#buyForm input[name="fragment_id"]').val(fragment_id);
-        $('#buyForm input[name="buyer"]').val(buyer);
+        $('#buyForm input[name="fragment_id"]').val($(this).data('fragment_id'));
+        $('#buyForm input[name="buyer"]').val($(this).data('buyer'));
         $('#buyForm').submit();
-    }
+    });
 
     $('#nft-confirmButton').on('click', function() {
-        nftconfirmTransaction($(this));
-    });
-
-    function nftconfirmTransaction(button) {
-        var nft_id = button.data('nftId');
-        var user = button.data('user');
-        console.log(nft_id)
-        console.log(user)
-        $('#redeemForm input[name="nft_id"]').val(nft_id);
-        $('#redeemForm input[name="user"]').val(user);
+        $('#redeemForm input[name="nft_id"]').val($(this).data('nftId'));
+        $('#redeemForm input[name="user"]').val($(this).data('user'));
         $('#redeemForm').submit();
-    }
+    });
 
 });
         

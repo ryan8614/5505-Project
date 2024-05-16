@@ -122,8 +122,6 @@ class NFT(db.Model):
 
 
 
-
-
 class Fragment(db.Model):
     __tablename__ = 'fragment'
 
