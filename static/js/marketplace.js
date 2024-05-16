@@ -98,5 +98,45 @@ $(document).ready(function() {
         $('#redeemForm').submit();
     });
 
+    $('#search-form').on('submit', function(event) {
+        event.preventDefault();
+        let query = $('#search-input').val();
+
+        $.ajax({
+            url: '{{ url_for("search_fragments") }}',
+            method: 'GET',
+            data: { query: query },
+            success: function(response) {
+                let fragmentsContainer = $('#fragments-container');
+                fragmentsContainer.empty();
+
+                response.trades.forEach(function(trade) {
+                    let fragmentHtml = `
+                    <div class="col fragment">
+                        <div class="card h-100">
+                            <img src="${trade.fragment.path}" class="card-img-top" alt="${trade.fragment.name}">
+                            <div class="card-body container d-flex flex-row justify-content-around">
+                                <div class="container d-flex flex-column">
+                                    <h5 class="card-title">${trade.fragment.name}</h5>
+                                    <p class="card-text">Price: ${trade.price} ETH</p>
+                                    <p class="card-text">${new Date(trade.listed_time).toLocaleDateString()}</p>
+                                </div>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#BuyModal"
+                                data-fragment-id="${trade.fragment.id}"
+                                data-fragment-path="${trade.fragment.path}"
+                                data-fragment-name="${trade.fragment.name}"
+                                data-fragment-price="${trade.price}"
+                                data-fragment-release-time="${new Date(trade.listed_time).toLocaleDateString()}">
+                                    Buy
+                                </button>
+                            </div>
+                        </div>
+                    </div>`;
+                    fragmentsContainer.append(fragmentHtml);
+                });
+            }
+        });
+    });
+
 });
         
