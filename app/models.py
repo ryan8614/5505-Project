@@ -1,8 +1,9 @@
 import os
-import re
 import hashlib
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from sqlalchemy.orm import column_property
+from sqlalchemy import func
 from datetime import datetime, timezone
 from decimal import Decimal
 from sqlalchemy.ext.hybrid import hybrid_property 
@@ -154,6 +155,7 @@ class Fragment(db.Model):
             file_name, _ = os.path.splitext(file_name_with_extension)
             return file_name
         return None  
+    
     
     def verify_frag_name(self):
         """
