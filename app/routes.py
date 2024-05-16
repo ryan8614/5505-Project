@@ -5,6 +5,8 @@ Server routes implementation using Flask
 
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import login_user, current_user, login_required, logout_user
+from sqlalchemy.orm import joinedload
+from sqlalchemy import func
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -373,20 +375,19 @@ def logout():
         return redirect(url_for('index'))
 
 
-
 @app.route('/search_fragments', methods=['GET'])
 def search_fragments():
-    query = request.args.get('query', '')
-    trades = Trade.query.filter(Trade.fragment.name.ilike(f'%{query}%')).all()
+    query = request.args.get('query', '').lower()
+    
+    if not query:
+        trades = Trade.query.options(joinedload(Trade.fragment)).all()
+    else:
+        # Retrieve all fragments and filter them in Python
+        fragments = Fragment.query.options(joinedload(Fragment.trade)).all()
+        matching_fragments = [fragment for fragment in fragments if fragment.name and query in fragment.name.lower()]
+        # Get the corresponding trades for those fragments
+        trades = [fragment.trade for fragment in matching_fragments if fragment.trade]
 
-    trades_data = [{
-        'fragment': {
-            'id': trade.fragment.id,
-            'path': trade.fragment.path,
-            'name': trade.fragment.name,
-        },
-        'price': trade.price,
-        'listed_time': trade.listed_time.isoformat()
-    } for trade in trades]
+    rendered = [render_template('_trade_card.html', trade=trade) for trade in trades]
 
-    return jsonify({'trades': trades_data})
+    return jsonify({'html': rendered})

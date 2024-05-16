@@ -1,0 +1,25 @@
+<div class="col">
+    <div class="card h-100">
+        <img src="{{ trade.fragment.path }}" class="card-img-top" alt="{{ trade.fragment.name }}">
+        <div class="card-body container d-flex flex-row justify-content-around p-3">
+            <div class="container d-flex flex-column col-8">
+                <h5 class="card-title">{{ trade.fragment.name }}</h5>
+                <p class="card-text">
+                    <span>Price: {{ trade.price }} ETH</span>
+                    <br>
+                    <span>{{ trade.listed_time.date() }}</span>
+                </p>
+            </div>
+            <div class="container d-flex col-4">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#BuyModal"
+                data-fragment-id="{{ trade.fragment.id }}"
+                data-fragment-path="{{ trade.fragment.path }}"
+                data-fragment-name="{{ trade.fragment.name }}"
+                data-fragment-price="{{ trade.price }}"
+                data-fragment-release-time="{{ trade.listed_time.date() }}">
+                Buy
+            </button>
+            </div>
+        </div>
+    </div>
+</div>

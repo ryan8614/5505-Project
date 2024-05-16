@@ -6,18 +6,32 @@ $(document).ready(function() {
         content.toggle();  // Toggle visibility
     });
 
-    // Handle modal show event and update modal content
-    $('button[data-bs-target="#BuyModal"]').click(function(event) {
-        event.preventDefault();
-        checkLoginStatus_fragment($(this));
-    });
+    function bindEvents() {
+        // Handle modal show event and update modal content
+        $('button[data-bs-target="#BuyModal"]').click(function(event) {
+            event.preventDefault();
+            checkLoginStatus_fragment($(this));
+        });
 
+        $('button[data-bs-target="#RedeemModal"]').click(function(event) {
+            event.preventDefault();
+            checkLoginStatus_nft($(this));
+        });
 
-    $('button[data-bs-target="#RedeemModal"]').click(function(event) {
-        event.preventDefault();
-        checkLoginStatus_nft($(this));
-    });
+        $('#frg-confirmButton').on('click', function() {
+            $('#buyForm input[name="fragment_id"]').val($(this).data('fragment_id'));
+            $('#buyForm input[name="buyer"]').val($(this).data('buyer'));
+            $('#buyForm').submit();
+        });
 
+        $('#nft-confirmButton').on('click', function() {
+            $('#redeemForm input[name="nft_id"]').val($(this).data('nftId'));
+            $('#redeemForm input[name="user"]').val($(this).data('user'));
+            $('#redeemForm').submit();
+        });
+    }
+
+    bindEvents();
 
     function checkLoginStatus_fragment(button) {
         $.ajax({
@@ -86,54 +100,27 @@ $(document).ready(function() {
         });
     }
 
-    $('#frg-confirmButton').on('click', function() {
-        $('#buyForm input[name="fragment_id"]').val($(this).data('fragment_id'));
-        $('#buyForm input[name="buyer"]').val($(this).data('buyer'));
-        $('#buyForm').submit();
-    });
-
-    $('#nft-confirmButton').on('click', function() {
-        $('#redeemForm input[name="nft_id"]').val($(this).data('nftId'));
-        $('#redeemForm input[name="user"]').val($(this).data('user'));
-        $('#redeemForm').submit();
-    });
-
     $('#search-form').on('submit', function(event) {
         event.preventDefault();
         let query = $('#search-input').val();
 
         $.ajax({
-            url: '{{ url_for("search_fragments") }}',
+            url: '/search_fragments',
             method: 'GET',
             data: { query: query },
             success: function(response) {
                 let fragmentsContainer = $('#fragments-container');
                 fragmentsContainer.empty();
-
-                response.trades.forEach(function(trade) {
-                    let fragmentHtml = `
-                    <div class="col fragment">
-                        <div class="card h-100">
-                            <img src="${trade.fragment.path}" class="card-img-top" alt="${trade.fragment.name}">
-                            <div class="card-body container d-flex flex-row justify-content-around">
-                                <div class="container d-flex flex-column">
-                                    <h5 class="card-title">${trade.fragment.name}</h5>
-                                    <p class="card-text">Price: ${trade.price} ETH</p>
-                                    <p class="card-text">${new Date(trade.listed_time).toLocaleDateString()}</p>
-                                </div>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#BuyModal"
-                                data-fragment-id="${trade.fragment.id}"
-                                data-fragment-path="${trade.fragment.path}"
-                                data-fragment-name="${trade.fragment.name}"
-                                data-fragment-price="${trade.price}"
-                                data-fragment-release-time="${new Date(trade.listed_time).toLocaleDateString()}">
-                                    Buy
-                                </button>
-                            </div>
-                        </div>
-                    </div>`;
+    
+                response.html.forEach(function(fragmentHtml) {
                     fragmentsContainer.append(fragmentHtml);
                 });
+                
+                // Re-bind events after updating the content
+                bindEvents();
+            },
+            error: function(error) {
+                console.error('Error:', error);
             }
         });
     });
