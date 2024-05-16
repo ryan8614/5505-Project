@@ -46,28 +46,28 @@
 
 .login-form {
     background: rgba(255, 255, 255, 0.8);
-    padding: 20px 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 500px; 
-    min-width: 300px;
+    padding: 2rem 4rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.1);
+    width: 50rem; 
+    min-width: 30rem;
     margin: auto;
 }
 
 input[type="email"], input[type="password"] {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
+    padding: 1rem;
+    margin-bottom: 2rem;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 input[type="submit"] {
     width: 100%;
-    padding: 10px;
+    padding: 1rem;
     background-color: #6a82fb;
     border: none;
     color: white;
-    border-radius: 5px;
+    border-radius: 0.5rem;
     cursor: pointer;
 }
 
@@ -79,5 +79,5 @@ input[type="submit"]:hover {
     display: flex;
     justify-content: space-between; 
     align-items: center;
-    padding: 10px 0;
+    padding: 1rem 0;
 }
