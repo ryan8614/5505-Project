@@ -68,29 +68,32 @@
         </div>
     </div>
 
-    <!-- User join container -->
-    <div class="user-container d-flex align-items-center justify-content-center">
-        <div class="user-img d-flex">
-            <img src="{{ url_for('static', filename='images/seller1.png') }}"  alt="user-image">
-            <img src="{{ url_for('static', filename='images/seller2.png') }}"  alt="user-image">
-            <img src="{{ url_for('static', filename='images/seller3.png') }}"  alt="user-image">
-            <img src="{{ url_for('static', filename='images/seller4.png') }}"  alt="user-image">
-            <img src="{{ url_for('static', filename='images/seller5.png') }}"  alt="user-image">
-            <img src="{{ url_for('static', filename='images/seller6.png') }}"  alt="user-image">
+    <div class="container-fluid d-flex flex-row justify-content-around p-5">
+        <!-- User review container -->
+        <div class="review-container col-md-5">
+            <div class="review-img">
+                <img src="{{ url_for('static', filename='images/market-img2.png') }}"  alt="nft image" class="market-img2">
+            </div>
+            <div class="review r1">Easy to sign up and easy to operate.</div>
+            <div class="review r2">Many attractive collections!</div>
+            <div class="review r3">A good way to entertainment!</div>
         </div>
-        <p class="user-text"><span>10000+</span> Users have joined!</p>
+
+        <!-- User join container -->
+        <div class="user-container d-flex align-items-center justify-content-center col-md-5">
+            <div class="user-img d-flex">
+                <img src="{{ url_for('static', filename='images/seller1.png') }}"  alt="user-image">
+                <img src="{{ url_for('static', filename='images/seller2.png') }}"  alt="user-image">
+                <img src="{{ url_for('static', filename='images/seller3.png') }}"  alt="user-image">
+                <img src="{{ url_for('static', filename='images/seller4.png') }}"  alt="user-image">
+                <img src="{{ url_for('static', filename='images/seller5.png') }}"  alt="user-image">
+                <img src="{{ url_for('static', filename='images/seller6.png') }}"  alt="user-image">
+            </div>
+            <p class="user-text"><span>10000+</span> Users have joined!</p>
+        </div>
     </div>
 
-   <!-- User review container -->
-    <div class="review-container">
-        <div class="review-img">
-            <img src="{{ url_for('static', filename='images/market-img2.png') }}"  alt="nft image" class="market-img2">
-        </div>
-        <div class="review r1">Easy to sign up and easy to operate.</div>
-        <div class="review r2">Many attractive collections!</div>
-        <div class="review r3">A good way to entertainment!</div>
-    </div>
-
+    
     <!-- Live Auction Carousel -->
     <div class="container mt-5 mb-5">
         <h2 class="mt-5 mb-5 text-center"><b>Live Auctions</b></h2>
@@ -105,8 +108,8 @@
                                 <img src="{{ item.path }}" class="card-img-top" alt="cat nft">
                                 <div class="card-body d-flex flex-row justify-content-around">
                                     <div class="container d-flex flex-column justify-content-around">
-                                        <p>{{ item.name }}</p>
-                                        <p>{{ item.bonus }}</p>
+                                        <p class="card-text">{{ item.name }}</p>
+                                        <p class="card-text">{{ item.bonus }}</p>
                                     </div>
                                     <div class="d-flex justify-content-center">
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#RedeemModal"
@@ -176,8 +179,8 @@
     <div class="search-container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form class="d-flex" id="search-form">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-input">
                     <button class="btn btn-outline-primary" type="submit">Search</button>
                 </form>
             </div>
@@ -190,7 +193,7 @@
         <!-- All Fregments Section  -->
         <div class="section">
             <div class="section-content" id="all-fragments">
-                <div class="row row-cols-1 row-cols-md-4 g-4">
+                <div class="row row-cols-1 row-cols-md-4 g-4" id="fragments-container">
                     <!-- Grab Tradable fragments from the database -->
                     {% for trade in trades %}
                     <div class="col">
@@ -214,42 +217,41 @@
                         </div>
                     </div>
                     {% endfor %}
+                </div>
+                <!-- Modal Box -->
+                <div class="modal fade" id="BuyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
 
-                    <!-- Modal Box -->
-                    <div class="modal fade" id="BuyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-
-                                <!-- Content -->
-                                <div class="modal-body">
-                                    <div class="container-fluid text-center">
-                                        <img src="" alt="trade-img" class="img-fluid">
-                                    </div>
-                                    
-                                    <h5></h5>
-                                    <p class="price"></p>
-                                    <p class="release-time"></p>
-                                    <p class="balance">
-                                        <span>Balance: </span>
-                                    {% if current_user.is_authenticated %}
-                                        {{ current_user.get_balance() }}<span> ETH</span>
-                                    {% else %}
-                                        <span>Login to see balance</span>
-                                    {% endif %}
-                                    </p>
+                            <!-- Content -->
+                            <div class="modal-body">
+                                <div class="container-fluid text-center">
+                                    <img src="" alt="trade-img" class="img-fluid">
                                 </div>
-                        
-                                <!-- Bottom -->
-                                <div class="modal-footer">
-                                    <button type="button" id="frg-confirmButton" class="btn btn-primary" data-bs-dismiss="modal"
-                                    data-fragment_id="" 
-                                    data-buyer="{{ current_user.id }}">
-                                        Confirm
-                                    </button>
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                </div>
-                        
+                                
+                                <h5></h5>
+                                <p class="price"></p>
+                                <p class="release-time"></p>
+                                <p class="balance">
+                                    <span>Balance: </span>
+                                {% if current_user.is_authenticated %}
+                                    {{ current_user.get_balance() }}<span> ETH</span>
+                                {% else %}
+                                    <span>Login to see balance</span>
+                                {% endif %}
+                                </p>
                             </div>
+                    
+                            <!-- Bottom -->
+                            <div class="modal-footer">
+                                <button type="button" id="frg-confirmButton" class="btn btn-primary" data-bs-dismiss="modal"
+                                data-fragment_id="" 
+                                data-buyer="{{ current_user.id }}">
+                                    Confirm
+                                </button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+                    
                         </div>
                     </div>
                 </div>

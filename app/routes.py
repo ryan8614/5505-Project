@@ -335,6 +335,7 @@ def upload():
     else:
         flash('You are not authorized to access this page.')
         return redirect(url_for('index'))
+    
 
 @app.route('/raffle', methods=['POST'])
 @login_required
@@ -372,3 +373,20 @@ def logout():
         return redirect(url_for('index'))
 
 
+
+@app.route('/search_fragments', methods=['GET'])
+def search_fragments():
+    query = request.args.get('query', '')
+    trades = Trade.query.filter(Trade.fragment.name.ilike(f'%{query}%')).all()
+
+    trades_data = [{
+        'fragment': {
+            'id': trade.fragment.id,
+            'path': trade.fragment.path,
+            'name': trade.fragment.name,
+        },
+        'price': trade.price,
+        'listed_time': trade.listed_time.isoformat()
+    } for trade in trades]
+
+    return jsonify({'trades': trades_data})
