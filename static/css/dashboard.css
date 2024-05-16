@@ -30,8 +30,9 @@ th, td {
 /*LOTTERY*/
 /****************************************/
 .lottery-block{
-    margin-top:15rem;
-    margin-bottom: 5rem;
+    margin-top:10rem;
+    margin-bottom: 10rem;
+    min-height: 600px;
 }
 /* lottery text */
 .lottery-text{
@@ -83,6 +84,10 @@ th, td {
 .lottery-title-container span:nth-of-type(7) {
     animation-delay: 1.4s;
 }
+
+/****************************************/
+/*SPIN*/
+/****************************************/
 
 /* lottery spin wheel animation */
 .lottery-container{

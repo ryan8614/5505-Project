@@ -87,8 +87,9 @@ def marketplace():
     buy_form = BuyForm()
     redeem_form = RedeemForm()
     trades = Trade.query.all()
+    users = User.query.all()
     nft = NFT.query.filter_by(completed=0).all()
-    return render_template('marketplace.html', trades=trades, nft=nft ,buy_form=buy_form, redeem_form=redeem_form)
+    return render_template('marketplace.html', trades=trades, nft=nft ,buy_form=buy_form, redeem_form=redeem_form, user_num = len(users))
 
 
 
@@ -261,7 +262,11 @@ def buy():
             return redirect(url_for('marketplace'))
         else:
             owner = User.query.get(trade.owner)
-            owner.balance += trade.price
+            if owner.balance + trade.price > 100000:
+                owner.balance = 99999
+            else:
+                owner.balance += trade.price
+
             buyer.balance -= trade.price
             frag.owner = buyer.id
 
