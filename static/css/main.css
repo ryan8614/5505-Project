@@ -27,18 +27,18 @@ padding:1.8rem;
 
 /* Navigation */
 .navbar {
-    padding: 12px 0;
+    padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-brand {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     font-weight: bold;
 }
 
 .nav-link {
-    font-size: 12px;
-    margin-left: 10px;
+    font-size: 1.6rem;
+    margin-left: 1rem;
 }
 
 /* Search Bar */
