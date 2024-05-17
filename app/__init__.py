@@ -13,8 +13,8 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-# secret_key = binascii.hexlify(os.urandom(24)).decode()
-app.config['SECRET_KEY'] = 'you-will-never-guess-the-secret_key'
+secret_key = binascii.hexlify(os.urandom(24)).decode()
+app.config['SECRET_KEY'] = secret_key
 
 login_manager = LoginManager(app)
 login_manager.init_app(app)

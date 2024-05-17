@@ -25,7 +25,7 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-md navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand ps-5" href="{{ ('index') }}"><img class="logo" alt="nft-logo" src="{{ url_for('static', filename='images/logo.png') }}">Virtual NFT Market</a>
+                <a class="navbar-brand ps-5" href="{{ url_for('index') }}"><img class="logo" alt="nft-logo" src="{{ url_for('static', filename='images/logo.png') }}">Virtual NFT Market</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -37,6 +37,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Marketplace</b></a > 
                         </li>
+                        {% if current_user.username == 'root' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('upload') }}"><b>Upload</b></a > 
+                        </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('logout') }}"><b>Log out</b></a >
                         </li>
@@ -260,8 +265,8 @@
 
         <!-- Lottery -->
         <div class="container lottery-block col-8">
-            <div class="row justify-content-center">
-                <div class="col-sm-5 d-flex align-items-start justify-content-center lottery-text">
+            <div class="row">
+                <div class="col-lg-6 d-flex align-items-start justify-content-center lottery-text">
                     <div class="lottery-title-container">
                         <h2 class="lottery-title mb-10">
                             <span>L</span>
@@ -273,18 +278,15 @@
                             <span>Y</span>
                         </h2>
                         <p class="lottery-intro">
-                            Want to collect some rare fragments?
-                            <br>
-                            Spend 10 ETH each time to participate in our lottery!
-                            <br> 
-                            Collect a complete set of fragments to redeem rewards! 
-                            <br>
+                            Want to collect some rare fragments?<br>
+                            Spend 10 ETH each time to participate in our lottery!<br> 
+                            Collect a complete set of fragments to redeem rewards! <br>
                             Click on the image on the right to join the lottery now!
                         </p>
                     </div>
                 </div>
                 <!-- Spin Wheel -->
-                <div class="lottery-container col-sm-5">
+                <div class="lottery-container col-lg-6">
                     <div class="spin-wheel">
                         <div class="one">1</div>
                         <div class="two">2</div>
