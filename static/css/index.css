@@ -36,20 +36,33 @@
 /****************************************/
 /*INTROSECTION*/
 /****************************************/
+.large-title{
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+.setup-title {
+    font-size: 2rem;
+    text-align: center;  
+}
 
 .intro-img{
-    height:2rem;
-    width:2rem; 
+    height:3rem;
+    width:3rem; 
 }
 
 .intro-description{
-    font-size: 1rem;
+    font-size: 1.3rem;
     color:grey;
 }
 
 /****************************************/
 /*LIVE AUCTION SECTION*/
 /****************************************/
+.sub-title{
+    font-size: 3rem;
+}
+
 .price {
     flex: 1;
     display: flex;
@@ -65,12 +78,9 @@
     align-items: flex-start;
 }
 
-
-.small {
-    color: #666;
-    font-size: 0.8em;
+.auction-text {
+    font-size: 1.2rem;
 }
-
 
 /* Styles for carousel controls */
 .carousel-control-prev-icon,
