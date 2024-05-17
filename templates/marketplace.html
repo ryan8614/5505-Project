@@ -107,23 +107,20 @@
                     <div class="row bg-white">
                         {% for item in nft[i*4:(i+1)*4] %}
                         <div class="col-sm-3">
-                            <div class="card">
+                            <div class="card clickable-card" data-bs-toggle="modal" data-bs-target="#RedeemModal"
+                                data-nft-id="{{ item.id }}"
+                                data-nft-bonus="{{ item.bonus }}"
+                                data-nft-name="{{ item.path.name }}">
                                 <img src="{{ item.path }}" class="card-img-top" alt="nft img">
-                                <div class="card-body container d-flex flex-row justify-content-around">
-                                    <div class="container d-flex flex-column col-8">
-                                        <p class="card-text">
-                                            <span>Name: {{ item.name }}</span>
-                                            <br>
-                                            <span>Bonus: {{ item.bonus }} ETH</span>
-                                        </p>
-                                    </div>
-                                    <div class="container d-flex col-4">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#RedeemModal"
-                                        data-nft-id="{{ item.id }}"
-                                        data-nft-bonus="{{ item.bonus }}"
-                                        data-nft-name="{{ item.path.name }}">
-                                            Redeem
-                                        </button>
+                                <div class="card-body container">
+                                    <div class="row d-flex flex-row justify-content-around">
+                                        <div class="container d-flex flex-column col-12">
+                                            <p class="card-text">
+                                                <span>Name: {{ item.name }}</span>
+                                                <br>
+                                                <span>Bonus: {{ item.bonus }} ETH</span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -279,91 +276,6 @@
                 </form>
             </div>  
         </div>
-    </div>
-   
-    <div class="container-fluid d-flex flex-column align-items-center">
-        <h1 class="mb-3 text-center">Fragments On Sale</h1>
-        <!-- Available Fragments -->
-        <div class="sidebar-container col-10 mt-3">
-            <!-- All Fregments Section  -->
-            <div class="section">
-                <div class="section-content" id="all-fragments">
-                    <div class="row row-cols-1 row-cols-md-4 g-4" id="fragments-container">
-                        <!-- Grab Tradable fragments from the database -->
-                        {% for trade in trades %}
-                        <div class="col">
-                            <div class="card">
-                                <img src="{{ trade.fragment.path }}" class="card-img-top" alt="{{ trade.fragment.name }}">
-                                <div class="card-body container d-flex flex-row justify-content-around">
-                                    <div class="container d-flex flex-column col-8">
-                                        <h5 class="card-title">{{ trade.fragment.name }}</h5>
-                                        <p class="card-text">
-                                            <span>Price: {{ trade.price }} ETH</span>
-                                            <br>
-                                            <span>{{ trade.listed_time.date() }}</span>
-                                        </p>
-                                    </div>
-                                    <div class="container d-flex col-4">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#BuyModal"
-                                        data-fragment-id="{{ trade.fragment.id }}"
-                                        data-fragment-path="{{ trade.fragment.path }}"
-                                        data-fragment-name="{{ trade.fragment.name }}"
-                                        data-fragment-price="{{ trade.price }}"
-                                        data-fragment-release-time="{{ trade.listed_time.date() }}">
-                                        Buy
-                                    </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <!-- Modal Box -->
-                    <div class="modal fade" id="BuyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-
-                                <!-- Content -->
-                                <div class="modal-body">
-                                    <div class="container-fluid text-center">
-                                        <img src="" alt="trade-img" class="img-fluid">
-                                    </div>
-                                    
-                                    <h5></h5>
-                                    <p class="price"></p>
-                                    <p class="release-time"></p>
-                                    <p class="balance">
-                                        <span>Balance: </span>
-                                    {% if current_user.is_authenticated %}
-                                        {{ current_user.get_balance() }}<span> ETH</span>
-                                    {% else %}
-                                        <span>Login to see balance</span>
-                                    {% endif %}
-                                    </p>
-                                </div>
-                        
-                                <!-- Bottom -->
-                                <div class="modal-footer">
-                                    <button type="button" id="frg-confirmButton" class="btn btn-primary" data-bs-dismiss="modal"
-                                    data-fragment_id="" 
-                                    data-buyer="{{ current_user.id }}">
-                                        Confirm
-                                    </button>
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                </div>
-                        
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- BuyForm -->
-            <form id="buyForm" method="POST" action="{{ url_for('buy') }}">
-                {{ buy_form.hidden_tag() }}
-                <input type="hidden" name="fragment_id" id="hiddenFragmentId">
-                <input type="hidden" name="buyer" id="hiddenBuyer">
-            </form>
-        </div>  
     </div>
     
      <!-- FAQ -->
