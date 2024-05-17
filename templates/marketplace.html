@@ -48,6 +48,15 @@
         </div>
     </nav>
 
+
+    <!-- Marketplace intro -->
+    <div class="market-intro-container mb-5">
+        <div class="market-intro">
+            <h1 class="intro-text">We are platform for everyone</h1>
+        </div>
+    </div>
+
+
     <!-- echo flash message -->
     <div class="container col-8 text-center">
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -59,14 +68,8 @@
         {% endwith %}
     </div> 
 
-    <!-- Marketplace intro -->
-    <div class="market-intro-container mb-5">
-        <div class="market-intro">
-            <h1 class="intro-text">We are platform for everyone</h1>
-        </div>
-    </div>
 
-    <div class="container-fluid d-flex flex-row justify-content-around p-5">
+    <div class="container-fluid d-flex flex-row justify-content-around col-10">
         <!-- User review container -->
         <div class="review-container col-md-5">
             <div class="review-img">
@@ -87,14 +90,14 @@
                 <img src="{{ url_for('static', filename='images/seller5.png') }}"  alt="user-image">
                 <img src="{{ url_for('static', filename='images/seller6.png') }}"  alt="user-image">
             </div>
-            <p class="user-text"><span>10000+</span> Users have joined!</p>
+            <p class="user-text"><span>{{ user_num }}+</span> Users have joined!</p>
         </div>
     </div>
 
     
     <!-- Live Auction Carousel -->
-    <div class="container mt-5 mb-5">
-        <h2 class="mt-5 mb-5 text-center"><b>Live Auctions</b></h2>
+    <div class="container mb-5">
+        <h1 class="my-5 text-center"><b>Live Auctions</b></h2>
         <div id="liveAuctionCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 {% for i in range(nft|length // 4 + (nft|length % 4 > 0)) %}
@@ -175,16 +178,104 @@
         </form>
     </div>
 
+    <div class="container-fluid d-flex flex-column align-items-center">
 
-    <!-- Search use AJAX if possible -->
-    <div class="search-container">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <form class="d-flex" id="search-form">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-input">
-                    <button class="btn btn-outline-primary" type="submit">Search</button>
-                </form>
+        <h1 class="mb-3 text-center my-5">Fragments On Sale</h1>
+
+        <!-- Search use AJAX if possible -->
+        <div class="search-container my-5 col-10">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <form class="input-group" id="search-form">
+                        <input class="form-control" type="search" placeholder="Search..." aria-label="Search" id="search-input">
+                        <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Search</button>
+                    </form>
+                </div>
             </div>
+        </div>        
+    
+        <div class="container-fluid d-flex flex-column align-items-center">
+            <!-- Available Fragments -->
+            <div class="sidebar-container col-10 mt-3">
+                <!-- All Fregments Section  -->
+                <div class="section">
+                    <div class="section-content" id="all-fragments">
+                        <div class="row row-cols-1 row-cols-md-4 g-4" id="fragments-container">
+                            <!-- Grab Tradable fragments from the database -->
+                            {% for trade in trades %}
+                            <div class="col">
+                                <div class="card">
+                                    <img src="{{ trade.fragment.path }}" class="card-img-top" alt="{{ trade.fragment.name }}">
+                                    <div class="card-body container d-flex flex-row justify-content-around">
+                                        <div class="container d-flex flex-column col-8">
+                                            <h5 class="card-title">{{ trade.fragment.name }}</h5>
+                                            <p class="card-text">
+                                                <span>Price: {{ trade.price }} ETH</span>
+                                                <br>
+                                                <span>{{ trade.listed_time.date() }}</span>
+                                            </p>
+                                        </div>
+                                        <div class="container d-flex col-4">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#BuyModal"
+                                            data-fragment-id="{{ trade.fragment.id }}"
+                                            data-fragment-path="{{ trade.fragment.path }}"
+                                            data-fragment-name="{{ trade.fragment.name }}"
+                                            data-fragment-price="{{ trade.price }}"
+                                            data-fragment-release-time="{{ trade.listed_time.date() }}">
+                                            Buy
+                                        </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <!-- Modal Box -->
+                        <div class="modal fade" id="BuyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <!-- Content -->
+                                    <div class="modal-body">
+                                        <div class="container-fluid text-center">
+                                            <img src="" alt="trade-img" class="img-fluid">
+                                        </div>
+                                        
+                                        <h5></h5>
+                                        <p class="price"></p>
+                                        <p class="release-time"></p>
+                                        <p class="balance">
+                                            <span>Balance: </span>
+                                        {% if current_user.is_authenticated %}
+                                            {{ current_user.get_balance() }}<span> ETH</span>
+                                        {% else %}
+                                            <span>Login to see balance</span>
+                                        {% endif %}
+                                        </p>
+                                    </div>
+                            
+                                    <!-- Bottom -->
+                                    <div class="modal-footer">
+                                        <button type="button" id="frg-confirmButton" class="btn btn-primary" data-bs-dismiss="modal"
+                                        data-fragment_id="" 
+                                        data-buyer="{{ current_user.id }}">
+                                            Confirm
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- BuyForm -->
+                <form id="buyForm" method="POST" action="{{ url_for('buy') }}">
+                    {{ buy_form.hidden_tag() }}
+                    <input type="hidden" name="fragment_id" id="hiddenFragmentId">
+                    <input type="hidden" name="buyer" id="hiddenBuyer">
+                </form>
+            </div>  
         </div>
     </div>
    
@@ -272,7 +363,6 @@
             </form>
         </div>  
     </div>
-
     
      <!-- FAQ -->
     <div class="collap-container">
