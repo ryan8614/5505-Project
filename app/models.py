@@ -107,6 +107,7 @@ class NFT(db.Model):
     def set_bonus(self, value):
         self.bonus = str(Decimal(value))
 
+    @hybrid_property
     def get_bonus(self):
         return Decimal(self.bonus)
     

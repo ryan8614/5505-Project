@@ -102,8 +102,8 @@ def check_login():
 @app.route('/redeem', methods=['POST'])
 def redeem():
     form = RedeemForm()
-    print(1)
     if form.validate_on_submit():
+        print(form)
         nft = NFT.query.get(form.nft_id.data)
         user = User.query.get(form.user.data)
         if not nft or not user:
@@ -146,8 +146,9 @@ def redeem():
             flash('Redeem verification failed.', 'error')
             return redirect(url_for('marketplace'))
         
-
-    return render_template('marketplace.html')
+    else:
+        flash('Form submission failed', 'error')
+        return redirect(url_for('marketplace'))
 
 
 @app.route('/privacy')
@@ -173,19 +174,21 @@ def trade():
         price = data.get('price')
         owner = data.get('owner')
 
+        # Convert price to floating point number
+        try:
+            price = float(price)
+        except ValueError:
+            return jsonify({'status': 'error', 'message': 'Invalid price format'}), 400
+
         fragment = Fragment.query.get(fragment_id)
         if fragment is None:
-            flash('Fragment not found', 'error')
-            return redirect(url_for('dashboard'))
+            return jsonify({'status': 'error', 'message': 'Fragment not found'}), 404
     
-        # Fragment have been listed for transactions
         if Trade.query.get(fragment_id):
-            flash('Fragment is currently for sale', 'error')
-            return redirect(url_for('dashboard'))
+            return jsonify({'status': 'error', 'message': 'Fragment is currently for sale'}), 400
         
         if str(owner) != str(current_user.id):
-            flash('User information does not match', 'error')
-            return redirect(url_for('dashboard'))
+            return jsonify({'status': 'error', 'message': 'User information does not match'}), 403
 
         # Create a new Trade object
         new_trade = Trade(id=fragment_id, owner=owner, listed_time=datetime.now())
@@ -195,11 +198,14 @@ def trade():
         db.session.add(new_trade)
         db.session.commit()
     
-        flash('Trade created successfully', 'success')
-        return redirect(url_for('dashboard'))
+        return jsonify({
+            'status': 'success', 
+            'message': 'Trade created successfully',
+            'new_status': 'For Sale', 
+            'new_price': f'{price:.2f}'
+        }), 200
     else:
-        flash('Invalid form data', 'error')
-        return redirect(url_for('dashboard'))
+        return jsonify({'status': 'error', 'message': 'Invalid form data'}), 400
 
 
 @app.route('/trade/update_price/<string:frag_id>', methods=['POST'])
@@ -211,29 +217,56 @@ def update_trade_price(frag_id):
         price = data.get('price')
         owner = data.get('owner')
 
+        # Convert price to floating point number
+        try:
+            price = float(price)
+        except ValueError:
+            return jsonify({'status': 'error', 'message': 'Invalid price format'}), 400
+
         # Retrieve the trade object
         trade = Trade.query.get(frag_id)
         if trade is None:
-            flash('Trade not found', 'error')
-            return redirect(url_for('dashboard'))
+            return jsonify({'status': 'error', 'message': 'Trade not found'}), 404
     
         # Check if current user is the owner of the fragment
         if str(current_user.id) != str(owner):
-            flash('Owner information does not match', 'error')
-            return redirect(url_for('dashboard'))
+            return jsonify({'status': 'error', 'message': 'Owner information does not match'}), 403
 
         # Update price
         if status == 'update':
             trade.set_price(price)
+            db.session.commit()
+            return jsonify({'status': 'success', 'message': 'Trade updated successfully', 'new_price': f'{price:.2f}'}), 200
         elif status == 'cancel':
             db.session.delete(trade)
-        db.session.commit()
-        flash('Trade updated successfully', 'success')
-        return redirect(url_for('dashboard'))
+            db.session.commit()
+            return jsonify({'status': 'success', 'message': 'Trade cancelled successfully'}), 200
     else:
-        flash('Invalid form data', 'error')
-        return redirect(url_for('dashboard'))
+        return jsonify({'status': 'error', 'message': 'Invalid form data'}), 400
         
+
+@app.route('/get_fragments', methods=['GET'])
+@login_required
+def get_fragments():
+    fragments = current_user.user_fragments
+    fragments_data = []
+    for fragment in fragments:
+        # Check if the price is of a type convertible to a float
+        try:
+            price = float(fragment.trade_price[1]) if fragment.trade_price[0] == 'For Sale' else ''
+            price = f"{price:.2f}" if price != '' else ''
+        except ValueError:
+            price = ''  # If the conversion fails, set the price to an empty string
+
+        fragments_data.append({
+            'path': fragment.path,
+            'id': fragment.id,
+            'name': fragment.name,
+            'status': fragment.trade_price[0],
+            'price': price
+        })
+    return jsonify(fragments_data)
+
 
 @app.route('/buy', methods=['POST'])
 def buy():
@@ -293,7 +326,6 @@ def buy():
             return redirect(url_for('marketplace'))
         
     return render_template('marketplace.html', form=form)
-
 
 
 @app.route('/upload', methods=['GET', 'POST'])
@@ -375,10 +407,10 @@ def logout():
     if current_user.is_authenticated:
         logout_user()
         flash('You have been logged out.', 'success')
-        return redirect(url_for('index'))
+        return render_template('index.html')
     else:
         flash('No active session found - you were not logged in.', 'danger')
-        return redirect(url_for('index'))
+        return render_template('index.html')
 
 
 @app.route('/search_fragments', methods=['GET'])
@@ -397,17 +429,3 @@ def search_fragments():
 
     return jsonify({'html': rendered})
     
-    '''
-    if not query:
-        trades = Trade.query.options(joinedload(Trade.fragment)).all()
-    else:
-        # Retrieve all fragments and filter them in Python
-        fragments = Fragment.query.options(joinedload(Fragment.trade)).all()
-        matching_fragments = [fragment for fragment in fragments if fragment.name and query in fragment.name.lower()]
-        # Get the corresponding trades for those fragments
-        trades = [fragment.trade for fragment in matching_fragments if fragment.trade]
-
-    rendered = [render_template('_trade_card.html', trade=trade) for trade in trades]
-
-    return jsonify({'html': rendered})
-    '''

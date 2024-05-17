@@ -1,357 +1,354 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual NFT Marketplace - Marketplace</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.bootcss.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Reused CSS Link -->
-    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
-    <!-- Marketplace CSS Link -->
-    <link href="{{ url_for('static', filename='css/marketplace.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand ps-5" href="{{ url_for('index') }}"><img class="logo" alt="nft-logo" src="{{ url_for('static', filename='images/logo.png') }}">Virtual NFT Market</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end pe-5" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index') }}"><b>Home</b></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Marketplace</b></a>
-                    </li>
-                    {% if current_user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('dashboard') }}"><b>Dashboard</b></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('logout') }}"><b>Logout</b></a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('login') }}"><b>Log In</b></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('register') }}"><b>Sign Up</b></a>
-                    </li>
-                    {% endif %}
-                </ul>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Virtual NFT Marketplace - Marketplace</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.bootcss.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Reused CSS Link -->
+        <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+        <!-- Marketplace CSS Link -->
+        <link href="{{ url_for('static', filename='css/marketplace.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
+    </head>
+    <body>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand ps-5" href="{{ url_for('index') }}"><img class="logo" alt="nft-logo" src="{{ url_for('static', filename='images/logo.png') }}">Virtual NFT Market</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end pe-5" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('index') }}"><b>Home</b></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Marketplace</b></a>
+                        </li>
+                        {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('dashboard') }}"><b>Dashboard</b></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('logout') }}"><b>Logout</b></a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('login') }}"><b>Log In</b></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('register') }}"><b>Sign Up</b></a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <!-- Marketplace intro -->
+        <div class="market-intro-container mb-5">
+            <div class="market-intro">
+                <h1 class="intro-text">We are platform for everyone</h1>
             </div>
         </div>
-    </nav>
 
 
-    <!-- Marketplace intro -->
-    <div class="market-intro-container mb-5">
-        <div class="market-intro">
-            <h1 class="intro-text">We are platform for everyone</h1>
-        </div>
-    </div>
-
-
-    <!-- echo flash message -->
-    <div class="container col-8 text-center">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
-    </div> 
-
-
-    <div class="container-fluid col-10">
-        <div class="row d-flex flex-row justify-content-around">
-            <!-- User review container -->
-            <div class="review-container col-lg-5">
-                <div class="review-img">
-                    <img src="{{ url_for('static', filename='images/market-img2.png') }}"  alt="nft image" class="market-img2">
-                </div>
-                <div class="review r1">Easy to sign up and easy to operate.</div>
-                <div class="review r2">Many attractive collections!</div>
-                <div class="review r3">A good way to entertainment!</div>
-            </div>
-
-            <!-- User join container -->
-            <div class="user-container d-flex align-items-center justify-content-center col-lg-5">
-                <div class="user-img d-flex">
-                    <img src="{{ url_for('static', filename='images/seller1.png') }}"  alt="user-image">
-                    <img src="{{ url_for('static', filename='images/seller2.png') }}"  alt="user-image">
-                    <img src="{{ url_for('static', filename='images/seller3.png') }}"  alt="user-image">
-                    <img src="{{ url_for('static', filename='images/seller4.png') }}"  alt="user-image">
-                    <img src="{{ url_for('static', filename='images/seller5.png') }}"  alt="user-image">
-                    <img src="{{ url_for('static', filename='images/seller6.png') }}"  alt="user-image">
-                </div>
-                <p class="user-text"><span>{{ user_num }}+</span> Users have joined!</p>
-            </div>
-            </div>
-    </div>
-
-    
-    <!-- Live Auction Carousel -->
-    <div class="container mb-5">
-        <h1 class="my-5 text-center"><b>Live Auctions</b></h2>
-        <div id="liveAuctionCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                {% for i in range(nft|length // 4 + (nft|length % 4 > 0)) %}
-                <div class="carousel-item {{ 'active' if i == 0 else '' }}">
-                    <div class="row bg-white">
-                        {% for item in nft[i*4:(i+1)*4] %}
-                        <div class="col-sm-3">
-                            <div class="card clickable-card" data-bs-toggle="modal" data-bs-target="#RedeemModal"
-                                data-nft-id="{{ item.id }}"
-                                data-nft-bonus="{{ item.bonus }}"
-                                data-nft-name="{{ item.path.name }}">
-                                <img src="{{ item.path }}" class="card-img-top" alt="nft img">
-                                <div class="card-body container">
-                                    <div class="row d-flex flex-row justify-content-around">
-                                        <div class="container d-flex flex-column col-12">
-                                            <p class="card-text">
-                                                <span>Name: {{ item.name }}</span>
-                                                <br>
-                                                <span>Bonus: {{ item.bonus }} ETH</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
+        <!-- echo flash message -->
+        <div class="container col-8 text-center">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
                 {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div> 
 
-                <!-- Modal Box -->
-                <div class="modal fade" id="RedeemModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-
-                            <!-- Content -->
-                            <div class="modal-body">
-                                <p>
-                                    Are you sure you want to redeem <span class="name"></span>? 
-                                    <br>
-                                    If success, you will get <span class="bonus"></span>.
-                                </p>
-                            </div>
-                    
-                            <!-- Bottom -->
-                            <div class="modal-footer">
-                                <button type="button" id="nft-confirmButton" class="btn btn-primary" data-bs-dismiss="modal"
-                                data-nftId="" 
-                                data-user="{{ current_user.id }}">
-                                    Confirm
-                                </button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                            </div>
-                    
-                        </div>
+        <div class="container-fluid col-10">
+            <div class="row d-flex flex-row justify-content-around">
+                <!-- User review container -->
+                <div class="review-container col-lg-5">
+                    <div class="review-img">
+                        <img src="{{ url_for('static', filename='images/market-img2.png') }}"  alt="nft image" class="market-img2">
                     </div>
+                    <div class="review r1">Easy to sign up and easy to operate.</div>
+                    <div class="review r2">Many attractive collections!</div>
+                    <div class="review r3">A good way to entertainment!</div>
                 </div>
-            </div>
-            <!-- Carousel controls -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#liveAuctionCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#liveAuctionCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+
+                <!-- User join container -->
+                <div class="user-container d-flex align-items-center justify-content-center col-lg-5">
+                    <div class="user-img d-flex">
+                        <img src="{{ url_for('static', filename='images/seller1.png') }}"  alt="user-image">
+                        <img src="{{ url_for('static', filename='images/seller2.png') }}"  alt="user-image">
+                        <img src="{{ url_for('static', filename='images/seller3.png') }}"  alt="user-image">
+                        <img src="{{ url_for('static', filename='images/seller4.png') }}"  alt="user-image">
+                        <img src="{{ url_for('static', filename='images/seller5.png') }}"  alt="user-image">
+                        <img src="{{ url_for('static', filename='images/seller6.png') }}"  alt="user-image">
+                    </div>
+                    <p class="user-text"><span>{{ user_num }}+</span> Users have joined!</p>
+                </div>
+                </div>
         </div>
-
-        <!-- RedeemForm -->
-        <form id="redeemForm" method="POST" action="{{ url_for('redeem') }}">
-            {{ redeem_form.hidden_tag() }}
-            <input type="hidden" name="nft_id" id="hiddenNFTId">
-            <input type="hidden" name="user" id="hiddenUser">
-        </form>
-    </div>
-
-    <div class="container-fluid d-flex flex-column align-items-center">
-
-        <h1 class="mb-3 text-center my-5">Fragments On Sale</h1>
-
-        <!-- Search use AJAX if possible -->
-        <div class="search-container my-5 col-10">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <form class="input-group" id="search-form">
-                        <input class="form-control" type="search" placeholder="Search..." aria-label="Search" id="search-input">
-                        <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Search</button>
-                    </form>
-                </div>
-            </div>
-        </div>        
-    
-        <div class="container-fluid d-flex flex-column align-items-center">
-            <!-- Available Fragments -->
-            <div class="sidebar-container col-10 mt-3">
-                <!-- All Fregments Section  -->
-                <div class="section">
-                    <div class="section-content" id="all-fragments">
-                        <div class="row row-cols-1 row-cols-md-4 g-4" id="fragments-container">
-                            <!-- Grab Tradable fragments from the database -->
-                            {% for trade in trades %}
-                            <div class="col">
-                                <div class="card">
-                                    <img src="{{ trade.fragment.path }}" class="card-img-top" alt="{{ trade.fragment.name }}">
-                                    <div class="card-body container d-flex flex-row justify-content-around">
-                                        <div class="container d-flex flex-column col-8">
-                                            <h5 class="card-title">{{ trade.fragment.name }}</h5>
-                                            <p class="card-text">
-                                                <span>Price: {{ trade.price }} ETH</span>
-                                                <br>
-                                                <span>{{ trade.listed_time.date() }}</span>
-                                            </p>
-                                        </div>
-                                        <div class="container d-flex col-4">
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#BuyModal"
-                                            data-fragment-id="{{ trade.fragment.id }}"
-                                            data-fragment-path="{{ trade.fragment.path }}"
-                                            data-fragment-name="{{ trade.fragment.name }}"
-                                            data-fragment-price="{{ trade.price }}"
-                                            data-fragment-release-time="{{ trade.listed_time.date() }}">
-                                            Buy
-                                        </button>
+        
+        <!-- Live Auction Carousel -->
+        <div class="container mb-5">
+            <h1 class="my-5 text-center"><b>Live Auctions</b></h2>
+            <div id="liveAuctionCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for i in range(nft|length // 4 + (nft|length % 4 > 0)) %}
+                    <div class="carousel-item {{ 'active' if i == 0 else '' }}">
+                        <div class="row bg-white">
+                            {% for item in nft[i*4:(i+1)*4] %}
+                            <div class="col-sm-3">
+                                <div class="card clickable-card" data-bs-toggle="modal" data-bs-target="#RedeemModal"
+                                    data-nft-id="{{ item.id }}"
+                                    data-nft-bonus="{{ item.bonus }}"
+                                    data-nft-name="{{ item.path.name }}">
+                                    <img src="{{ item.path }}" class="card-img-top" alt="nft img">
+                                    <div class="card-body container">
+                                        <div class="row d-flex flex-row justify-content-around">
+                                            <div class="container d-flex flex-column col-12">
+                                                <p class="card-text">
+                                                    <span>Name: {{ item.name }}</span>
+                                                    <br>
+                                                    <span>Bonus: {{ item.bonus }} ETH</span>
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             {% endfor %}
                         </div>
-                        <!-- Modal Box -->
-                        <div class="modal fade" id="BuyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
+                    </div>
+                    {% endfor %}
 
-                                    <!-- Content -->
-                                    <div class="modal-body">
-                                        <div class="container-fluid text-center">
-                                            <img src="" alt="trade-img" class="img-fluid">
-                                        </div>
-                                        
-                                        <h5></h5>
-                                        <p class="price"></p>
-                                        <p class="release-time"></p>
-                                        <p class="balance">
-                                            <span>Balance: </span>
-                                        {% if current_user.is_authenticated %}
-                                            {{ current_user.get_balance() }}<span> ETH</span>
-                                        {% else %}
-                                            <span>Login to see balance</span>
-                                        {% endif %}
-                                        </p>
-                                    </div>
-                            
-                                    <!-- Bottom -->
-                                    <div class="modal-footer">
-                                        <button type="button" id="frg-confirmButton" class="btn btn-primary" data-bs-dismiss="modal"
-                                        data-fragment_id="" 
-                                        data-buyer="{{ current_user.id }}">
-                                            Confirm
-                                        </button>
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                    </div>
-                            
+                    <!-- Modal Box -->
+                    <div class="modal fade" id="RedeemModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <!-- Content -->
+                                <div class="modal-body">
+                                    <p>
+                                        Are you sure you want to redeem <span class="name"></span>? 
+                                        <br>
+                                        If success, you will get <span class="bonus"></span>.
+                                    </p>
                                 </div>
+                        
+                                <!-- Bottom -->
+                                <div class="modal-footer">
+                                    <button type="button" id="nft-confirmButton" class="btn btn-primary" data-bs-dismiss="modal"
+                                    data-nftId="" 
+                                    data-user="{{ current_user.id }}">
+                                        Confirm
+                                    </button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                </div>
+                        
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- BuyForm -->
-                <form id="buyForm" method="POST" action="{{ url_for('buy') }}">
-                    {{ buy_form.hidden_tag() }}
-                    <input type="hidden" name="fragment_id" id="hiddenFragmentId">
-                    <input type="hidden" name="buyer" id="hiddenBuyer">
-                </form>
-            </div>  
-        </div>
-    </div>
-    
-     <!-- FAQ -->
-    <div class="collap-container">
-        <h2 class="FAQ">Frequently Asked Questions</h2>
-        <button type="button" class="collap-btn bg-light">What Exactly are NFTs?</button>
-        <div class="collap-content bg-light">
-            <p>Non-fungible Tokens are digital valuables that can be purchased and sold utilizing Blockchain technology on an online marketplace. In terms of data, NFTs can be anything. Images, videos, audio, text, and other forms of creative media are all acceptable. Each NFT is unique, with proven ownership, because it is stored on the blockchain.</p>
-        </div>
-            <button type="button" class="collap-btn bg-light">How to Collect NFT Fragments?</button>
-        <div class="collap-content bg-light">
-            <p>You can consume 10 ETH each time to attend lottery on dashboard or buy fragments from marketplace.</p>
-        </div>
-        <button type="button" class="collap-btn bg-light">How to Redeem NFTs?</button>
-        <div class="collap-content bg-light">
-            <p>Once you collect a set of fragments, you can redeem them on Marketplace page, choose the NFT you would like to redeem. Then the bonus value for successfully obtaining the NFT will add into your account balance directly</p>
-        </div>
-    </div>
+                <!-- Carousel controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#liveAuctionCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#liveAuctionCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
 
-    <!-- Join our community-->
-    <div class="join-container d-block text-center">
-        <h1 class="py-2">Join Our Community</h1>
-        <a class="btn btn-primary py-2" href="{{ url_for('register') }}">Get Started</a>
-    </div>
+            <!-- RedeemForm -->
+            <form id="redeemForm" method="POST" action="{{ url_for('redeem') }}">
+                {{ redeem_form.hidden_tag() }}
+                <input type="hidden" name="nft_id" id="hiddenNFTId">
+                <input type="hidden" name="user" id="hiddenUser">
+            </form>
+        </div>
 
-    
-    <!-- Footer -->
-    <footer class="bg-light text-center text-lg-start">
-        <div class="container p-4">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                    <h5 class="text-uppercase">Balance</h5>
-                    <p>
-                        Balance offers a platform to trade and collect virtual NFTs. We are dedicated to providing a secure and engaging environment for our users.
-                    </p>
+        <div class="container-fluid d-flex flex-column align-items-center">
+
+            <h1 class="mb-3 text-center my-5">Fragments On Sale</h1>
+
+            <!-- Search use AJAX if possible -->
+            <div class="search-container my-5 col-10">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <form class="input-group" id="search-form">
+                            <input class="form-control" type="search" placeholder="Search..." aria-label="Search" id="search-input">
+                            <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Search</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <h5 class="text-uppercase">Links</h5>
-                    <ul class="list-unstyled mb-0">
-                        <li>
-                            <a href="{{ url_for('about') }}" class="text-dark">About Us</a>
-                        </li>
-                        <li>
-                            <a href="{{ url_for('terms') }}" class="text-dark">Terms of Service</a>
-                        </li>
-                        <li>
-                            <a href="{{ url_for('privacy') }}" class="text-dark">Privacy Policy</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <h5 class="text-uppercase">Follow Us</h5>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="#!" class="text-dark">Twitter</a>
-                        </li>
-                        <li>
-                            <a href="#!" class="text-dark">Facebook</a>
-                        </li>
-                        <li>
-                            <a href="#!" class="text-dark">Instagram</a>
-                        </li>
-                    </ul>
-                </div>
+            </div>        
+        
+            <div class="container-fluid d-flex flex-column align-items-center">
+                <!-- Available Fragments -->
+                <div class="sidebar-container col-10 mt-3">
+                    <!-- All Fregments Section  -->
+                    <div class="section">
+                        <div class="section-content" id="all-fragments">
+                            <div class="row row-cols-1 row-cols-md-4 g-4" id="fragments-container">
+                                <!-- Grab Tradable fragments from the database -->
+                                {% for trade in trades %}
+                                <div class="col">
+                                    <div class="card">
+                                        <img src="{{ trade.fragment.path }}" class="card-img-top" alt="{{ trade.fragment.name }}">
+                                        <div class="card-body container d-flex flex-row justify-content-around">
+                                            <div class="container d-flex flex-column col-8">
+                                                <h5 class="card-title">{{ trade.fragment.name }}</h5>
+                                                <p class="card-text">
+                                                    <span>Price: {{ trade.price }} ETH</span>
+                                                    <br>
+                                                    <span>{{ trade.listed_time.date() }}</span>
+                                                </p>
+                                            </div>
+                                            <div class="container d-flex col-4">
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#BuyModal"
+                                                data-fragment-id="{{ trade.fragment.id }}"
+                                                data-fragment-path="{{ trade.fragment.path }}"
+                                                data-fragment-name="{{ trade.fragment.name }}"
+                                                data-fragment-price="{{ trade.price }}"
+                                                data-fragment-release-time="{{ trade.listed_time.date() }}">
+                                                Buy
+                                            </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <!-- Modal Box -->
+                            <div class="modal fade" id="BuyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+
+                                        <!-- Content -->
+                                        <div class="modal-body">
+                                            <div class="container-fluid text-center">
+                                                <img src="" alt="trade-img" class="img-fluid">
+                                            </div>
+                                            
+                                            <h5></h5>
+                                            <p class="price"></p>
+                                            <p class="release-time"></p>
+                                            <p class="balance">
+                                                <span>Balance: </span>
+                                            {% if current_user.is_authenticated %}
+                                                {{ current_user.get_balance() }}<span> ETH</span>
+                                            {% else %}
+                                                <span>Login to see balance</span>
+                                            {% endif %}
+                                            </p>
+                                        </div>
+                                
+                                        <!-- Bottom -->
+                                        <div class="modal-footer">
+                                            <button type="button" id="frg-confirmButton" class="btn btn-primary" data-bs-dismiss="modal"
+                                            data-fragment_id="" 
+                                            data-buyer="{{ current_user.id }}">
+                                                Confirm
+                                            </button>
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- BuyForm -->
+                    <form id="buyForm" method="POST" action="{{ url_for('buy') }}">
+                        {{ buy_form.hidden_tag() }}
+                        <input type="hidden" name="fragment_id" id="hiddenFragmentId">
+                        <input type="hidden" name="buyer" id="hiddenBuyer">
+                    </form>
+                </div>  
             </div>
         </div>
-        <div class="text-center p-3" style="background-color: #f0f0f0;">
-            © 2024 Balance, Inc. All rights reserved.
+        
+        <!-- FAQ -->
+        <div class="collap-container">
+            <h2 class="FAQ">Frequently Asked Questions</h2>
+            <button type="button" class="collap-btn bg-light">What Exactly are NFTs?</button>
+            <div class="collap-content bg-light">
+                <p>Non-fungible Tokens are digital valuables that can be purchased and sold utilizing Blockchain technology on an online marketplace. In terms of data, NFTs can be anything. Images, videos, audio, text, and other forms of creative media are all acceptable. Each NFT is unique, with proven ownership, because it is stored on the blockchain.</p>
+            </div>
+                <button type="button" class="collap-btn bg-light">How to Collect NFT Fragments?</button>
+            <div class="collap-content bg-light">
+                <p>You can consume 10 ETH each time to attend lottery on dashboard or buy fragments from marketplace.</p>
+            </div>
+            <button type="button" class="collap-btn bg-light">How to Redeem NFTs?</button>
+            <div class="collap-content bg-light">
+                <p>Once you collect a set of fragments, you can redeem them on Marketplace page, choose the NFT you would like to redeem. Then the bonus value for successfully obtaining the NFT will add into your account balance directly</p>
+            </div>
         </div>
-    </footer>
 
-    <!-- jQuery, Popper.js, and Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-    <!-- Custom JS -->
-    <script src="{{ url_for('static', filename='js/marketplace.js') }}"></script>
-</body>
+        <!-- Join our community-->
+        <div class="join-container d-block text-center">
+            <h1 class="py-2">Join Our Community</h1>
+            <a class="btn btn-primary py-2" href="{{ url_for('register') }}">Get Started</a>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="bg-light text-center text-lg-start">
+            <div class="container p-4">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Balance</h5>
+                        <p>
+                            Balance offers a platform to trade and collect virtual NFTs. We are dedicated to providing a secure and engaging environment for our users.
+                        </p>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Links</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="{{ url_for('about') }}" class="text-dark">About Us</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('terms') }}" class="text-dark">Terms of Service</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('privacy') }}" class="text-dark">Privacy Policy</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Follow Us</h5>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#!" class="text-dark">Twitter</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-dark">Facebook</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-dark">Instagram</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center p-3" style="background-color: #f0f0f0;">
+                © 2024 Balance, Inc. All rights reserved.
+            </div>
+        </footer>
+
+        <!-- jQuery, Popper.js, and Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+        <!-- Custom JS -->
+        <script src="{{ url_for('static', filename='js/marketplace.js') }}"></script>
+    </body>
 </html>
