@@ -5,6 +5,20 @@
     height:15rem;
     width:15rem;
 }
+
+.user-info h1 {
+    font-size: 5rem; 
+}
+
+.welcome-message {
+    font-size: 2.5rem; 
+    font-weight: bold; 
+    margin-bottom: 1rem;
+}
+
+.balance-info {
+    font-size: 2rem; 
+}
 /* scroll nav contents with fixed height */
 .tab-content{
     height: 40rem;
@@ -19,12 +33,24 @@
 }
 
 th, td {
+    font-size: 1.8rem;
     text-align: left;
     vertical-align: middle;
 }
 .nav-container{
     border:1px solid grey;
     border-radius: 2rem;
+}
+
+nav-tabs .nav-link {
+    font-size: 1.8rem; 
+    padding: 1.2rem 2rem;
+}
+.nav-tabs .nav-link.active {
+    font-size: 2rem; 
+    background-color: #007bff; 
+    color: white; 
+    border: none; 
 }
 /****************************************/
 /*LOTTERY*/
