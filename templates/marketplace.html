@@ -69,29 +69,31 @@
     </div> 
 
 
-    <div class="container-fluid d-flex flex-row justify-content-around col-10">
-        <!-- User review container -->
-        <div class="review-container col-md-5">
-            <div class="review-img">
-                <img src="{{ url_for('static', filename='images/market-img2.png') }}"  alt="nft image" class="market-img2">
+    <div class="container-fluid col-10">
+        <div class="row d-flex flex-row justify-content-around">
+            <!-- User review container -->
+            <div class="review-container col-lg-5">
+                <div class="review-img">
+                    <img src="{{ url_for('static', filename='images/market-img2.png') }}"  alt="nft image" class="market-img2">
+                </div>
+                <div class="review r1">Easy to sign up and easy to operate.</div>
+                <div class="review r2">Many attractive collections!</div>
+                <div class="review r3">A good way to entertainment!</div>
             </div>
-            <div class="review r1">Easy to sign up and easy to operate.</div>
-            <div class="review r2">Many attractive collections!</div>
-            <div class="review r3">A good way to entertainment!</div>
-        </div>
 
-        <!-- User join container -->
-        <div class="user-container d-flex align-items-center justify-content-center col-md-5">
-            <div class="user-img d-flex">
-                <img src="{{ url_for('static', filename='images/seller1.png') }}"  alt="user-image">
-                <img src="{{ url_for('static', filename='images/seller2.png') }}"  alt="user-image">
-                <img src="{{ url_for('static', filename='images/seller3.png') }}"  alt="user-image">
-                <img src="{{ url_for('static', filename='images/seller4.png') }}"  alt="user-image">
-                <img src="{{ url_for('static', filename='images/seller5.png') }}"  alt="user-image">
-                <img src="{{ url_for('static', filename='images/seller6.png') }}"  alt="user-image">
+            <!-- User join container -->
+            <div class="user-container d-flex align-items-center justify-content-center col-lg-5">
+                <div class="user-img d-flex">
+                    <img src="{{ url_for('static', filename='images/seller1.png') }}"  alt="user-image">
+                    <img src="{{ url_for('static', filename='images/seller2.png') }}"  alt="user-image">
+                    <img src="{{ url_for('static', filename='images/seller3.png') }}"  alt="user-image">
+                    <img src="{{ url_for('static', filename='images/seller4.png') }}"  alt="user-image">
+                    <img src="{{ url_for('static', filename='images/seller5.png') }}"  alt="user-image">
+                    <img src="{{ url_for('static', filename='images/seller6.png') }}"  alt="user-image">
+                </div>
+                <p class="user-text"><span>{{ user_num }}+</span> Users have joined!</p>
             </div>
-            <p class="user-text"><span>{{ user_num }}+</span> Users have joined!</p>
-        </div>
+            </div>
     </div>
 
     

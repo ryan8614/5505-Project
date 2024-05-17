@@ -156,6 +156,15 @@ class Fragment(db.Model):
             return file_name
         return None  
     
+    @name.expression
+    def name(cls):
+        """Extract the file name in the path (without extension) in SQL, suitable for SQLite database."""
+        start = func.instr(cls.path, 'static/outputs/') + len('static/outputs/')
+        rest_of_path = func.substr(cls.path, start)
+        dot_pos = func.instr(rest_of_path, '.')
+        return func.substr(rest_of_path, 1, dot_pos - 1)
+
+    
     
     def verify_frag_name(self):
         """

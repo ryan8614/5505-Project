@@ -21,7 +21,7 @@ $(document).ready(function() {
                 }
                 $('#errorModal').modal('show');
             });
-        }, 3000); // 3秒后显示消息
+        }, 3000); 
     });
 
     $('#raffleButton').click(function() {

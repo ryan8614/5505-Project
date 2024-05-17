@@ -5,6 +5,7 @@ Server routes implementation using Flask
 
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import login_user, current_user, login_required, logout_user
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import joinedload
 from sqlalchemy import func
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -383,7 +384,20 @@ def logout():
 @app.route('/search_fragments', methods=['GET'])
 def search_fragments():
     query = request.args.get('query', '').lower()
+
+    if not query:
+        trades = Trade.query.options(joinedload(Trade.fragment)).all()
+    else:
+        # 在数据库中直接进行不区分大小写的搜索，以防止SQL注入
+        fragments = Fragment.query.options(joinedload(Fragment.trade)) \
+                                   .filter(Fragment.name.ilike(f'%{query}%')).all()
+        trades = [fragment.trade for fragment in fragments if fragment.trade]
+
+    rendered = [render_template('_trade_card.html', trade=trade) for trade in trades]
+
+    return jsonify({'html': rendered})
     
+    '''
     if not query:
         trades = Trade.query.options(joinedload(Trade.fragment)).all()
     else:
@@ -396,3 +410,4 @@ def search_fragments():
     rendered = [render_template('_trade_card.html', trade=trade) for trade in trades]
 
     return jsonify({'html': rendered})
+    '''
