@@ -8,9 +8,10 @@ NFT Plattform
 
 | UWA ID | 姓名 | GitHub 用户名 |
 |--------|------|----------------|
-| 12345678 | 张三 | githubuser1 |
-| 87654321 | 李四 | githubuser2 |
-| 23456789 | 王五 | githubuser3 |
+| 24023844 | Shaohong Zheng | Shaohongzheng |
+| 23691038 | Yike Chang | ryan8614 |
+| 23941952 | Min Zhang | JasAAA |
+| 23254894 | Yifei Tang | yifei-T |
 
 ## 启动应用程序
 
