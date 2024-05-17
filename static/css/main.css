@@ -122,3 +122,38 @@ padding:1.8rem;
     padding: 5px;
 }
 
+/* footer */
+.footer-custom {
+    background-color: #f8f9fa; 
+    text-align: left; 
+    padding-top: 1.5rem;   
+}
+
+.footer-custom .container {
+    margin-bottom: 1rem;
+}
+
+
+.footer-custom a {
+    color: #000; 
+    text-decoration: none; 
+}
+
+
+.footer-custom a:hover {
+    text-decoration: underline; 
+}
+
+.contact-info {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+}
+
+
+.footer-bottom {
+    background-color: #f0f0f0; 
+    text-align: center;
+    padding: 1rem 0;
+}
+
