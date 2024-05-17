@@ -50,17 +50,6 @@
             </div>
         </nav>
 
-        <!-- echo flash message -->
-        <div class="container col-8 text-center">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-            {% endwith %}
-        </div>    
-
         <!-- User info -->
         <div class="user-info">
             <h1 class="mt-5 mb-5 text-center">Dashboard</h1>
@@ -114,6 +103,7 @@
                             </tbody>
                         </table>
                     </div>
+
                     <!-- My Fragments -->
                     <div id="my-fragments" class="container tab-pane fade"><br>
 
@@ -129,12 +119,12 @@
                             </thead>
                             <tbody id="fragments">
                                 {% for fragment in fragments %}
-                                    <tr data-bs-toggle="modal" data-bs-target="#myFragmentModal" data-id="{{ fragment.id }}" data-name="{{ fragment.name }}" data-name="{{ fragment.name }}" data-status="{{ fragment.trade_price[0] }}" data-price="{{ fragment.trade_price[1] }}">
+                                    <tr data-bs-toggle="modal" data-bs-target="#myFragmentModal" data-id="{{ fragment.id }}" data-name="{{ fragment.name }}" data-name="{{ fragment.name }}" data-status="{{ fragment.trade_price[0] }}" data-price="{{ '%.2f'|format(fragment.trade_price[1]) }}">
                                         <td><img class="trade-img" src="{{ fragment.path }}"></td>
                                         <td>{{ fragment.id }}</td>
                                         <td>{{ fragment.name }}</td>
                                         <td>{{ fragment.trade_price[0] }}</td>
-                                        <td>{% if fragment.trade_price[0] == 'For Sale' %}{{ fragment.trade_price[1] }}{% else %}{% endif %}</td>
+                                        <td>{% if fragment.trade_price[0] == 'For Sale' %}{{ '%.2f'|format(fragment.trade_price[1]) }}{% else %}{% endif %}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -181,6 +171,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- My collection -->
                     <div id="my-collection" class="container tab-pane fade"><br>
                         <div class="row mt-5 mb-5">
@@ -200,13 +191,14 @@
                                 </div>
                             {% endif %}
                         </div>
-                    </div>
+                    </div>               
                 </div>
             </div>
         </div>
 
         <!-- Lottery -->
         <div class="container lottery-block col-8">
+            <!-- Lottory Intro -->
             <div class="row">
                 <div class="col-lg-6 d-flex align-items-start justify-content-center lottery-text">
                     <div class="lottery-title-container">
@@ -243,7 +235,6 @@
                 </div>
             </div>
 
-
             <!-- Raffle Modal -->
             <div class="modal fade" id="raffleModal" tabindex="-1" aria-labelledby="raffleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -260,6 +251,21 @@
                         <div class="modal-footer justify-content-center">
                             <!-- Added data-bs-dismiss attribute to ensure this button also can close the modal -->
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Message Modal -->
+            <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="messageModalLabel">Message</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Message content will be filled dynamically -->
                         </div>
                     </div>
                 </div>
@@ -284,9 +290,11 @@
                         </div>
                     </div>
                 </div>
-            </div>       
+            </div>   
         </div>
         
+
+
         <!-- Footer -->
         <footer class="bg-light text-center text-lg-start">
             <div class="container p-4">
@@ -334,8 +342,6 @@
 
         <!-- JQuery Link -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-        <script src="{{ url_for('static', filename='js/raffle.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/trade.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
     </body>
 </html>

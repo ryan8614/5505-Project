@@ -6,20 +6,6 @@ $(document).ready(function() {
         content.toggle();  // Toggle visibility
     });
 
-    $('.clickable-card').on('click', function() {
-        var nftId = $(this).data('nft-id');
-        var nftBonus = $(this).data('nft-bonus');
-        var nftName = $(this).data('nft-name');
-        
-        // Set the data of the modal box
-        var modal = $('#RedeemModal');
-        modal.find('.modal-nft-id').text(nftId);  
-        modal.find('.modal-nft-bonus').text(nftBonus);  
-        modal.find('.modal-nft-name').text(nftName); 
-
-        // Show modal box
-        modal.modal('show');
-    });
 
     function bindEvents() {
         // Handle modal show event and update modal content
@@ -28,7 +14,7 @@ $(document).ready(function() {
             checkLoginStatus_fragment($(this));
         });
 
-        $('button[data-bs-target="#RedeemModal"]').click(function(event) {
+        $('.clickable-card').click(function(event) {
             event.preventDefault();
             checkLoginStatus_nft($(this));
         });
