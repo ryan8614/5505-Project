@@ -70,8 +70,8 @@
                         <img src="{{ url_for('static', filename='images/seller8.png') }}" class="user-img d-block">
                     </div>
                 </div>
-                <h3 class="text-center">Hello {{ current_user.username }},welcome to dashboard!</h3>
-                <h4 class="text-center">Balance:{{ '%.2f'|format(current_user.balance) }} ETH</h4> 
+                <h3 class="welcome-message text-center">Hello {{ current_user.username }},welcome to dashboard!</h3>
+                <h4 class="balance-info text-center">Balance:{{ '%.2f'|format(current_user.balance) }} ETH</h4> 
             </div>
             <!-- User Nav Section -->
             <div class="container nav-container"> 
