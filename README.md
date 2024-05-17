@@ -7,8 +7,8 @@ NFT Plattform
 ## 团队成员
 
 | UWA ID | 姓名 | GitHub 用户名 |
-|23691038|Yike Chang|ryan8614|
-|24023844|Shaohong Zheng|Shaohongzheng|
+|--------|------|----------------|
+| 12345678 | 张三 | githubuser1 |
 | 87654321 | 李四 | githubuser2 |
 | 23456789 | 王五 | githubuser3 |
 
