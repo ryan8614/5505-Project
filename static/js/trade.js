@@ -79,8 +79,8 @@ $(document).ready(function() {
                     price: newPrice
                 }),
                 success: function(response) {
-                    alert(response.message);
-                    location.reload(); 
+                    alert("Change sucessfully!");
+                    location.reload();
                 },
                 error: handleAjaxError
             });
@@ -96,8 +96,8 @@ $(document).ready(function() {
                     owner: $("#currentUserId").val()
                 }),
                 success: function(response) {
-                    alert(response.message);
-                    location.reload(); 
+                    alert("Change sucessfully!");
+                    location.reload();
                 },
                 error: handleAjaxError
             });
@@ -113,8 +113,8 @@ $(document).ready(function() {
                     owner: $("#currentUserId").val()
                 }),
                 success: function(response) {
-                    alert(response.message);
-                    location.reload(); 
+                    alert("Change sucessfully!");
+                    location.reload();
                 },
                 error: handleAjaxError
             });

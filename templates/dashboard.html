@@ -82,18 +82,76 @@
                         <a class="nav-link" data-bs-toggle="tab" href="#my-collection">My Collection</a>
                     </li>
                 </ul>
-                <!-- nav tab content -->
-                <div class="tab-content">
-                    <!-- my trade -->
-                    <div id="my-trade" class="container tab-pane active"><br>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Frag-Id</th>
-                                    <th>Frag-Name</th>
-                                    <th>Price</th>
-                                    <th>Date</th>
-                                    <th>Seller</th>
+            </div>
+        </div>
+    </nav>
+
+    <!-- echo flash message -->
+    <div class="container col-8 text-center">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>    
+
+     <!-- User info -->
+    <div class="user-info">
+        <h1 class="mt-5 mb-5 text-center">Dashboard</h1>
+        <div class="info-head mb-5">
+            <div class="d-flex align-items-center justify-content-center flex-column">
+                <div class="mb-3">
+                    <img src="{{ url_for('static', filename='images/seller8.png') }}" class="user-img d-block">
+                </div>
+            </div>
+            <h3 class="text-center">Hello {{ current_user.username }},welcome to dashboard!</h3>
+            <h4 class="text-center">Balance:{{ '%.2f'|format(current_user.balance) }} ETH</h4>
+            {% if current_user.username == 'root' %}
+            <div class="text-center mt-3">
+                <a href="http://127.0.0.1:5001/upload" class="btn btn-primary">Upload NFT</a>
+            </div>
+            {% endif %}
+        </div>
+    </div> 
+        </div>
+        <!-- User Nav Section -->
+        <div class="container nav-container"> 
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#my-trade">Trade History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#my-fragments">My Fragments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#my-collection">My Collection</a>
+                </li>
+            </ul>
+            <!-- nav tab content -->
+            <div class="tab-content">
+                <!-- my trade -->
+                <div id="my-trade" class="container tab-pane active"><br>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Frag-Id</th>
+                                <th>Frag-Name</th>
+                                <th>Price</th>
+                                <th>Date</th>
+                                <th>Seller</th>
+                            </tr>
+                        </thead>
+                        <tbody id="trades">
+                            {% for trade in trade_history %}
+                                <tr style="height: 50px;">
+                                    <td>{{ trade.frag_id }}</td>
+                                    <td>{{ trade.frag_name }}</td>
+                                    <td>{{ '%.2f'|format(trade.price) }}</td>
+                                    <td>{{ trade.transaction_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                                    <td>{{ trade.seller_username }}</td>
                                 </tr>
                             </thead>
                             <tbody id="trades">
