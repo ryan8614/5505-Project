@@ -16,22 +16,22 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md navbar-light bg-light">
       <div class="container-fluid">
-          <a class="navbar-brand ps-5" href="{{ url_for('index') }}"><img class="logo" alt="nft-logo" src="{{ url_for('static', filename='images/logo.png') }}">Virtual NFT Market</a>
+          <a class="navbar-brand ps-5" href="{{ url_for('pages.index') }}"><img class="logo" alt="nft-logo" src="{{ url_for('static', filename='images/logo.png') }}">Virtual NFT Market</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end pe-5" id="navbarNav">
               <ul class="navbar-nav">
                   <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}"><b>Home</b></a>
+                      <a class="nav-link active" aria-current="page" href="{{ url_for('pages.index') }}"><b>Home</b></a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Marketplace</b></a> 
+                      <a class="nav-link" href="{{ url_for('pages.marketplace') }}"><b>Marketplace</b></a> 
                   <li class="nav-item">
-                      <a class="nav-link" href="{{ url_for('login') }}"><b>Log In</b></a>
+                      <a class="nav-link" href="{{ url_for('auth.login') }}"><b>Log In</b></a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="{{ url_for('register') }}"><b>Sign Up</b></a>
+                      <a class="nav-link" href="{{ url_for('auth.register') }}"><b>Sign Up</b></a>
                   </li>
               </ul>
           </div>
@@ -80,7 +80,7 @@
               </div>
               <div class="form-footer-links">
                 <span class="psw">Forget <a href="#">password?</a></span>
-                <span class="sign_up">No account?<a href="{{ url_for('register') }}"">sign up</a></span>
+                <span class="sign_up">No account?<a href="{{ url_for('auth.register') }}"">sign up</a></span>
               </div>
           </form>    
         </div>

@@ -120,37 +120,6 @@ $(document).ready(function() {
         $('#myFragmentModal').modal('hide');
     });
 
-    // Raffle.js functionality
-    var spinWheel = $(".spin-wheel");  
-    var spinButton = $('#spin');
-
-    spinButton.click(function() {
-        let number = Math.ceil(Math.random() * 10000);
-        spinWheel.css({
-            "transition": "transform 3s ease",
-            "transform": "rotate(" + number + "deg)"
-        });
-
-        setTimeout(function() {
-            spinWheel.css("transition", "");  
-            $.post('/raffle', function(data) {
-                $('#winningSplitImage').attr('src', data.fragment_path);
-                $('#winningSplitName').text('Congratulations! You won: ' + data.fragment_name);
-                $('#raffleModal').modal('show');
-
-                // Call fetchFragments() to update the fragment list
-                fetchFragments();
-            }).fail(function(jqXHR) {
-                var errorMessage = 'Error: An unexpected error occurred. Please try again.';
-                if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
-                    errorMessage = jqXHR.responseJSON.error;
-                }
-                $('#errorMessage').text(errorMessage);
-                $('#errorModal').modal('show');
-            });
-        }, 3000);
-    });
-
     function fetchFragments() {
         $.ajax({
             url: '/get_fragments',

@@ -18,31 +18,31 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand ps-5" href="{{ url_for('index') }}"><img class="logo" alt="nft-logo" src="{{ url_for('static', filename='images/logo.png') }}">Virtual NFT Market</a>
+            <a class="navbar-brand ps-5" href="{{ url_for('pages.index') }}"><img class="logo" alt="nft-logo" src="{{ url_for('static', filename='images/logo.png') }}">Virtual NFT Market</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end pe-5" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}"><b>Home</b></a>
+                        <a class="nav-link active" aria-current="page" href="{{ url_for('pages.index') }}"><b>Home</b></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('marketplace') }}"><b>Marketplace</b></a>
+                        <a class="nav-link" href="{{ url_for('pages.marketplace') }}"><b>Marketplace</b></a>
                     </li>
                     {% if not current_user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('login') }}"><b>Log In</b></a>
+                            <a class="nav-link" href="{{ url_for('auth.login') }}"><b>Log In</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('register') }}"><b>Sign Up</b></a>
+                            <a class="nav-link" href="{{ url_for('auth.register') }}"><b>Sign Up</b></a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('dashboard') }}"><b>Dashboard</b></a>
+                            <a class="nav-link" href="{{ url_for('pages.dashboard') }}"><b>Dashboard</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('logout') }}"><b>Log Out</b></a>
+                            <a class="nav-link" href="{{ url_for('auth.logout') }}"><b>Logout</b></a>
                         </li>
                     {% endif %}
                 </ul>
@@ -67,8 +67,8 @@
             <h1 class="large-title">Welcome to the Virtual NFT Marketplace</h1>
             <h3>A platform where you can trade and collect virtual NFT fragments</h3>
             <div>
-                <a href="{{ url_for('marketplace') }}" class="header-btn">Explore</a>
-                <a href="{{ url_for('dashboard') }}" class="header-btn">Create</a>
+                <a href="{{ url_for('pages.marketplace') }}" class="header-btn">Explore</a>
+                <a href="{{ url_for('pages.dashboard') }}" class="header-btn">Create</a>
             </div>
        
     </header>
@@ -367,51 +367,39 @@
         </div>
     </div>
     <!-- Footer -->
-    <footer class="bg-light text-center text-lg-start">
-    <div class="container p-4">
-        <div class="row align-items-center">
-            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                <h5 class="text-uppercase">Balance</h5>
-                <p>
-                    Balance offers a platform to trade and collect virtual NFTs. We are dedicated to providing a secure and engaging environment for our users.
-                </p>
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <div class="row align-items-start g-3"> 
+                <div class="col-lg-6 col-md-12">
+                    <h5 class="text-uppercase fw-bold">Balance</h5> <!-- fw-bold for bold font weight -->
+                    <p>
+                        Balance offers a platform to trade and collect virtual NFTs. We are dedicated to providing a secure and engaging environment for our users.
+                    </p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-uppercase fw-bold">Links</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li><a href="{{ url_for('pages.about') }}" class="text-dark">About Us</a></li>
+                        <li><a href="{{ url_for('pages.terms') }}" class="text-dark">Terms of Service</a></li>
+                        <li><a href="{{ url_for('pages.privacy') }}" class="text-dark">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-uppercase fw-bold">Follow Us</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#!" class="text-dark">Twitter</a></li>
+                        <li><a href="#!" class="text-dark">Facebook</a></li>
+                        <li><a href="#!" class="text-dark">Instagram</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase">Links</h5>
-                <ul class="list-unstyled mb-0">
-                    <li>
-                        <a href="{{ url_for('about') }}" class="text-dark">About Us</a>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('terms') }}" class="text-dark">Terms of Service</a>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('privacy') }}" class="text-dark">Privacy Policy</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase">Follow Us</h5>
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="#!" class="text-dark">Twitter</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-dark">Facebook</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-dark">Instagram</a>
-                    </li>
-                </ul>
-            </div>
+            
         </div>
-    </div>
-    <div class="text-center p-3" style="background-color: #f0f0f0;">
-        © 2024 Balance, Inc. All rights reserved.
-    </div>
-</footer>
-   
-        <!-- Bootstrap JavaScript Link -->
-        <script src="https://cdn.bootcss.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+        <div class="text-center p-3" style="background-color: #f0f0f0;">
+            © 2024 Balance, Inc. All rights reserved.
+        </div>
+    </footer>
+    <!-- Bootstrap JavaScript Link -->
+    <script src="https://cdn.bootcss.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

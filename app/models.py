@@ -1,8 +1,8 @@
 import os
 import hashlib
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
+from flask import g
 from flask_login import UserMixin
-from sqlalchemy.orm import column_property
 from sqlalchemy import func
 from datetime import datetime, timezone
 from decimal import Decimal
