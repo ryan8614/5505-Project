@@ -33,17 +33,30 @@ def check_login():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_password = generate_password_hash(form.password.data, method='pbkdf2:sha256')
-        new_user = User(username=form.username.data, email=form.email.data, passwd_hash=hashed_password)
-        new_user.set_balance(50)
-        # Add user data to Database
-        db.session.add(new_user)
-        # Make sure to commit changes to the database
-        db.session.commit()
+        # Check if the same username or email exists in the database
+        existing_user = User.query.filter((User.username == form.username.data) | (User.email == form.email.data)).first()
+        if existing_user:
+            # Check which field caused the conflict and prompt the user
+            if existing_user.username == form.username.data:
+                flash('This username is already in use. Please choose a different one.', 'error')
+            elif existing_user.email == form.email.data:
+                flash('This email address is already registered. Please use a different email address.', 'error')
+            return render_template('register.html', title='Register', form=form)
 
-        flash('Account created for {0}! You can now log in.'.format(form.username.data), 'success')
-        return redirect(url_for('auth.login'))  # Redirect to the login page after successful registration
-
+        # If there are no duplicates, continue to create new users
+        try:
+            hashed_password = generate_password_hash(form.password.data, method='pbkdf2:sha256')
+            new_user = User(username=form.username.data, email=form.email.data, passwd_hash=hashed_password)
+            new_user.set_balance(50)  # Assume there's a method to set the balance
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Account created for {0}! You can now log in.'.format(form.username.data), 'success')
+            return redirect(url_for('auth.login'))
+        except Exception as e:
+            # Handle possible database exceptions (for example, unique constraint failure)
+            db.session.rollback()
+            flash('An error occurred during registration. Please try again.', 'error')
+    
     return render_template('register.html', title='Register', form=form)
 
 

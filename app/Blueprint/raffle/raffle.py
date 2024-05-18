@@ -29,7 +29,9 @@ def raffle():
     db.session.commit()
     fragment_path = selected_frag.path.split('/static/')[-1]
     fragment_name = secure_filename(fragment_path.split('/')[-1])
-    return jsonify({'fragment_path': fragment_path, 'fragment_name': fragment_name})
+    fragment_id = selected_frag.id
+    return jsonify({'fragment_path': fragment_path, 'fragment_name': fragment_name, 'fragment_id':fragment_id})
+
 
 @raffle_bp.route('/upload', methods=['GET', 'POST'])
 @login_required 
@@ -38,6 +40,7 @@ def upload():
         if request.method == 'POST':
             file = request.files['file']
             num_parts = request.form.get('num_parts', type=int)
+            bonus = request.form.get('bonus', type=float)
             
             if file and file.filename and processor.allowed_file(file.filename):
                 filename = secure_filename(file.filename)  # NFT filename
@@ -53,6 +56,7 @@ def upload():
                     # Insert a new piece of data into the NFT table
                     img_hash_id = hashlib.sha256(filename.encode()).hexdigest() # NFT hash id
                     new_nft = NFT(id=img_hash_id, path=file_path, completed=False, pieces=num_parts, owner=0)
+                    new_nft.set_bonus(bonus)
                     db.session.add(new_nft)
 
                     fragments = processor.split_image(file_path, num_parts)

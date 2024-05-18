@@ -49,7 +49,8 @@ def trade():
     else:
         return jsonify({'status': 'error', 'message': 'Invalid form data'}), 400
 
-@trade_bp.route('/trade/update_price/<string:frag_id>', methods=['POST'])
+
+@trade_bp.route('/update_price/<string:frag_id>', methods=['POST'])
 @login_required
 def update_trade_price(frag_id):
     data = request.get_json()
@@ -85,6 +86,7 @@ def update_trade_price(frag_id):
     else:
         return jsonify({'status': 'error', 'message': 'Invalid form data'}), 400
      
+
 @trade_bp.route('/redeem', methods=['POST'])
 def redeem():
     form = RedeemForm()
@@ -136,6 +138,7 @@ def redeem():
         flash('Form submission failed', 'error')
         return redirect(url_for('pages.marketplace'))
     
+
 @trade_bp.route('/search_fragments', methods=['GET'])
 def search_fragments():
     query = request.args.get('query', '').lower()
@@ -152,6 +155,7 @@ def search_fragments():
 
     return jsonify({'html': rendered})
   
+
 @trade_bp.route('/get_fragments', methods=['GET'])
 @login_required
 def get_fragments():

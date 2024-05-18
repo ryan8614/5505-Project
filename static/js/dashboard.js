@@ -80,7 +80,7 @@ $(document).ready(function() {
         // Determine which AJAX call to make based on the fragment's current and new status
         let url, data;
         if (current_status === 'Not For Sale' && new_status === 'for_sale') {
-            url = "/trade";
+            url = "/trade/trade";
             data = JSON.stringify({
                 fragment_id: fragment_id,
                 owner: $("#currentUserId").val(),
@@ -122,7 +122,7 @@ $(document).ready(function() {
 
     function fetchFragments() {
         $.ajax({
-            url: '/get_fragments',
+            url: '/trade/get_fragments',
             type: 'GET',
             success: function(fragments) {
                 var tbody = $('#fragments');
@@ -144,4 +144,37 @@ $(document).ready(function() {
             }
         });
     }
+
+    $('.lottery-button').on('click', function() {
+        $.ajax({
+            url: '/raffle/raffle', // raffle route
+            type: 'POST',
+            dataType: 'json', 
+            success: function(response) {
+                // Callback function after successful request
+                if (response.fragment_path && response.fragment_name && response.fragment_id) {
+                    $('#winningSplitImage').attr('src', response.fragment_path); 
+                    $('#winningSplitName').text('Congratulations! You won: ' + response.fragment_name);
+                    $('#lotteryModal').modal('show');
+                    fetchFragments()
+                }
+            },
+            error: function(xhr) {
+                var errorMessage = 'An unknown error occurred, please try again later.'; // Default error message
+                if (xhr.status === 400) {
+                    try {
+                        var errorResponse = JSON.parse(xhr.responseText);
+                        errorMessage = `Error: ${errorResponse.error}`; // Parsing the JSON error response
+                    } catch (e) {
+                        errorMessage = 'Error parsing the response, please try again.';
+                    }
+                } else if (xhr.status) {
+                    errorMessage = `Error ${xhr.status}: ${xhr.statusText}`; // General HTTP error message
+                }
+                $('#messageModal .modal-body').text(errorMessage);
+                $('#messageModal').modal('show'); // Show the modal with the error message
+            }
+        });
+    });
+
 });

@@ -73,6 +73,9 @@
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="tab" href="#my-collection">My Collection</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#lottery">Lottery</a>
+                    </li>
                 </ul>
                 <!-- nav tab content -->
                 <div class="tab-content">
@@ -189,10 +192,54 @@
                                 </div>
                             {% endif %}
                         </div>
-                    </div>               
+                    </div>      
+                    
+                    <!-- Lottery -->
+                    <div id="lottery" class="container tab-pane fade"><br>
+                        <div class="lottery-description">
+                            <h1>Spend 10 ETH to get a new fragment!</h1>
+                        </div>
+                        <button class="lottery-button">Try your luck</button>
+
+                        <!-- Lottery Model -->
+                        <div class="modal fade" id="lotteryModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <!-- Head -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Congratulations!</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <!-- Content -->
+                                    <div class="modal-body">
+                                        <!-- Dynamically insert the image and split name -->
+                                        <p>You've won a piece!</p>
+                                        <img id="winningSplitImage" src="" alt="Winning Split" class="img-fluid"> 
+                                        <p id="winningSplitName"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Message Modal -->
+        <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="messageModalLabel">Message</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Message content will be filled dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
 
         <!-- Footer -->
         <footer class="bg-light text-center text-lg-start mt-5">

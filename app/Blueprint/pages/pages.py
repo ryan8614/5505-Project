@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
 from flask_login import login_required, current_user
 from ...models import TradeHistory, Trade
-from ...models import User, NFT
+from ...models import User, NFT, Fragment
 from ...forms import BuyForm, RedeemForm
 from ... import db
 from . import pages_bp
@@ -25,7 +25,8 @@ def dashboard():
     ).join(User, User.id == TradeHistory.seller).filter(TradeHistory.buyer == current_user.id).all()
     fragments=current_user.user_fragments
     collections = NFT.query.filter_by(completed=1, owner=current_user.id).all()
-    return render_template('dashboard.html', trade_history=trade_history, fragments=fragments, collections=collections)
+    available_fragments = Fragment.query.filter_by(owner=0).all()
+    return render_template('dashboard.html', trade_history=trade_history, fragments=fragments, collections=collections, available_fragments=available_fragments)
 
 @pages_bp.route('/marketplace', methods=['GET'])
 def marketplace():

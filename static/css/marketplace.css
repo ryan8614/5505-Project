@@ -227,3 +227,100 @@ background-color: #f1f1f1;
         width: 100%;
     }
 }
+
+
+/****************************************/
+/*Redeem Modal*/
+/****************************************/
+#RedeemModal .modal-content {
+    border-radius: 8px; /* Rounded corners for the modal content */
+    background: #fff; /* Light background for better readability */
+    border: 1px solid #dee2e6; /* Subtle border to define the modal */
+}
+
+#RedeemModal .modal-header {
+    background-color: #f8f9fa; /* Light gray background for the header */
+    border-bottom: 1px solid #dee2e6; /* Light border to separate from the body */
+    color: #495057; /* Dark gray text color for contrast */
+}
+
+#RedeemModal .modal-title {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Clean, modern font */
+    font-size: 20px; /* Appropriate size for modal titles */
+    font-weight: bold; /* Bold font for emphasis */
+}
+
+#RedeemModal .modal-body {
+    font-family: 'Arial', sans-serif; /* Consistent, readable font */
+    font-size: 16px; /* Good size for readability */
+    color: #343a40; /* Slightly darker text for good readability */
+    padding: 20px; /* Ample padding for spacing the content */
+}
+
+#RedeemModal .modal-footer {
+    border-top: 1px solid #dee2e6; /* Light border to separate from body */
+    padding: 15px; /* Padding for space around buttons */
+}
+
+#RedeemModal .btn-close {
+    filter: brightness(0.5) invert(1); /* Ensure close button is visible */
+}
+
+#RedeemModal .btn {
+    font-size: 14px; /* Smaller font size for buttons */
+    padding: 6px 10px; /* Padding for button size and comfort */
+}
+
+
+/****************************************/
+/*Buy Modal*/
+/****************************************/
+#BuyModal .modal-content {
+    border-radius: 10px; /* Adds rounded corners to the modal */
+    background: #fff; /* Light background to enhance content visibility */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+#BuyModal .modal-header {
+    background-color: #007bff; /* Bootstrap primary color for header */
+    color: #ffffff; /* White text for better contrast */
+    border-bottom: 2px solid #0056b3; /* Darker border for a slight 3D effect */
+    border-top-left-radius: 10px; /* Rounded top corners */
+    border-top-right-radius: 10px; /* Rounded top corners */
+}
+
+#BuyModal .modal-title {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 22px; /* Slightly larger font size for the title */
+    font-weight: bold;
+}
+
+#BuyModal .btn-close {
+    filter: brightness(1); /* Normal brightness for better integration */
+    color: #ffffff; /* Ensures the close button is clearly visible */
+}
+
+#BuyModal .modal-body {
+    padding: 20px; /* Generous padding to create space around content */
+    font-size: 18px; /* Larger font size for easy reading */
+    text-align: center; /* Center aligns the text and image for better focus */
+    color: #333; /* Dark grey for readable text */
+}
+
+#BuyModal img {
+    margin-top: 15px; /* Space above the image */
+    margin-bottom: 15px; /* Space below the image */
+    width: 300px; /* Fixed width for all images */
+    height: 200px; /* Fixed height for all images */
+    object-fit: cover; /* Ensures that the aspect ratio is maintained while covering the area */
+    border-radius: 5px; /* Slight rounding on the image corners */
+}
+
+#BuyModal p {
+    margin-bottom: 10px; /* Consistent margin for paragraphs */
+}
+
+#BuyModal .btn {
+    font-size: 14px; /* Smaller font size for buttons */
+    padding: 6px 10px; /* Padding for button size and comfort */
+}

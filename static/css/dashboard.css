@@ -52,162 +52,167 @@ nav-tabs .nav-link {
     color: white; 
     border: none; 
 }
-/****************************************/
-/*LOTTERY*/
-/****************************************/
-.lottery-block{
-    margin-top:10rem;
-    margin-bottom: 10rem;
-    min-height: 600px;
-}
-/* lottery text */
-.lottery-text{
-    border:1rem dotted grey;
-    border-radius: 5rem;
-    background-color: azure;
-}
-.lottery-intro{
-    font-family: "Permanent Marker", cursive;
-    font-weight: 200;
-    font-style: normal;
-    font-size:2.4rem;
-}
-/* lottery title animation */
-.lottery-title span {
-    font-family: "Permanent Marker", cursive;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 5rem;
-    color: orange;
-    display: inline-flex;
-    animation: lottery-title 2s infinite;
-}
-
-@keyframes lottery-title {
-    0%,
-    75% {
-        transform: rotateY(360deg);
-    }
-}
-.lottery-title-container span:nth-of-type(1) {
-    animation-delay: 0.2s;
-}
-.lottery-title-container span:nth-of-type(2) {
-    animation-delay: 0.4s;
-}
-.lottery-title-container span:nth-of-type(3) {
-    animation-delay: 0.6s;
-}
-.lottery-title-container span:nth-of-type(4) {
-    animation-delay: 0.8s;
-}
-.lottery-title-container span:nth-of-type(5) {
-    animation-delay: 1s;
-}
-.lottery-title-container span:nth-of-type(6) {
-    animation-delay: 1.2s;
-}
-.lottery-title-container span:nth-of-type(7) {
-    animation-delay: 1.4s;
-}
 
 /****************************************/
-/*SPIN*/
+/*LOTTERY MODULE*/
 /****************************************/
-
-/* lottery spin wheel animation */
-.lottery-container{
-    display: flex;
-    align-items: center;
-    justify-content:center;
-    margin-top: 3rem;
-    margin-bottom: 20rem;
+#lottery .lottery-description {
+    text-align: center;
+    margin-bottom: 20px;
 }
-.spin-wheel{
-    height:35rem;
-    width:35rem;
-    position: relative;
-    border-radius: 50%;
+
+#lottery .lottery-button {
+    display: block;
+    margin: 0 auto 20px auto;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#lottery .lottery-button:hover {
+    background-color: #0056b3;
+}
+
+#lottery .lottery-container {
+    width: 750px;  /* 容器宽度，显示多个奖品 */
+    height: 150px; /* 容器高度 */
     overflow: hidden;
-    box-shadow:0 0 1rem grey;
-    transition: 3s all;
+    border: 2px solid #000;
+    background-color: #fff;
+    position: relative;
 }
 
-.spin-wheel div{
-    height: 50%;
-    width:20rem;
-    clip-path:polygon(100% 0,50% 100%,0 0);
-    position:absolute;
-    transform: translateX(-50%);
-    transform-origin: bottom;
-    left:21%;
+#lottery .item-list {
     display: flex;
-    align-items: center;
-    font-size:4rem;
-    font-weight: 1000;
-    font-family: monospace;
-    letter-spacing: 1rem;
-    color:white;
-    writing-mode: vertical-rl;
-}
-
-.spin-wheel .one{
-    background-color: bisque;
-    left:50%;
-}
-
-.spin-wheel .two{
-    background-color: blueviolet;
-    transform: rotate(60deg);
-}
-
-.spin-wheel .three{
-    background-color: bisque;
-    transform: rotate(120deg);
-}
-.spin-wheel .four{
-    background-color: blueviolet;
-    transform: rotate(180deg);
-}
-.spin-wheel .five{
-    background-color: bisque;
-    transform: rotate(240deg);
-}
-
-.spin-wheel .six{
-    background-color: blueviolet;
-    transform: rotate(300deg);
-}
-
-.wheel-center{
-    height:2.5rem;
-    width:2.5rem;
-    background:orange;
-    border-radius: 50%;
-    position:absolute;
-}
-
-#spin{
-    height:6rem;
-    width: 12rem;
     position: absolute;
-    margin-top: 60rem;
-    font-size: 2.4rem;
-    font-weight: 800;
-    box-shadow: 0 1rem 1.5rem grey;
+    top: 0;
+    left: 0;
 }
 
-#spin:hover{
-    box-shadow: none;
+#lottery .item {
+    width: 150px;  
+    height: 150px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #ccc;
 }
 
-.stopper{
-    height: 5rem;
-    width:4rem;
-    background:orange;
-    position:absolute;
-    margin-top: 60rem;
-    margin-top:-35rem;
-    clip-path:polygon(100% 0,50% 100%,0 0);
+#lottery .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
 
+#lottery .indicator-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background-color: red; 
+    transform: translateX(-50%);
+    z-index: 1; 
+}
+
+#lotteryModal .modal-content {
+    border-radius: 10px; /* Adds rounded corners to the modal */
+    background: #fff; /* Light background to enhance content visibility */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+#lotteryModal .modal-header {
+    background-color: #007bff; /* Bootstrap primary color for header */
+    color: #ffffff; /* White text for better contrast */
+    border-bottom: 2px solid #0056b3; /* Darker border for a slight 3D effect */
+    border-top-left-radius: 10px; /* Rounded top corners */
+    border-top-right-radius: 10px; /* Rounded top corners */
+}
+
+#lotteryModal .modal-title {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 22px; /* Slightly larger font size for the title */
+    font-weight: bold;
+}
+
+#lotteryModal .btn-close {
+    filter: brightness(1); /* Normal brightness for better integration */
+    color: #ffffff; /* Ensures the close button is clearly visible */
+}
+
+#lotteryModal .modal-body {
+    padding: 20px; /* Generous padding to create space around content */
+    font-size: 18px; /* Larger font size for easy reading */
+    text-align: center; /* Center aligns the text and image for better focus */
+    color: #333; /* Dark grey for readable text */
+}
+
+#lotteryModal img {
+    margin-top: 15px; /* Space above the image */
+    margin-bottom: 15px; /* Space below the image */
+    width: 300px; /* Fixed width for all images */
+    height: 200px; /* Fixed height for all images */
+    object-fit: cover; /* Ensures that the aspect ratio is maintained while covering the area */
+    border-radius: 5px; /* Slight rounding on the image corners */
+}
+
+#lotteryModal p {
+    margin-bottom: 10px; /* Consistent margin for paragraphs */
+}
+
+/****************************************/
+/*myFragmentModal*/
+/****************************************/
+
+#myFragmentModal .modal-content {
+    border-radius: 8px; /* Rounded corners for the modal content */
+    background: #fff; /* Light background for better readability */
+    border: 1px solid #dee2e6; /* Subtle border to define the modal */
+}
+
+#myFragmentModal .modal-header {
+    background-color: #f8f9fa; /* Light gray background for the header */
+    border-bottom: 1px solid #dee2e6; /* Light border to separate from the body */
+    color: #495057; /* Dark gray text color for contrast */
+}
+
+#myFragmentModal .modal-title {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Clean, modern font */
+    font-size: 20px; /* Appropriate size for modal titles */
+    font-weight: bold; /* Bold font for emphasis */
+}
+
+#myFragmentModal .modal-body {
+    font-family: 'Arial', sans-serif; /* Consistent, readable font */
+    font-size: 16px; /* Good size for readability */
+    color: #343a40; /* Slightly darker text for good readability */
+    padding: 20px; /* Ample padding for spacing the content */
+}
+
+#myFragmentModal .modal-footer {
+    border-top: 1px solid #dee2e6; /* Light border to separate from body */
+    padding: 15px; /* Padding for space around buttons */
+}
+
+#myFragmentModal .btn-close {
+    filter: brightness(0.5) invert(1); /* Ensure close button is visible */
+}
+
+#myFragmentModal .btn {
+    font-size: 14px; /* Smaller font size for buttons */
+    padding: 10px 20px; /* Padding for button size and comfort */
+}
+
+#myFragmentModal .form-group {
+    margin-top: 10px; /* Spacing for form groups */
+}
+
+#myFragmentModal select,
+#myFragmentModal input[type="number"] {
+    height: 38px; /* Height of inputs for easy interaction */
+    font-size: 16px; /* Font size for inputs to match the body text */
 }

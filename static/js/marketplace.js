@@ -36,7 +36,7 @@ $(document).ready(function() {
 
     function checkLoginStatus_fragment(button) {
         $.ajax({
-            url: '/check_login',
+            url: '/auth/check_login',
             method: 'GET',
             success: function(data) {
                 if (data.is_logged_in) {
@@ -49,7 +49,7 @@ $(document).ready(function() {
 
                     var modal = $('#BuyModal');
                     modal.find('img').attr('src', fragmentPath);
-                    modal.find('h5').text(fragmentName);
+                    modal.find('.modal-title').text(fragmentName);
                     modal.find('.price').text('Price: ' + fragmentPrice + ' ETH');
                     modal.find('.release-time').text('Release Time: ' + fragmentReleaseTime);
                     modal.modal('show');
@@ -60,10 +60,11 @@ $(document).ready(function() {
 
                 } else {
                     // User is not logged in, redirect to login page
-                    window.location.href = '/login';
+                    window.location.href = '/auth/login';
                 }
             },
             error: function(error) {
+                flash('You must log in first to redeem')
                 console.error('Error:', error);
             }
         });
@@ -72,7 +73,7 @@ $(document).ready(function() {
 
     function checkLoginStatus_nft(button) {
         $.ajax({
-            url: '/check_login',
+            url: '/auth/check_login',
             method: 'GET',
             success: function(data) {
                 if (data.is_logged_in) {
@@ -92,7 +93,7 @@ $(document).ready(function() {
 
                 } else {
                     // User is not logged in, redirect to login page
-                    window.location.href = '/login';
+                    window.location.href = '/auth/login';
                 }
             },
             error: function(error) {

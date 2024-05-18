@@ -135,11 +135,11 @@
 
                                 <!-- Content -->
                                 <div class="modal-body">
-                                    <p>
+                                    <h3>
                                         Are you sure you want to redeem <span class="name"></span>? 
                                         <br>
-                                        If success, you will get <span class="bonus"></span>.
-                                    </p>
+                                        If success, you will get <span class="bonus"></span> ETH.
+                                    </h3>
                                 </div>
                         
                                 <!-- Bottom -->
@@ -229,16 +229,18 @@
                             </div>
                             <!-- Modal Box -->
                             <div class="modal fade" id="BuyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-dialog  modal-dialog-centered">
                                     <div class="modal-content">
-
+                                        <div class="modal-header">
+                                            <h4 class="modal-title"></h4>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
                                         <!-- Content -->
                                         <div class="modal-body">
                                             <div class="container-fluid text-center">
                                                 <img src="" alt="trade-img" class="img-fluid">
                                             </div>
-                                            
-                                            <h5></h5>
+                                        
                                             <p class="price"></p>
                                             <p class="release-time"></p>
                                             <p class="balance">
@@ -250,17 +252,15 @@
                                             {% endif %}
                                             </p>
                                         </div>
-                                
                                         <!-- Bottom -->
                                         <div class="modal-footer">
-                                            <button type="button" id="frg-confirmButton" class="btn btn-primary" data-bs-dismiss="modal"
-                                            data-fragment_id="" 
-                                            data-buyer="{{ current_user.id }}">
+                                            <button type="button" id="nft-confirmButton" class="btn btn-primary" data-bs-dismiss="modal"
+                                            data-nftId="" 
+                                            data-user="{{ current_user.id }}">
                                                 Confirm
                                             </button>
                                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                         </div>
-                                
                                     </div>
                                 </div>
                             </div>
@@ -297,6 +297,21 @@
         <div class="join-container d-block text-center">
             <h1 class="py-2"><b>Join Our Community</b></h1>
             <a class="btn btn-primary py-2" href="{{ url_for('auth.register') }}">Get Started</a>
+        </div>
+
+        <!-- Message Modal -->
+        <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="messageModalLabel">Message</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Message content will be filled dynamically -->
+                    </div>
+                </div>
+            </div>
         </div>
         
         <!-- Footer -->

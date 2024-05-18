@@ -156,3 +156,40 @@ padding:1.8rem;
     padding: 1rem 0;
 }
 
+
+/************************************/
+/* message Modal */
+/************************************/
+
+#messageModal .modal-content {
+    border-radius: 8px; /* Rounded corners for the modal */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow around the modal */
+}
+
+#messageModal .modal-header {
+    border-radius: 8px; /* Rounded corners for the modal */
+    background-color: #f8f9fa; /* Light gray background for the header */
+    border-bottom: 1px solid #dee2e6; /* A subtle border line to separate header from body */
+}
+
+#messageModal .modal-title {
+    color: #007bff; /* Bootstrap primary color for the title */
+    font-family: 'Arial', sans-serif; /* A more modern font family */
+    font-size: 24px; /* Larger font size for the title */
+}
+
+#messageModal .modal-body {
+    font-family: 'Helvetica', sans-serif; /* Clear and readable font for the body */
+    font-size: 18px; /* Slightly larger font size for better readability */
+    padding: 20px; /* More padding to make the text less cramped */
+    color: #333; /* Darker text for better contrast and readability */
+}
+
+#messageModal .btn-close {
+    filter: none; /* Remove the inversion filter for a more natural look */
+    color: #6c757d; /* Soft grey, good for subtle UI elements */
+    background-color: transparent; /* Keep background clear to avoid drawing too much attention */
+    border: none; /* Remove any borders for a cleaner look */
+    opacity: 1; /* Slightly transparent when not focused/hovered */
+}
+

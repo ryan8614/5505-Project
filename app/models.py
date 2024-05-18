@@ -3,56 +3,69 @@ import hashlib
 from werkzeug.security import check_password_hash
 from flask import g
 from flask_login import UserMixin
-from sqlalchemy import func
+from sqlalchemy import func, Numeric
 from datetime import datetime, timezone
 from decimal import Decimal
 from sqlalchemy.ext.hybrid import hybrid_property 
 from . import db
 
 '''
-CREATE TABLE users(
-    id INTEGER PRIMARY KEY,
-    username VARCHAR(64) UNIQUE,
-    email VARCHAR(255) UNIQUE,
-    passwd_hash VARCHAR(255),
-    balance NUMERIC CHECK (balance >=0 AND balance < 100000)
-);
-
-CREATE TABLE nft (
-    id TEXT PRIMARY KEY,
-    path TEXT UNIQUE NOT NULL,
-    completed INTEGER DEFAULT 0 NOT NULL CHECK (completed IN (0, 1)),
-    pieces INTEGER NOT NULL CHECK (pieces IN (4, 6, 9)),
-    owner INTEGER REFERENCES users(id),
-    bonus NUMERIC CHECK (bonus>=0)
-);
-
 CREATE TABLE fragment (
-    id TEXT PRIMARY KEY,
-    img_id TEXT REFERENCES nft(id),
-    path TEXT UNIQUE NOT NULL,
-    piece_number INTEGER CHECK (piece_number BETWEEN 1 AND 9),
-    owner INTEGER REFERENCES users(id)
+        id VARCHAR(64) NOT NULL, 
+        img_id VARCHAR(64), 
+        path VARCHAR(255) NOT NULL, 
+        piece_number INTEGER NOT NULL, 
+        owner INTEGER, 
+        PRIMARY KEY (id), 
+        CHECK (piece_number BETWEEN 1 AND 9), 
+        FOREIGN KEY(img_id) REFERENCES nft (id), 
+        UNIQUE (path), 
+        FOREIGN KEY(owner) REFERENCES users (id)
 );
-
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY,
+    username VARCHAR(64) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    passwd_hash VARCHAR(255) NOT NULL,
+    balance NUMERIC(10, 2) NOT NULL DEFAULT 50.00,
+    CONSTRAINT check_balance CHECK (balance >= 0 AND balance < 100000)
+);
+CREATE TABLE nft (
+        id VARCHAR(64) NOT NULL, 
+        path VARCHAR(255) NOT NULL, 
+        completed BOOLEAN NOT NULL, 
+        pieces INTEGER NOT NULL, 
+        owner INTEGER, 
+        bonus NUMERIC(10, 2) NOT NULL DEFAULT 100.00,
+        PRIMARY KEY (id), 
+        CONSTRAINT check_pieces_values CHECK (pieces IN (4, 6, 9)), 
+        UNIQUE (path), 
+        FOREIGN KEY(owner) REFERENCES users (id)
+);
 CREATE TABLE trade (
-    id TEXT PRIMARY KEY REFERENCES fragment(id), 
-    owner INTEGER REFERENCES users(id),
-    price NUMERIC CHECK (price>=0),
-    listed_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+        id VARCHAR(64) NOT NULL, 
+        owner INTEGER, 
+        price NUMERIC(10, 2) NOT NULL, 
+        listed_time DATETIME, 
+        PRIMARY KEY (id), 
+        CHECK (price >= 0), 
+        FOREIGN KEY(id) REFERENCES fragment (id), 
+        FOREIGN KEY(owner) REFERENCES users (id)
 );
-
 CREATE TABLE trade_history (
-    trade_id INTEGER PRIMARY KEY,
-    frag_id TEXT NOT NULL,
-    seller INTEGER REFERENCES users(id),
-    buyer INTEGER REFERENCES users(id),
-    price NUMERIC CHECK (price>=0),
-    transaction_time TIMESTAMP NOT NULL
+        trade_id INTEGER NOT NULL, 
+        frag_id TEXT NOT NULL, 
+        frag_name TEXT NOT NULL, 
+        seller INTEGER, 
+        buyer INTEGER, 
+        price NUMERIC(10, 2) NOT NULL,
+        transaction_time DATETIME NOT NULL, 
+        PRIMARY KEY (trade_id), 
+        CONSTRAINT price_nonnegative CHECK (price >= 0), 
+        FOREIGN KEY(seller) REFERENCES users (id), 
+        FOREIGN KEY(buyer) REFERENCES users (id)
 );
 '''
-
-
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -61,7 +74,13 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
     passwd_hash = db.Column(db.String(255), nullable=False)
-    balance = db.Column(db.String(255), nullable=False, default='50.0')
+    balance = db.Column(db.Numeric(10, 2), default=50.00, nullable=False)
+
+    def __repr__(self):
+        return f'<User {self.username}>'
+    
+    def verify_password(self, password):
+        return check_password_hash(self.passwd_hash, password)
 
     # Fragments owned by User
     user_fragments = db.relationship('Fragment', lazy='select')
@@ -72,18 +91,17 @@ class User(db.Model, UserMixin):
     __table_args__ = (
         db.CheckConstraint('balance >= 0 AND balance < 100000', name='check_balance'),
     )
-
-    def __repr__(self):
-        return f'<User {self.username}>'
-
-    def verify_password(self, password):
-        return check_password_hash(self.passwd_hash, password)
     
     def set_balance(self, value):
-        self.balance = str(Decimal(value))
+        # Directly assign the Decimal value
+        if isinstance(value, Decimal):
+            self.balance = value
+        else:
+            self.balance = Decimal(value)
 
     def get_balance(self):
-        return Decimal(self.balance)
+        return self.balance
+
 
     
 
@@ -95,7 +113,7 @@ class NFT(db.Model):
     completed = db.Column(db.Boolean, default=False, nullable=False)
     pieces = db.Column(db.Integer, nullable=False)
     owner = db.Column(db.Integer, db.ForeignKey('users.id'))
-    bonus = db.Column(db.String(255), nullable=False, default='50.0')
+    bonus = db.Column(db.Numeric(10, 2), default=Decimal('100.00'), nullable=False)
 
     __table_args__ = (
         db.CheckConstraint('pieces IN (4, 6, 9)', name='check_pieces_values'),
@@ -105,7 +123,11 @@ class NFT(db.Model):
         return f'<NFT {self.path}>'
     
     def set_bonus(self, value):
-        self.bonus = str(Decimal(value))
+        # Directly assign the Decimal value
+        if isinstance(value, Decimal):
+            self.balance = value
+        else:
+            self.balance = Decimal(value)
 
     @hybrid_property
     def get_bonus(self):
@@ -187,7 +209,7 @@ class Trade(db.Model):
 
     id = db.Column(db.String(64),  db.ForeignKey('fragment.id'), primary_key=True)
     owner = db.Column(db.Integer, db.ForeignKey('users.id'))
-    price = db.Column(db.String(255), nullable=False, default='0.0')
+    price = db.Column(db.Numeric(10, 2), nullable=False,  default='0.0')
     listed_time = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
     __table_args__ = (
@@ -195,10 +217,14 @@ class Trade(db.Model):
     )
 
     def set_price(self, value):
-        self.price = str(Decimal(value))
+        # Directly assign the Decimal value
+        if isinstance(value, Decimal):
+            self.price = value
+        else:
+            self.price = Decimal(value)
 
     def get_price(self):
-        return Decimal(self.price)
+        return self.price
     
 
 
@@ -211,7 +237,7 @@ class TradeHistory(db.Model):
     frag_name = db.Column(db.Text,  nullable=False)
     seller = db.Column(db.Integer, db.ForeignKey('users.id'))
     buyer = db.Column(db.Integer, db.ForeignKey('users.id'))
-    price = db.Column(db.String, nullable=False, default=0.0, server_default="0.0")
+    price = db.Column(db.Numeric(10, 2), nullable=False, default=0.0, server_default="0.0")
     transaction_time = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
     # Relationships
@@ -225,11 +251,16 @@ class TradeHistory(db.Model):
     def __repr__(self):
         return f"<TradeHistory(trade_id={self.trade_id}, frag_id={self.frag_id}, seller={self.seller}, buyer={self.buyer}, price={self.price}, transaction_time={self.transaction_time})>"
     
-    def set_price(self, value):
-        self.price = str(Decimal(value))
+    
+    def set_pricee(self, value):
+        # Directly assign the Decimal value
+        if isinstance(value, Decimal):
+            self.price = value
+        else:
+            self.price = Decimal(value)
 
     def get_price(self):
-        return Decimal(self.price)
+        return self.balance
     
     @property
     def seller_username(self):
