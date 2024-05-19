@@ -5,3 +5,4 @@ flask_migrate==4.0.7
 flask_login==0.6.3
 flask_wtf==1.2.1
 pillow==10.3.0
+email_validator==2.1.1

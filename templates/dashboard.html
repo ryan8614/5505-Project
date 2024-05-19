@@ -188,19 +188,30 @@
                             {% endif %}
                         {% else %}
                             <div class="row mt-5 mb-5">
-                                <p>No collections to display.</p>
+                                <p class="h3 text-center">No collections to display.</p>
                             </div>
                         {% endfor %}
                     </div>
 
-                    
                     <!-- Lottery -->
                     <div id="lottery" class="container tab-pane fade"><br>
-                        <div class="lottery-description">
+                        <div class="lottery-description mt-3">
                             <h1>Spend 10 ETH to get a new fragment!</h1>
                         </div>
+                        <div class="row d-flex justify-content-center my-5">
+                            <div id="lottery-container" class="lottery-container">
+                                <div class="indicator-line"></div>
+                                <div class="item-list">
+                                    {% for fragment in available_fragments %}
+                                        <div class="item">
+                                            <img src="{{ fragment.path }}" alt="{{ fragment.id }}">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
                         <button class="lottery-button">Try your luck</button>
-
+                    
                         <!-- Lottery Model -->
                         <div class="modal fade" id="lotteryModal">
                             <div class="modal-dialog">

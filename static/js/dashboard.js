@@ -154,7 +154,7 @@ $(document).ready(function() {
                 if (response.fragment_path && response.fragment_name && response.fragment_id) {
                     $('#winningSplitImage').attr('src', response.fragment_path); 
                     $('#winningSplitName').text('Congratulations! You won: ' + response.fragment_name);
-                    $('#lotteryModal').modal('show');
+                    startAnimation(response.fragment_id)
                     fetchFragments()
                 }
             },
@@ -171,9 +171,109 @@ $(document).ready(function() {
                     errorMessage = `Error ${xhr.status}: ${xhr.statusText}`; // General HTTP error message
                 }
                 $('#messageModal .modal-body').text(errorMessage);
-                $('#messageModal').modal('show'); // Show the modal with the error message
+                $('#messageModal').modal('show')
             }
         });
     });
+
+
+    function findItemIndexByFragmentId(fragment_id, items) {
+        let index = -1; // The default index is -1, indicating not found
+    
+        items.some((item, idx) => { // Use the .some method to stop iteration as soon as a match is found
+            const altValue = $(item).find('img').attr('alt'); // Get the alt attribute of the img element under the current item
+            if (altValue === fragment_id.toString()) { 
+                index = idx; 
+                return true; 
+            }
+            return false; // Keep iterating
+        });
+    
+        return index; // return index
+    }
+
+    let isAnimating = false;
+    let animationFrameId;
+    const duration = 3000; 
+    const decelerationDuration = 2000;
+    let position = 0;
+    let speed = 110;
+
+    function startAnimation(frag_id) {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        const itemList = $('.item-list');
+        const items = $('.item').toArray();
+
+        const itemWidth = items[0].offsetWidth;
+        const itemCount = items.length;
+
+        items.forEach(item => {
+            $(item).css('width', `${itemWidth}px`);
+        });
+        index = findItemIndexByFragmentId(frag_id, items)
+
+        const totalItems = itemCount * 3;
+        const visibleItems = 5;
+        const centerIndex = Math.floor(visibleItems / 2);
+        const totalWidth = itemWidth * totalItems;
+        var final_index = itemCount + index
+        itemList.empty();
+        [...items, ...items, ...items].forEach(item => {
+            itemList.append($(item).clone(true));
+        });
+
+        const startTime = performance.now();
+
+        function easeOutCubic(t) {
+            return 1 - Math.pow(1 - t, 3);
+        }
+
+        function animate(time) {
+            const elapsed = time - startTime;
+            if (elapsed < duration) {
+                position += speed;
+                position %= totalWidth;
+                itemList.css('transform', `translateX(${-position}px)`);
+                animationFrameId = requestAnimationFrame(animate);
+            } else {
+                const decelerationStartTime = performance.now();
+                const initialPosition = position;
+                const randomIndex = final_index;
+                const stopPosition = randomIndex * itemWidth - (itemWidth * centerIndex);
+                const totalDistance = (stopPosition - initialPosition + totalWidth) % totalWidth;
+
+                function decelerate(decelerateTime) {
+                    const decelerationElapsed = decelerateTime - decelerationStartTime;
+                    const t = Math.min(decelerationElapsed / decelerationDuration, 1);
+                    const ease = easeOutCubic(t);
+                    position = initialPosition + totalDistance * ease;
+                    position %= totalWidth;
+                    itemList.css('transform', `translateX(${-position}px)`);
+                    if (t < 1) {
+                        animationFrameId = requestAnimationFrame(decelerate);
+                    } else {
+                        isAnimating = false;
+                        const prizeIndex = Math.floor((position + itemWidth * centerIndex) / itemWidth) % totalItems;
+                        const prizeImage = $(items[prizeIndex]).find('img').attr('alt');
+                        setTimeout(() => {
+                            $('#lotteryModal').modal('show'); // Show the modal with the error message
+                        }, 100);
+                    }
+                }
+                animationFrameId = requestAnimationFrame(decelerate);
+            }
+        }
+
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = requestAnimationFrame(animate);
+    }
+
+    function stopAnimation() {
+        cancelAnimationFrame(animationFrameId);
+        isAnimating = false;
+    }
+
 
 });
