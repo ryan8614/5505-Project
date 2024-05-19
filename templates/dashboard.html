@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <h3 class="welcome-message text-center">Hello {{ current_user.username }}, welcome to dashboard!</h3>
-                <h4 class="balance-info text-center">Balance:{{ '%.2f'|format(current_user.balance) }} ETH</h4> 
+                <h4 class="balance-info text-center" id="user_balance">Balance:{{ '%.2f'|format(current_user.balance) }} ETH</h4> 
             </div>
             <!-- User Nav Section -->
             <div class="container nav-container p-4"> 

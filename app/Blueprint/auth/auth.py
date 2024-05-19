@@ -29,6 +29,17 @@ def check_login():
     return jsonify({'is_logged_in': current_user.is_authenticated})
 
 
+@auth_bp.route('/user_info')
+def get_user_info():
+    if current_user.is_authenticated:
+        user_info = {
+            "balance": current_user.get_balance()
+        }
+        return jsonify(user_info)
+    else:
+        return jsonify({"error": "User not authenticated"}), 403
+
+
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()

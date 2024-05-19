@@ -139,7 +139,34 @@ $(document).ready(function() {
                 });
             },
             error: function(xhr) {
-                console.error('Failed to fetch fragments:', xhr.responseText);
+                $('#messageModal .modal-body').text('Failed to fetch user details:', xhr.responseText);
+                $('#messageModal').modal('show')
+            }
+        });
+        
+    }
+
+    function updateUserDetails() {
+        $.ajax({
+            url: '/auth/user_info',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (!response.error) {
+                    if (typeof response.balance === 'string') {
+                        var balance = parseFloat(response.balance);
+                        $('#user_balance').text(`Balance: ${balance.toFixed(2)} ETH`);
+                    } else {
+                        $('#user_balance').text(`Balance: ${response.balance.toFixed(2)} ETH`);
+                    }
+                } else {
+                    $('#messageModal .modal-body').text(response.error);
+                    $('#messageModal').modal('show')
+                }
+            },
+            error: function(xhr) {
+                $('#messageModal .modal-body').text('Failed to fetch user details:', xhr.responseText);
+                $('#messageModal').modal('show')
             }
         });
     }
@@ -156,6 +183,7 @@ $(document).ready(function() {
                     $('#winningSplitName').text('Congratulations! You won: ' + response.fragment_name);
                     startAnimation(response.fragment_id)
                     fetchFragments()
+                    updateUserDetails()
                 }
             },
             error: function(xhr) {

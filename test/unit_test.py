@@ -1,9 +1,11 @@
+'''
+use 'python  -m unittest test/unit_test.py' to test
+''' 
+
 import unittest
-from flask import Flask
-from flask_login import login_user
 from werkzeug.security import generate_password_hash
 from app import create_app, db
-from app.models import User, Trade, Fragment, Trade
+from app.models import User, Fragment
 from app.config import TestConfig
 import json
 
