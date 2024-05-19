@@ -30,6 +30,8 @@ How to increase your balance?
 
 ## Instrctions to launch application
 
+Python Version: 3.9
+
 To launch this application, follow the steps below
 
 1. Clone this repository to your local git directory：
@@ -38,7 +40,7 @@ To launch this application, follow the steps below
     ```
 2. Go to the git project directory：
     ```sh
-    cd /local-git-directory/5505-Project
+    cd local-git-repo/5505-Project
     ```
 3. Install required packages：
     ```sh
@@ -49,23 +51,40 @@ To launch this application, follow the steps below
     python server.py
     ```
 
-应用程序应在 `http://localhost:5001` 上运行。
+The application should run on `http://localhost:5001` 
 
 ## Instruction to run tests
 
-要运行应用程序的测试，请按照以下步骤操作：
+To run your application's tests, follow these steps:
 
-1. 确保你在项目的根目录：
+1. Make sure you are in the root directory of your project：
     ```sh
     cd your-repo-name
     ```
-2. 运行测试命令：
-    ```sh
-    npm test
-    ```
 
-测试结果将显示在终端窗口中。
+2. Run test command: 
+
+    - Unit Tests
+
+      ```
+      python  -m unittest test/unit_test.py
+      ```
+
+    - Selenium Tests
+
+      ```
+      python server.py & python -m unittest test/selenium_test.py
+      ```
+
+       or you need to keep the server running first then excute:
+
+      ```
+      python -m unittest test/selenium_test.py
+      ```
+
+      
+
+3. The test results will be displayed in the terminal window.
 
 ---
 
-请根据实际情况修改项目名称、GitHub仓库地址、依赖项安装命令以及启动和测试命令。希望这个模板对你有帮助！
