@@ -42,7 +42,7 @@ To launch this application, follow the steps below
     ```
 3. Install required packages：
     ```sh
-    pip install -r /requirements.txt
+    pip install -r requirements.txt
     ```
 4. Run server.py：
     ```sh
