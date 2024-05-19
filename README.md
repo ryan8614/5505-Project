@@ -1,42 +1,57 @@
-# 项目名称
-NFT Plattform
-## 应用程序简介
+# Project name
+NFT Marketplace
+## Application introduction
 
-此Web应用程序旨在[描述应用程序的目的]。该应用程序设计用于[解释应用程序的设计和使用]。用户可以通过该应用程序[简要描述主要功能]。
+Our NFT Marketplace aims to provide a trading platform for all users, where users are allowed to create their respective accounts to trade NFT fragments and collect NFT.
 
-## 团队成员
+ When each user is first created and logged in, each user account will be set to have the same value. There are two ways for users to obtain NFT fragments. 
 
-| UWA ID | 姓名 | GitHub 用户名 |
-|--------|------|----------------|
+- The first way is to go to the lottery interface of the dashboard page to draw NFT fragments and obtain NFT fragments; 
+
+- The second way is to go to the marketplace page to purchase the NFT fragments they need. After users extract NFT fragments, these fragments will appear in my fragment on the dashboard. In this container, users can freely adjust the transaction status and price of each of their own NFT fragments.
+
+When the user needs an exact NFT fragment, he can go to the marketplace page and enter the desired NFT keyword into the search box. The platform will retrieve the content entered by the user and return results to the user to help the user purchase it. Wanted nft fragment.
+
+How to increase your balance?
+
+- Each user will receive 50 ETH as initial capital when they first register.
+- Users can earn additional income by trading their own nft fragments.
+
+- Finally, when the user collects a certain series of nft fragments, the user can go to the market place to redeem the prize and get the bonus.
+
+## Team member
+
+| UWA Student ID | Name | GitHub User Name |
+|:------:|:----:|:--------------:|
 | 24023844 | Shaohong Zheng | Shaohongzheng |
 | 23691038 | Yike Chang | ryan8614 |
 | 23941952 | Min Zhang | JasAAA |
 | 23254894 | Yifei Tang | yifei-T |
 
-## 启动应用程序
+## Instrctions to launch application
 
-要启动此应用程序，请按照以下步骤操作：
+To launch this application, follow the steps below
 
-1. 克隆此仓库到你的本地机器：
+1. Clone this repository to your local git directory：
     ```sh
-    git clone https://github.com/your-repo-name.git
+    git clone https://github.com/ryan8614/5505-Project.git
     ```
-2. 导航到项目目录：
+2. Go to the git project directory：
     ```sh
-    cd your-repo-name
+    cd /local-git-directory/5505-Project
     ```
-3. 安装所需的依赖项：
+3. Install required packages：
     ```sh
-    npm install
+    pip install -r /requirements.txt
     ```
-4. 启动应用程序：
+4. Run server.py：
     ```sh
-    npm start
+    python server.py
     ```
 
-应用程序应在 `http://localhost:3000` 上运行。
+应用程序应在 `http://localhost:5001` 上运行。
 
-## 运行测试
+## Instruction to run tests
 
 要运行应用程序的测试，请按照以下步骤操作：
 
