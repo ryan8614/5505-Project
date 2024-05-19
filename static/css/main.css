@@ -205,3 +205,25 @@ padding:1.8rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow for depth */
 }
 
+/************************************/
+/* Upload style */
+/************************************/
+.upload-title {
+    font-size: 4rem; 
+    font-weight: bold; 
+}
+
+.form-group{
+    font-size: 2rem;
+}
+
+.form-control {
+    font-size: 3rem; 
+}
+
+.btn {
+    font-size: 2rem; 
+}
+
+.customup-alert {
+    font-size: 2rem;}
