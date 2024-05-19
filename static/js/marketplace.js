@@ -107,7 +107,7 @@ $(document).ready(function() {
         let query = $('#search-input').val();
 
         $.ajax({
-            url: '/search_fragments',
+            url: '/trade/search_fragments',
             method: 'GET',
             data: { query: query },
             success: function(response) {

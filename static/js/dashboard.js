@@ -129,9 +129,8 @@ $(document).ready(function() {
                 tbody.empty(); // Clear the current fragment list
                 fragments.forEach(function(fragment) {
                     tbody.append(`
-                        <tr data-bs-toggle="modal" data-bs-target="#myFragmentModal" data-id="${fragment.id}" data-name="${fragment.name}" data-status="${fragment.status}" data-price="${fragment.price}">
+                        <tr data-bs-toggle="modal" data-bs-target="#myFragmentModal" data-id="${fragment.id}" data-name="${fragment.name}" data-status="${fragment.status}" data-price="${fragment.price}" style="height: 100px;">
                             <td><img class="trade-img" src="${fragment.path}"></td>
-                            <td>${fragment.id}</td>
                             <td>${fragment.name}</td>
                             <td>${fragment.status}</td>
                             <td>${fragment.price}</td>

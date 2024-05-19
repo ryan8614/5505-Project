@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import render_template
 from flask_login import login_required, current_user
 from ...models import TradeHistory, Trade
 from ...models import User, NFT, Fragment
@@ -10,7 +10,6 @@ from . import pages_bp
 @pages_bp.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
-
 
 @pages_bp.route('/dashboard', methods=['GET'])
 @login_required

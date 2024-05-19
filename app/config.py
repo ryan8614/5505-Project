@@ -6,10 +6,10 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class DeploymentConfig(Config):
-    SQLALCHEMY_DATABASE_UR = "sqlite:///" + os.path.join(basedir, 'test.db')
+    SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir, 'test.db')
 
 class TestConfig(Config):
-    SQLALCHEMY_DATABASE_UR = "sqlite:///:memory"
+    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory"
     TESTING = True
 
     

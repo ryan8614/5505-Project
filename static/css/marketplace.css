@@ -44,7 +44,6 @@
 .user-img img:last-child{
     margin-right: 0;
 }
-
 .user-text{
     font-size: 1.8rem;
     font-weight: 600;
@@ -324,3 +323,24 @@ background-color: #f1f1f1;
     font-size: 14px; /* Smaller font size for buttons */
     padding: 6px 10px; /* Padding for button size and comfort */
 }
+
+
+/****************************************/
+/*Search Modal*/
+/****************************************/
+.search-container .form-control {
+    height: 48px; /* Increase the height of the search input */
+    font-size: 18px; /* Increase font size for better readability */
+}
+
+.search-container .btn {
+    font-size: large;
+    height: 48px; /* Match the button height with the input field */
+    padding: 0 20px; /* Increase padding for a wider button */
+}
+
+/* Optional: Increase the width of the search form to fill more space */
+.search-container .col-md-6 {
+    max-width: 100%; /* Increase max-width to utilize more space */
+}
+

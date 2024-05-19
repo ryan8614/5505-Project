@@ -193,3 +193,15 @@ padding:1.8rem;
     opacity: 1; /* Slightly transparent when not focused/hovered */
 }
 
+
+/************************************/
+/* flash style */
+/************************************/
+.alert {
+    font-size: 1.25rem; /* Increase the font size to 20px for better visibility */
+    padding: 1rem 1.5rem; /* Increase padding to make the alert box larger */
+    margin-bottom: 1rem; /* Ensure there is space between multiple flash messages */
+    border-radius: 0.25rem; /* Optional: slight rounding of corners */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow for depth */
+}
+

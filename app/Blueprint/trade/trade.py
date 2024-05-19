@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, flash, redirect, url_for, render_template
+from flask import jsonify, request, flash, redirect, url_for, render_template
 from flask_login import current_user, login_required
 from datetime import datetime
 from sqlalchemy.orm import joinedload
@@ -95,20 +95,20 @@ def redeem():
         nft = NFT.query.get(form.nft_id.data)
         user = User.query.get(form.user.data)
         if not nft or not user:
-            flash('NFT or user not found.', 'error')
+            flash('NFT or user not found.', 'danger')
             return redirect(url_for('pages.marketplace'))
         
         fragments = Fragment.query.filter_by(img_id=nft.id, owner=user.id).all()
         piece_list = set()
 
         if len(fragments) < nft.pieces:
-            flash('Not enough fragments to redeem.', 'error')
+            flash('Not enough fragments to redeem.', 'danger')
             return redirect(url_for('pages.marketplace'))
 
     
         for fragment in fragments:
             if not fragment.verify_frag_name() or fragment.piece_number in piece_list:
-                flash('Redeem verification failed.', 'error')
+                flash('Redeem verification failed.', 'danger')
                 return redirect(url_for('pages.marketplace'))
             piece_list.add(fragment.piece_number)
 
@@ -131,11 +131,11 @@ def redeem():
             flash('Redemption successful.', 'success')
             return redirect(url_for('pages.marketplace'))
         else:
-            flash('Redeem verification failed.', 'error')
+            flash('Redeem verification failed.', 'danger')
             return redirect(url_for('pages.marketplace'))
         
     else:
-        flash('Form submission failed', 'error')
+        flash('Form submission failed', 'danger')
         return redirect(url_for('pages.marketplace'))
     
 
@@ -146,7 +146,7 @@ def search_fragments():
     if not query:
         trades = Trade.query.options(joinedload(Trade.fragment)).all()
     else:
-        # 在数据库中直接进行不区分大小写的搜索，以防止SQL注入
+        # Perform case-insensitive searches directly in the database to prevent SQL injection
         fragments = Fragment.query.options(joinedload(Fragment.trade)) \
                                 .filter(Fragment.name.ilike(f'%{query}%')).all()
         trades = [fragment.trade for fragment in fragments if fragment.trade]
@@ -187,22 +187,22 @@ def buy():
         buyer = User.query.get(form.buyer.data)
     
         if not frag or not buyer:
-            flash('Invalid transaction details.', 'error')
+            flash('Invalid transaction details.', 'danger')
             return redirect(url_for('pages.marketplace'))
         
         # Get transaction information related to fragments
         trade = Trade.query.get(frag.id)
         # Confirm that the transaction information is valid
         if not trade:
-            flash('No trade found for this fragment.', 'error')
+            flash('No trade found for this fragment.', 'danger')
             return redirect(url_for('pages.marketplace'))
 
         # Check if the buyer is the current owner of the item
         if buyer.id == trade.owner:
-            flash('You already own this fragment.', 'error')
+            flash('You already own this fragment.', 'danger')
             return redirect(url_for('pages.marketplace'))
         elif buyer.balance < trade.price:
-            flash('Insufficient balance.', 'error')
+            flash('Insufficient balance.', 'danger')
             return redirect(url_for('pages.marketplace'))
         else:
             owner = User.query.get(trade.owner)

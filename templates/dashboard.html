@@ -54,10 +54,10 @@
             <div class="info-head mb-5">
                 <div class="d-flex align-items-center justify-content-center flex-column">
                     <div class="mb-3">
-                        <img src="{{ url_for('static', filename='images/seller8.png') }}" class="user-img d-block">
+                        <img src="{{ url_for('static', filename='images/seller8.png') }}" class="user-img d-block" alt="seller-8">
                     </div>
                 </div>
-                <h3 class="welcome-message text-center">Hello {{ current_user.username }},welcome to dashboard!</h3>
+                <h3 class="welcome-message text-center">Hello {{ current_user.username }}, welcome to dashboard!</h3>
                 <h4 class="balance-info text-center">Balance:{{ '%.2f'|format(current_user.balance) }} ETH</h4> 
             </div>
             <!-- User Nav Section -->
@@ -84,7 +84,6 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Frag-Id</th>
                                     <th>Frag-Name</th>
                                     <th>Price</th>
                                     <th>Date</th>
@@ -94,7 +93,6 @@
                             <tbody id="trades">
                                 {% for trade in trade_history %}
                                     <tr style="height: 50px;">
-                                        <td>{{ trade.frag_id }}</td>
                                         <td>{{ trade.frag_name }}</td>
                                         <td>{{ '%.2f'|format(trade.price) }}</td>
                                         <td>{{ trade.transaction_time.strftime('%Y-%m-%d %H:%M') }}</td>
@@ -107,12 +105,10 @@
 
                     <!-- My Fragments -->
                     <div id="my-fragments" class="container tab-pane fade"><br>
-
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>Images</th>
-                                    <th>ID</th>
+                                    <th>Image</th>
                                     <th>Name</th>
                                     <th>Status</th>
                                     <th>Price</th>
@@ -120,9 +116,8 @@
                             </thead>
                             <tbody id="fragments">
                                 {% for fragment in fragments %}
-                                    <tr data-bs-toggle="modal" data-bs-target="#myFragmentModal" data-id="{{ fragment.id }}" data-name="{{ fragment.name }}" data-name="{{ fragment.name }}" data-status="{{ fragment.trade_price[0] }}" data-price="{{ '%.2f'|format(fragment.trade_price[1]) }}">
+                                    <tr data-bs-toggle="modal" data-bs-target="#myFragmentModal" data-id="{{ fragment.id }}" data-name="{{ fragment.name }}" data-name="{{ fragment.name }}" data-status="{{ fragment.trade_price[0] }}" data-price="{{ '%.2f'|format(fragment.trade_price[1]) }}" style="height: 100px;">
                                         <td><img class="trade-img" src="{{ fragment.path }}"></td>
-                                        <td>{{ fragment.id }}</td>
                                         <td>{{ fragment.name }}</td>
                                         <td>{{ fragment.trade_price[0] }}</td>
                                         <td>{% if fragment.trade_price[0] == 'For Sale' %}{{ '%.2f'|format(fragment.trade_price[1]) }}{% else %}{% endif %}</td>
@@ -175,24 +170,29 @@
 
                     <!-- My collection -->
                     <div id="my-collection" class="container tab-pane fade"><br>
-                        <div class="row mt-5 mb-5">
-                            {% for nft in collections %}
-                                {% if loop.index0 % 3 == 0 and not loop.first %}
-                                    </div>
-                                    <div class="row mt-5 mb-5">
+                        {% for nft in collections %}
+                            {% if loop.index0 % 3 == 0 %}
+                                {% if not loop.first %}
+                                    </div> <!-- Close the previous row if it's not the first loop iteration -->
                                 {% endif %}
-                                <div class="col-sm-3 col-md-3">
-                                    <div class="card">
-                                        <img src="{{ nft.path }}" class="card-img-top" alt="{{ nft.name }} nft">
-                                        <span style="display: block; text-align: center; font-weight: bold; margin-top: 10px;">{{ nft.name.upper() }}</span>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                            {% if collections|length % 3 != 0 %}
-                                </div>
+                                <div class="row mt-5 mb-5"> <!-- Start a new row for every 3 items -->
                             {% endif %}
-                        </div>
-                    </div>      
+                            <div class="col-sm-3 col-md-3">
+                                <div class="card">
+                                    <img src="{{ nft.path }}" class="card-img-top" alt="{{ nft.name }} nft">
+                                    <span style="display: block; text-align: center; font-weight: bold; margin-top: 10px;" class="fs-4">{{ nft.name.upper() }}</span>
+                                </div>
+                            </div>
+                            {% if loop.last %}
+                                </div> <!-- Ensure the row div is closed if it's the last item -->
+                            {% endif %}
+                        {% else %}
+                            <div class="row mt-5 mb-5">
+                                <p>No collections to display.</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+
                     
                     <!-- Lottery -->
                     <div id="lottery" class="container tab-pane fade"><br>

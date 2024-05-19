@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, jsonify
+from flask import render_template, redirect, url_for, flash, jsonify
 from flask_login import login_user, logout_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from ...models import User
@@ -55,8 +55,9 @@ def register():
         except Exception as e:
             # Handle possible database exceptions (for example, unique constraint failure)
             db.session.rollback()
-            flash('An error occurred during registration. Please try again.', 'error')
-    
+            flash('An error occurred during registration. Please try again.', 'danger')
+    else:
+        print('Form errors:', form.errors)
     return render_template('register.html', title='Register', form=form)
 
 

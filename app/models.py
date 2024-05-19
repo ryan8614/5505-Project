@@ -103,7 +103,6 @@ class User(db.Model, UserMixin):
         return self.balance
 
 
-    
 
 class NFT(db.Model):
     __tablename__ = 'nft'
@@ -252,7 +251,7 @@ class TradeHistory(db.Model):
         return f"<TradeHistory(trade_id={self.trade_id}, frag_id={self.frag_id}, seller={self.seller}, buyer={self.buyer}, price={self.price}, transaction_time={self.transaction_time})>"
     
     
-    def set_pricee(self, value):
+    def set_price(self, value):
         # Directly assign the Decimal value
         if isinstance(value, Decimal):
             self.price = value

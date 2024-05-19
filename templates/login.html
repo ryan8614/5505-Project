@@ -37,16 +37,7 @@
           </div>
       </div>
     </nav>
-    <!-- echo flash message -->
-    <div class="container col-8 text-center">
-      {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-          {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">{{ message }}</div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
-    </div>
+    
     <!-- Login form -->
     <div class="container col-md-4 my-3 bg-light" id="login-container-bg">
       <div class="login-container">
