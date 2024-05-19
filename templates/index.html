@@ -91,6 +91,20 @@
             </div>
         </div>
     </div>
+
+    <!-- Echo flash messages -->
+    <div class="container col-md-8 text-center">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show customup-alert" role="alert">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+    </div>
+    
     <!-- Live Auction Carousel -->
     <div class="container mt-5 mb-5">
         <h2 class="sub-title mt-5 mb-5 text-center"><b>Live Auctions</b></h2>
@@ -217,7 +231,7 @@
                                     </span>
                                     <span class="auction-text">
                                         <span class="fs-5">Current Bid</span><br>
-                                        <spam class="fs-5">7.8 ETH</span>
+                                        <span class="fs-5">7.8 ETH</span>
                                     </span>
                                 </div>
                             </div>

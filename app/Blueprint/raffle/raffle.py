@@ -48,7 +48,7 @@ def upload():
 
                 # Check if the file already exists
                 if os.path.exists(file_path):
-                    flash('A file with this name already exists. Please upload a file with a different name or delete the existing one.')
+                    flash('A file with this name already exists. Please upload a file with a different name or delete the existing one.', 'danger')
                     return redirect(request.url)
 
                 save_result = processor.save_file(file)
@@ -68,18 +68,18 @@ def upload():
                     db.session.commit()
                     
 
-                    flash('File has been uploaded and processed successfully.')
+                    flash('File has been uploaded and processed successfully.', 'success')
                     return redirect(url_for('raffle.upload'))
                 else:
-                    flash('File format not supported.')
+                    flash('File format not supported.', 'danger')
                     return redirect(request.url)
                 
             else:
-                flash('Invalid file or file format not supported.')
+                flash('Invalid file or file format not supported.', 'danger')
                 return redirect(url_for('raffle.upload'))
         else:
             return render_template('upload.html')
     else:
-        flash('You are not authorized to access this page.')
+        flash('You are not authorized to access this page.', 'danger')
         return redirect(url_for('pages.index'))
     
